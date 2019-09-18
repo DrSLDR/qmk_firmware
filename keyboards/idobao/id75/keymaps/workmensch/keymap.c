@@ -47,24 +47,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* FUNCTION
  * .--------------------------------------------------------------------------------------------------------------------------------------.
- * | F1     | F2     | F3     | F4     | F5     | F6     | NUM LK | RESET  | P*     | F7     | F8     | F9     | F10    | F11    | DEL    |
+ * |        | F1     | F2     | F3     | F4     | F5     | F11    | RESET  | F12    | F6     | F7     | F8     | F9     | F10    | DEL    |
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
- * | SELECT | CALC   | MYCOMP | MAIL   | RGB HD | RGB HI | P7     | P8     | P9     | -      |        |        | PR SCR | EQL    | PAUSE  |
+ * |        |        |        |        | RGB HD | RGB HI | P7     | P8     | P9     | -      | {      | }      | EQL    | ^EQL   |        |
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
- * | PREV   | PLAY   | NEXT   | STOP   | RGB SD | RGB SI | P4     | P5     | P6     | +      |        | RESET  |        | QUOT   |        |
+ * | PREV   | PLAY   | NEXT   | STOP   | RGB SD | RGB SI | P4     | P5     | P6     | +      | [      | ]      | QUOT   | ^QUOT  |        |
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
- * |        | MUTE   | VOL+   | APP    | RGB VD | RGB VI | P1     | P2     | P3     | PENT   |        |        |        | MINS   |        |
+ * | VOL-   | MUTE   | VOL+   |        | RGB VD | RGB VI | P1     | P2     | P3     | PENT   |        |        | MINS   | ^MINS  |        |
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
- * |        |        | RGB TG | FN     | RGB RMD| RGB MD | P0     |        | P.     | PENT   | PENT   | FN     |        |        |        |
+ * |        | [TRNS] | RGB TG |        | RGB RMD| RGB MD |        | P0     | PAUSE  | PENT   | PENT   |        |        |        |        |
  * '--------------------------------------------------------------------------------------------------------------------------------------'
  */
 
  [_FN] = LAYOUT_ortho_5x15( /* FUNCTION */
-    KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_NLCK, RESET,   KC_ASTR, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_DEL,  \
-    KC_MSEL, KC_CALC, KC_MYCM, KC_MAIL, RGB_HUD, RGB_HUI, KC_P7,   KC_P8,   KC_P9,   KC_MINS, _______, _______, KC_PSCR, KC_EQL,  KC_PAUS, \
-    KC_MPRV, KC_MPLY, KC_MNXT, KC_MSTP, RGB_SAD, RGB_SAI, KC_P4,   KC_P5,   KC_P6,   KC_PLUS, _______, RESET,   _______, KC_QUOT, _______, \
-    _______, KC_MUTE, KC_VOLU, KC_APP,  RGB_VAD, RGB_VAI, KC_P1,   KC_P2,   KC_P3,   KC_PENT, _______, _______, _______, KC_MINS, _______, \
-    _______, MO(_FN), RGB_TOG, _______, RGB_RMOD,RGB_MOD, KC_P0,   _______, KC_PDOT, KC_PENT, KC_PENT, _______, _______, _______, _______  \
+    _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F11,  RESET,   KC_F12,  KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,        KC_DEL,              \
+    _______, _______, _______, _______, RGB_HUD, RGB_HUI, KC_P7,   KC_P8,   KC_P9,   KC_MINS, LSFT(KC_LBRC), LSFT(KC_RBRC), KC_EQL,  LSFT(KC_EQL),  _______, \
+    KC_MPRV, KC_MPLY, KC_MNXT, KC_MSTP, RGB_SAD, RGB_SAI, KC_P4,   KC_P5,   KC_P6,   KC_PLUS, KC_LBRC,       KC_RBRC,       KC_QUOT, LSFT(KC_QUOT), _______, \
+    KC_VOLD, KC_MUTE, KC_VOLU, _______, RGB_VAD, RGB_VAI, KC_P1,   KC_P2,   KC_P3,   KC_PENT, _______,       _______,       KC_MINS, LSFT(KC_MINS), _______, \
+    _______, KC_TRNS, RGB_TOG, _______, RGB_RMOD,RGB_MOD, _______, KC_P0,   KC_PAUS, KC_PENT, KC_PENT,       _______,       _______, _______,       _______  \
  ),
 };
 
