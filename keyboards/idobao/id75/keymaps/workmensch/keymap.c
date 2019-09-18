@@ -19,6 +19,8 @@
 #define _WM 0
 #define _FN 1
 
+uint8_t th, ts, tv;
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* QWERTY
@@ -76,6 +78,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
     }
     else {
       // do fuck all
+    }
+	case MO(_FN):
+	if (record->event.pressed){
+	  th = rgblight_get_hue();
+	  ts = rgblight_get_sat();
+	  tv = rgblight_get_val();
+      rgblight_sethsv(43, 255, 255);
+    }
+    else {
+      rgblight_sethsv(th, ts, tv);
     }
   }
   return true;
