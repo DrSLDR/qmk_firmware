@@ -30,6 +30,7 @@
 uint8_t ph, ps, pv, ch, cs, cv, th, ts, tv;
 static void decode_symbol(LEDTRIPLE, PLEDTRIPLE);
 static void read_current_led(PLEDTRIPLE);
+static void set_led(PLEDTRIPLE);
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -117,4 +118,8 @@ static void read_current_led(uint8_t *hp, uint8_t *sp, uint8_t *vp){
   *hp = rgblight_get_hue();
   *sp = rgblight_get_sat();
   *vp = rgblight_get_val();
+}
+
+static void set_led(uint8_t *hp, uint8_t *sp, uint8_t *vp){
+  rgblight_sethsv(*hp, *sp, *vp);
 }
