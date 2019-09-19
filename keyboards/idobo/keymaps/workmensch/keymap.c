@@ -25,9 +25,8 @@
 
 #define PCURLED &ch, &cs, &cv
 #define PPRELED &ph, &ps, &pv
-#define PTMPLED &th, &ts, &tv
 
-uint8_t ph, ps, pv, ch, cs, cv, th, ts, tv;
+uint8_t ph, ps, pv, ch, cs, cv;
 static void read_current_led(PLEDTRIPLE);
 static void set_led(PLEDTRIPLE);
 static bool led_equal(LEDTRIPLE, PLEDTRIPLE);
@@ -108,7 +107,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
 void keyboard_post_init_user(){
   ph = 0; ps = 0; pv = 0;
   ch = 0; cs = 0; cv = 0;
-  th = 0; ts = 0; tv = 0;
 
   set_permanent_led(HSV_ORANGE);
   rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
