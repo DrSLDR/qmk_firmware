@@ -19,7 +19,15 @@
 #define _WM 0
 #define _FN 1
 
-uint8_t th, ts, tv;
+// Shorthand LED macros
+#define LEDTRIPLE uint8_t, uint8_t, uint8_t
+#define PLEDTRIPLE uint8_t*, uint8_t*, uint8_t*
+
+#define PCURLED &ch, &cs, &cv
+#define PPRELED &ph, &ps, &pv
+#define PTMPLED &th, &ts, &tv
+
+uint8_t ph, ps, pv, ch, cs, cv, th, ts, tv;
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
