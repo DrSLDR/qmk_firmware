@@ -28,7 +28,6 @@
 #define PTMPLED &th, &ts, &tv
 
 uint8_t ph, ps, pv, ch, cs, cv, th, ts, tv;
-static void decode_symbol(LEDTRIPLE, PLEDTRIPLE);
 static void read_current_led(PLEDTRIPLE);
 static void set_led(PLEDTRIPLE);
 
@@ -109,9 +108,6 @@ void keyboard_post_init_user(){
   rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
 }
 
-static void decode_symbol(uint8_t h,   uint8_t s,   uint8_t v,
-                          uint8_t *hp, uint8_t *sp, uint8_t *vp){
-  *hp = h; *sp = s; *vp = v;
 }
 
 static void read_current_led(uint8_t *hp, uint8_t *sp, uint8_t *vp){
