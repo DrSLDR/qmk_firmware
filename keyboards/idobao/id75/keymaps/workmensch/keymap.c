@@ -83,7 +83,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
  * | VOL-   | MUTE   | VOL+   |        | RGB VD | RGB VI | P1     | P2     | P3     | PENT   |        |        | MINS   | ^MINS  |        |
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
- * |        | [TRNS] | RGB TG |        | RGB RMD| RGB MD |        | P0     | PAUSE  | PENT   | PENT   |        |        |        |        |
+ * |        | [TRNS] | RGB TG |        | RGB RMD| RGB MD |        | P0     | PAUSE  | PENT   | PENT   | HOME   | PG UP  | PG DN  | END    |
  * '--------------------------------------------------------------------------------------------------------------------------------------'
  */
 
@@ -92,7 +92,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, _______, _______, RGB_HUD, RGB_HUI, KC_P7,   KC_P8,   KC_P9,   KC_MINS, LSFT(KC_LBRC), LSFT(KC_RBRC), KC_EQL,  LSFT(KC_EQL),  _______, \
     KC_MPRV, KC_MPLY, KC_MNXT, KC_MSTP, RGB_SAD, RGB_SAI, KC_P4,   KC_P5,   KC_P6,   KC_PLUS, KC_LBRC,       KC_RBRC,       KC_QUOT, LSFT(KC_QUOT), _______, \
     KC_VOLD, KC_MUTE, KC_VOLU, _______, RGB_VAD, RGB_VAI, KC_P1,   KC_P2,   KC_P3,   KC_PENT, _______,       _______,       KC_MINS, LSFT(KC_MINS), _______, \
-    _______, KC_TRNS, RGB_TOG, _______, RGB_RMOD,RGB_MOD, _______, KC_P0,   KC_PAUS, KC_PENT, KC_PENT,       _______,       _______, _______,       _______  \
+    _______, KC_TRNS, RGB_TOG, _______, RGB_RMOD,RGB_MOD, _______, KC_P0,   KC_PAUS, KC_PENT, KC_PENT,       KC_HOME,       KC_PGUP, KC_PGDN,       KC_END \
  ),
 };
 
