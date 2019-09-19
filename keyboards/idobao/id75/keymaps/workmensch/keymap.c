@@ -32,6 +32,9 @@ static void read_current_led(PLEDTRIPLE);
 static void set_led(PLEDTRIPLE);
 static bool led_equal(LEDTRIPLE, PLEDTRIPLE);
 
+static void set_temporary_led(LEDTRIPLE);
+static void reset_temporary_led(void);
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* QWERTY
@@ -92,13 +95,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
     }
 	case MO(_FN):
 	if (record->event.pressed){
-	  th = rgblight_get_hue();
-	  ts = rgblight_get_sat();
-	  tv = rgblight_get_val();
-      rgblight_sethsv(43, 255, 255);
+	    set_temporary_led(255,255,255);
     }
     else {
-      rgblight_sethsv(th, ts, tv);
+      reset_temporary_led();
     }
   }
   return true;
@@ -112,6 +112,23 @@ void keyboard_post_init_user(){
   th = 0; ts = 0; tv = 0;
 }
 
+static void set_temporary_led(uint8_t h, uint8_t s, uint8_t v){
+  if (led_equal(h, s, v, PCURLED)) {
+    // Suggested color is the same as the recorded current, go no further
+    return;
+  }
+  read_current_led(PPRELED);
+  ch = h; cs = s; cv = v;
+  set_led(PCURLED);
+}
+
+static void reset_temporary_led(){
+  if (0 == rgblight_get_mode()){
+    // Leds are turned off. Do nothing
+    return;
+  }
+  set_led(PPRELED);
+  ch = ph; cs = ps; cv = pv;
 }
 
 static void read_current_led(uint8_t *hp, uint8_t *sp, uint8_t *vp){
