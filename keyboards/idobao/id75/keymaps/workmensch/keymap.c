@@ -30,6 +30,7 @@
 uint8_t ph, ps, pv, ch, cs, cv, th, ts, tv;
 static void read_current_led(PLEDTRIPLE);
 static void set_led(PLEDTRIPLE);
+static bool led_equal(LEDTRIPLE, PLEDTRIPLE);
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -106,6 +107,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
 void keyboard_post_init_user(){
   rgblight_sethsv(128, 255, 255);
   rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
+  ph = 0; ps = 0; pv = 0;
+  ch = 0; cs = 0; cv = 0;
+  th = 0; ts = 0; tv = 0;
 }
 
 }
@@ -118,4 +122,9 @@ static void read_current_led(uint8_t *hp, uint8_t *sp, uint8_t *vp){
 
 static void set_led(uint8_t *hp, uint8_t *sp, uint8_t *vp){
   rgblight_sethsv(*hp, *sp, *vp);
+}
+
+static bool led_equal(uint8_t h,   uint8_t s,   uint8_t v,
+                      uint8_t *hp, uint8_t *sp, uint8_t *vp){
+  return (h == *hp && s == *sp && v == *vp);
 }
