@@ -99,19 +99,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 bool process_record_user(uint16_t keycode, keyrecord_t *record){
   switch (keycode) {
     case RESET:
-    if (record->event.pressed){
-      rgblight_sethsv(HSV_RED);
-    }
-    else {
-      // do fuck all
-    }
-	case MO(_FN):
-	if (record->event.pressed){
-	    set_temporary_led(HSV_WHITE);
-    }
-    else {
-      reset_temporary_led();
-    }
+      if (record->event.pressed){
+        rgblight_sethsv(HSV_RED);
+      }
+      else {
+        // do fuck all
+      }
+      break;
+    case MO(_FN):
+      if (record->event.pressed){
+        set_temporary_led(HSV_WHITE);
+      }
+      else {
+        reset_temporary_led();
+      }
+      break;
   }
   return true;
 }
