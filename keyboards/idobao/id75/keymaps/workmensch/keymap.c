@@ -34,6 +34,7 @@ static bool led_equal(LEDTRIPLE, PLEDTRIPLE);
 
 static void set_temporary_led(LEDTRIPLE);
 static void reset_temporary_led(void);
+static void set_permanent_led(LEDTRIPLE);
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -88,14 +89,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
   switch (keycode) {
     case RESET:
     if (record->event.pressed){
-      rgblight_sethsv(0, 255, 255);
+      rgblight_sethsv(HSV_RED);
     }
     else {
       // do fuck all
     }
 	case MO(_FN):
 	if (record->event.pressed){
-	    set_temporary_led(255,255,255);
+	    set_temporary_led(HSV_WHITE);
     }
     else {
       reset_temporary_led();
@@ -105,11 +106,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
 }
 
 void keyboard_post_init_user(){
-  rgblight_sethsv(128, 255, 255);
-  rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
   ph = 0; ps = 0; pv = 0;
   ch = 0; cs = 0; cv = 0;
   th = 0; ts = 0; tv = 0;
+
+  set_permanent_led(HSV_ORANGE);
+  rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
 }
 
 static void set_temporary_led(uint8_t h, uint8_t s, uint8_t v){
@@ -129,6 +131,11 @@ static void reset_temporary_led(){
   }
   set_led(PPRELED);
   ch = ph; cs = ps; cv = pv;
+}
+
+static void set_permanent_led(uint8_t h, uint8_t s, uint8_t v){
+  ph = h; ps = s; pv = v;
+  set_led(PPRELED);
 }
 
 static void read_current_led(uint8_t *hp, uint8_t *sp, uint8_t *vp){
