@@ -28,6 +28,8 @@
 #define PTMPLED &th, &ts, &tv
 
 uint8_t ph, ps, pv, ch, cs, cv, th, ts, tv;
+static void decode_symbol(LEDTRIPLE, PLEDTRIPLE);
+static void read_current_led(PLEDTRIPLE);
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -104,4 +106,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
 void keyboard_post_init_user(){
   rgblight_sethsv(128, 255, 255);
   rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
+}
+
+static void decode_symbol(uint8_t h,   uint8_t s,   uint8_t v,
+                          uint8_t *hp, uint8_t *sp, uint8_t *vp){
+  *hp = h; *sp = s; *vp = v;
+}
+
+static void read_current_led(uint8_t *hp, uint8_t *sp, uint8_t *vp){
+  *hp = rgblight_get_hue();
+  *sp = rgblight_get_sat();
+  *vp = rgblight_get_val();
 }
