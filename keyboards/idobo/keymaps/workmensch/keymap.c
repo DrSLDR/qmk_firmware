@@ -49,27 +49,27 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-/* QWERTY
+/* WORKMAN
  * .--------------------------------------------------------------------------------------------------------------------------------------.
  * | TILDE  | 1      | 2      | 3      | 4      | 5      | -      | `      | =      | 6      | 7      | 8      | 9      | 0      | BACKSP |
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-----------------|
- * | TAB    | Q      | W      | E      | R      | T      | [      | \      | ]      | Y      | U      | I      | O      | P      | \      |
+ * | TAB    | Q      | W      | E      | R      | T      |        |        |        | Y      | U      | I      | O      | P      | \      |
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-----------------+--------|
- * | LCTRL  | A      | S      | D      | F      | G      | HOME   | DEL    | PG UP  | H      | J      | K      | L      | ;      | ENTER  |
+ * | LCTRL  | A      | S      | D      | F      | G      |        |        |        | H      | J      | K      | L      | ;      | ENTER  |
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------------------------+--------|
- * | LSHIFT | Z      | X      | C      | V      | B      | END    | UP     | PG DN  | N      | M      | ,      | .      | /      | RSHIFT |
+ * | LSHIFT | Z      | X      | C      | V      | B      |        |        |        | N      | M      | ,      | .      | /      | RSHIFT |
  * |--------+--------+--------+--------+--------+-----------------+--------+--------+--------+--------+-----------------+--------+--------|
- * | ESC    | FN     | LGUI   | LALT   | SPACE  | SPACE  | LEFT   | DOWN   | RIGHT  | SPACE  | SPACE  | LEFT   | UP     | DOWN   | RIGHT  |
+ * | ESC    | FN     | LGUI   | LALT   | SPACE  | SPACE  |        |        |        | SPACE  | SPACE  | LEFT   | UP     | DOWN   | RIGHT  |
  * '--------------------------------------------------------------------------------------------------------------------------------------'
  */
 
 
   [_WM] = LAYOUT_ortho_5x15( /* Workmensch */
     KC_TILDE,         KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_MINS, KC_GRV,  KC_EQL,  KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC, \
-    KC_TAB,           KC_Q,    KC_D,    KC_R,    KC_W,    KC_B,    KC_LBRC, KC_BSLS, KC_RBRC, KC_J,    KC_F,    KC_U,    KC_P,    KC_SCLN, KC_BSLS, \
-    KC_LCTL,          KC_A,    KC_S,    KC_H,    KC_T,    KC_G,    KC_HOME, KC_DEL,  KC_PGUP, KC_Y,    KC_N,    KC_E,    KC_O,    KC_I,    KC_ENT,  \
-    TD(TD_LSH_CAPS),  KC_Z,    KC_X,    KC_M,    KC_C,    KC_V,    KC_END,  KC_UP,   KC_PGDN, KC_K,    KC_L,    KC_COMM, KC_DOT,  KC_SLSH, TD(TD_RSH_CAPS), \
-    KC_ESC,           MO(_FN), KC_LGUI, KC_LALT, KC_SPC,  KC_SPC,  KC_LEFT, KC_DOWN, KC_RGHT, KC_SPC,  KC_SPC,  KC_LEFT, KC_UP,   KC_DOWN, KC_RGHT  \
+    KC_TAB,           KC_Q,    KC_D,    KC_R,    KC_W,    KC_B,    _______, _______, _______, KC_J,    KC_F,    KC_U,    KC_P,    KC_SCLN, KC_BSLS, \
+    KC_LCTL,          KC_A,    KC_S,    KC_H,    KC_T,    KC_G,    _______, _______, _______, KC_Y,    KC_N,    KC_E,    KC_O,    KC_I,    KC_ENT,  \
+    TD(TD_LSH_CAPS),  KC_Z,    KC_X,    KC_M,    KC_C,    KC_V,    _______, _______, _______, KC_K,    KC_L,    KC_COMM, KC_DOT,  KC_SLSH, TD(TD_RSH_CAPS), \
+    KC_ESC,           MO(_FN), KC_LGUI, KC_LALT, KC_SPC,  KC_SPC,  _______, _______, _______, KC_SPC,  KC_SPC,  KC_LEFT, KC_UP,   KC_DOWN, KC_RGHT  \
  ),
 
 
