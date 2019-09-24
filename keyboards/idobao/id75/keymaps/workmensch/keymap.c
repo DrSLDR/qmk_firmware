@@ -18,6 +18,7 @@
 // Keyboard Layers
 #define _WM 0
 #define _FN 1
+#define _SE 2
 
 // Shorthand LED macros
 #define LEDTRIPLE uint8_t, uint8_t, uint8_t
@@ -63,7 +64,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * '--------------------------------------------------------------------------------------------------------------------------------------'
  */
 
-
   [_WM] = LAYOUT_ortho_5x15( /* Workmensch */
     KC_TILDE,         KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_MINS, KC_GRV,  KC_EQL,  KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC, \
     KC_TAB,           KC_Q,    KC_D,    KC_R,    KC_W,    KC_B,    _______, _______, _______, KC_J,    KC_F,    KC_U,    KC_P,    KC_SCLN, KC_BSLS, \
@@ -71,7 +71,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     TD(TD_LSH_CAPS),  KC_Z,    KC_X,    KC_M,    KC_C,    KC_V,    _______, _______, _______, KC_K,    KC_L,    KC_COMM, KC_DOT,  KC_SLSH, TD(TD_RSH_CAPS), \
     KC_ESC,           MO(_FN), KC_LGUI, KC_LALT, KC_SPC,  KC_SPC,  _______, _______, _______, KC_SPC,  KC_SPC,  KC_LEFT, KC_UP,   KC_DOWN, KC_RGHT  \
  ),
-
 
 /* FUNCTION
  * .--------------------------------------------------------------------------------------------------------------------------------------.
@@ -94,6 +93,28 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, KC_VOLD, KC_MUTE, KC_VOLU, _______, _______, KC_P1,   KC_P2,   KC_P3,   KC_PENT, _______,       _______,       KC_MINS, LSFT(KC_MINS), _______, \
     _______, KC_TRNS, RGB_TOG, _______, _______, _______, _______, KC_P0,   KC_PAUS, KC_PENT, KC_PENT,       KC_HOME,       KC_PGUP, KC_PGDN,       KC_END \
  ),
+
+ /* SWEDEN WORKMAN MONSTROSITY
+  * .--------------------------------------------------------------------------------------------------------------------------------------.
+  * | TILDE  | 1      | 2      | 3      | 4      | 5      | -      | `      | =      | 6      | 7      | 8      | 9      | 0      | BACKSP |
+  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-----------------|
+  * | TAB    | Q      | W      | E      | R      | T      |        |        |        | Y      | U      | I      | O      | P      | \      |
+  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-----------------+--------|
+  * | LCTRL  | A      | S      | D      | F      | G      |        |        |        | H      | J      | K      | L      | ;      | ENTER  |
+  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------------------------+--------|
+  * | LSHIFT | Z      | X      | C      | V      | B      |        |        |        | N      | M      | ,      | .      | /      | RSHIFT |
+  * |--------+--------+--------+--------+--------+-----------------+--------+--------+--------+--------+-----------------+--------+--------|
+  * | ESC    | FN     | LGUI   | LALT   | SPACE  | SPACE  |        |        |        | SPACE  | SPACE  | LEFT   | UP     | DOWN   | RIGHT  |
+  * '--------------------------------------------------------------------------------------------------------------------------------------'
+  */
+
+   [_SE] = LAYOUT_ortho_5x15( /* SWEWORKNOPE */
+     KC_TILDE,         KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_MINS, KC_GRV,  KC_EQL,  KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC, \
+     KC_TAB,           KC_Q,    KC_D,    KC_R,    KC_W,    KC_B,    _______, _______, _______, KC_J,    KC_F,    KC_U,    KC_P,    KC_SCLN, KC_BSLS, \
+     KC_LCTL,          KC_A,    KC_S,    KC_H,    KC_T,    KC_G,    _______, _______, _______, KC_Y,    KC_N,    KC_E,    KC_O,    KC_I,    KC_ENT,  \
+     TD(TD_LSH_CAPS),  KC_Z,    KC_X,    KC_M,    KC_C,    KC_V,    _______, _______, _______, KC_K,    KC_L,    KC_COMM, KC_DOT,  KC_SLSH, TD(TD_RSH_CAPS), \
+     KC_ESC,           MO(_FN), KC_LGUI, KC_LALT, KC_SPC,  KC_SPC,  _______, _______, _______, KC_SPC,  KC_SPC,  KC_LEFT, KC_UP,   KC_DOWN, KC_RGHT  \
+  ),
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record){
