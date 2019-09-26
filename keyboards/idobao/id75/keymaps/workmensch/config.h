@@ -19,3 +19,17 @@
 
 // place overrides here
 #define TAPPING_TERM 200
+
+/* USB Device descriptor parameter */
+#undef VENDOR_ID
+#undef PRODUCT_ID
+#undef DEVICE_VER
+#undef MANUFACTURER
+#undef PRODUCT
+#undef DESCRIPTION
+#define VENDOR_ID       0x51dc
+#define PRODUCT_ID      0x005e
+#define DEVICE_VER      0x0001
+#define MANUFACTURER    SLDR
+#define PRODUCT         ID75 (idobo)
+#define DESCRIPTION     15x5 matrix keyboard
