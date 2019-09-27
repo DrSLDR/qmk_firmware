@@ -28,19 +28,19 @@
 #define PPRELED &ph, &ps, &pv
 
 // Variable declarations
-uint8_t ph, ps, pv, ch, cs, cv;
+static uint8_t ph, ps, pv, ch, cs, cv;
 static bool caps;
 
 // Low level LED control
-static void read_current_led(PLEDTRIPLE);
-static void set_led(PLEDTRIPLE);
-static bool led_equal(LEDTRIPLE, PLEDTRIPLE);
+void read_current_led(PLEDTRIPLE);
+void set_led(PLEDTRIPLE);
+bool led_equal(LEDTRIPLE, PLEDTRIPLE);
 
 // Higher level LED utility functions
-static void set_temporary_led(LEDTRIPLE);
-static void reset_temporary_led(void);
-static void set_permanent_led(LEDTRIPLE);
-static void caps_effect_toggle(void);
+void set_temporary_led(LEDTRIPLE);
+void reset_temporary_led(void);
+void set_permanent_led(LEDTRIPLE);
+void caps_effect_toggle(void);
 
 // A tap dance state struct
 typedef struct {
@@ -176,7 +176,7 @@ void keyboard_post_init_user(){
 
 // LED CONTROL FUNCTIONS //////////////////////////////////////////////////////
 
-static void set_temporary_led(uint8_t h, uint8_t s, uint8_t v){
+void set_temporary_led(uint8_t h, uint8_t s, uint8_t v){
   if (led_equal(h, s, v, PCURLED)) {
     // Suggested color is the same as the recorded current, go no further
     return;
@@ -186,7 +186,7 @@ static void set_temporary_led(uint8_t h, uint8_t s, uint8_t v){
   set_led(PCURLED);
 }
 
-static void reset_temporary_led(){
+void reset_temporary_led(){
   if (0 == rgblight_get_mode()){
     // Leds are turned off. Do nothing
     return;
@@ -195,22 +195,22 @@ static void reset_temporary_led(){
   ch = ph; cs = ps; cv = pv;
 }
 
-static void set_permanent_led(uint8_t h, uint8_t s, uint8_t v){
+void set_permanent_led(uint8_t h, uint8_t s, uint8_t v){
   ph = h; ps = s; pv = v;
   set_led(PPRELED);
 }
 
-static void read_current_led(uint8_t *hp, uint8_t *sp, uint8_t *vp){
+void read_current_led(uint8_t *hp, uint8_t *sp, uint8_t *vp){
   *hp = rgblight_get_hue();
   *sp = rgblight_get_sat();
   *vp = rgblight_get_val();
 }
 
-static void set_led(uint8_t *hp, uint8_t *sp, uint8_t *vp){
+void set_led(uint8_t *hp, uint8_t *sp, uint8_t *vp){
   rgblight_sethsv(*hp, *sp, *vp);
 }
 
-static bool led_equal(uint8_t h,   uint8_t s,   uint8_t v,
+bool led_equal(uint8_t h,   uint8_t s,   uint8_t v,
                       uint8_t *hp, uint8_t *sp, uint8_t *vp){
   return (h == *hp && s == *sp && v == *vp);
 }
