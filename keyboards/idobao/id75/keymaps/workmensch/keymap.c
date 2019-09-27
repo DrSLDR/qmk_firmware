@@ -41,6 +41,7 @@ void set_temporary_led(LEDTRIPLE);
 void reset_temporary_led(void);
 void set_permanent_led(LEDTRIPLE);
 void caps_effect_toggle(void);
+void set_temporary_fn_led(void);
 
 // A tap dance state struct
 typedef struct {
@@ -165,7 +166,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
       break;
     case MO(_FN):
       if (record->event.pressed){
-        set_temporary_led(_FN_LED_HSV);
+        set_temporary_fn_led();
       }
       else {
         reset_temporary_led();
@@ -236,6 +237,11 @@ void caps_effect_toggle(){
     caps = true;
     rgblight_mode(CAPS_EFFECT);
   }
+}
+
+void set_temporary_fn_led(){
+  uint8_t sat = ps / _FN_LED_SAT_DEN;
+  set_temporary_led(ph, sat, pv);
 }
 
 // TAP DANCE CONTROL FUNCTIONS ////////////////////////////////////////////////
