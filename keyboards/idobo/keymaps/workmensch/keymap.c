@@ -29,6 +29,7 @@
 
 // Variable declarations
 uint8_t ph, ps, pv, ch, cs, cv;
+static bool caps;
 
 // Low level LED control
 static void read_current_led(PLEDTRIPLE);
@@ -55,6 +56,7 @@ enum {
 int cur_dance (qk_tap_dance_state_t *state);
 
 // Specific handler prototypes for the Shift tap dance
+void caps_effect_toggle(void);
 void shft_finished(qk_tap_dance_state_t *state, void *user_data);
 void shft_reset(qk_tap_dance_state_t *state, void *user_data);
 
@@ -164,6 +166,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
 void keyboard_post_init_user(){
   ph = 0; ps = 0; pv = 0;
   ch = 0; cs = 0; cv = 0;
+  caps = false;
 
   set_permanent_led(HSV_ORANGE);
   rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
@@ -208,6 +211,19 @@ static bool led_equal(uint8_t h,   uint8_t s,   uint8_t v,
   return (h == *hp && s == *sp && v == *vp);
 }
 
+void caps_effect_toggle(){
+  if (caps) {
+    // Caps is on, turn off.
+    caps = false;
+    rgblight_mode(RGBLIGHT_MODE_STATIC_LIGHT);
+  }
+  else {
+    // Caps is off, turn on.
+    caps = true;
+    rgblight_mode(RGBLIGHT_MODE_SNAKE + 5);
+  }
+}
+
 int cur_dance(qk_tap_dance_state_t *state){
   if (state->count == 1) {
     return SINGLE_TAP;
@@ -236,7 +252,7 @@ void shft_reset(qk_tap_dance_state_t *state, void *user_data) {
   shfttap_state.state = cur_dance(state);
   switch (shfttap_state.state) {
     case SINGLE_TAP: unregister_code(KC_LSFT); break;
-    case DOUBLE_TAP: unregister_code(KC_CAPS); break;
+    case DOUBLE_TAP: unregister_code(KC_CAPS); caps_effect_toggle(); break;
   }
   shfttap_state.state = 0;
 }
