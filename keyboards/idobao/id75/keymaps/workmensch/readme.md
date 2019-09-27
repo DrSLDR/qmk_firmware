@@ -18,6 +18,4 @@ Function layer accessible while holding the FN key (bottom, second column). Cont
 
 LED is supposed to be managed depending on layer and active function.
 
-Base color is currently Orange and will switch to White while FN is held down. While in Reset mode, color switches to Red.
-
-I intend for everything to blink or something while Caps Lock is active, but haven't gotten that to work just yet.
+Base color is currently Orange and will switch to White while FN is held down. While in Reset mode, color switches to Red. Does a very fast snake when caps lock is enabled.
