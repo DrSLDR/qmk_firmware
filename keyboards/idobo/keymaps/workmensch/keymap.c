@@ -261,7 +261,6 @@ void lshft_finished(qk_tap_dance_state_t *state, void *user_data) {
 }
 
 void lshft_reset(qk_tap_dance_state_t *state, void *user_data) {
-  lshfttap_state.state = cur_dance(state);
   switch (lshfttap_state.state) {
     case SINGLE_TAP: unregister_code(KC_LSFT); break;
     case DOUBLE_TAP: unregister_code(KC_CAPS); caps_effect_toggle(); break;
@@ -278,7 +277,6 @@ void rshft_finished(qk_tap_dance_state_t *state, void *user_data) {
 }
 
 void rshft_reset(qk_tap_dance_state_t *state, void *user_data) {
-  rshfttap_state.state = cur_dance(state);
   switch (rshfttap_state.state) {
     case SINGLE_TAP: unregister_code(KC_RSFT); break;
     case DOUBLE_TAP: unregister_code(KC_CAPS); caps_effect_toggle(); break;
