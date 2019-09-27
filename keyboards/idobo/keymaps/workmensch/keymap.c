@@ -82,7 +82,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
  * |        | VOL-   | MUTE   | VOL+   | RGB TG |        | P1     | P2     | P3     | PENT   |        |        | MINS   | UNDS   |        |
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
- * |        |        | [TRNS] |        |        |        |        | P0     | PAUSE  | PENT   | PENT   | HOME   | PG UP  | PG DN  | END    |
+ * |        |        | [TRNS] |        |        |        |        | P0     | PAUSE  | PENT   |        | HOME   | PG UP  | PG DN  | END    |
  * '--------------------------------------------------------------------------------------------------------------------------------------'
  */
 
@@ -91,7 +91,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, _______, _______, _______, _______, KC_P7,   KC_P8,   KC_P9,   KC_MINS, KC_LCBR, KC_RCBR, KC_EQL,  KC_PLUS, _______, \
     _______, KC_MPRV, KC_MPLY, KC_MNXT, KC_MSTP, _______, KC_P4,   KC_P5,   KC_P6,   KC_PLUS, KC_LBRC, KC_RBRC, KC_QUOT, KC_DQUO, _______, \
     _______, KC_VOLD, KC_MUTE, KC_VOLU, RGB_TOG, _______, KC_P1,   KC_P2,   KC_P3,   KC_PENT, _______, _______, KC_MINS, KC_UNDS, _______, \
-    _______, _______, KC_TRNS, _______, _______, _______, _______, KC_P0,   KC_PAUS, KC_PENT, KC_PENT, KC_HOME, KC_PGUP, KC_PGDN, KC_END \
+    _______, _______, KC_TRNS, _______, _______, _______, _______, KC_P0,   KC_PAUS, KC_PENT, _______, KC_HOME, KC_PGUP, KC_PGDN, KC_END \
  ),
 
  /* SWEDEN WORKMAN MONSTROSITY
