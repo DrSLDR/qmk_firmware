@@ -18,7 +18,7 @@
 
 
 // place overrides here
-#define TAPPING_TERM 200
+#define TAPPING_TERM 150
 
 /* USB Device descriptor parameter */
 #undef VENDOR_ID
