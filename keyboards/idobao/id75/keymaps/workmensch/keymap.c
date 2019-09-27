@@ -27,14 +27,36 @@
 #define PCURLED &ch, &cs, &cv
 #define PPRELED &ph, &ps, &pv
 
+// Variable declarations
 uint8_t ph, ps, pv, ch, cs, cv;
+
+// Low level LED control
 static void read_current_led(PLEDTRIPLE);
 static void set_led(PLEDTRIPLE);
 static bool led_equal(LEDTRIPLE, PLEDTRIPLE);
 
+// Higher level LED utility functions
 static void set_temporary_led(LEDTRIPLE);
 static void reset_temporary_led(void);
 static void set_permanent_led(LEDTRIPLE);
+
+// A tap dance state struct
+typedef struct {
+  int state;
+} tap;
+
+// A tap dance type enum
+enum {
+  SINGLE_TAP = 1,
+  DOUBLE_TAP = 2
+};
+
+// General tap dance prototypes
+int cur_dance (qk_tap_dance_state_t *state);
+
+// Specific handler prototypes for the Shift tap dance
+void shft_finished(qk_tap_dance_state_t *state, void *user_data);
+void shft_reset(qk_tap_dance_state_t *state, void *user_data);
 
 // Tap dance definitions
 enum {
@@ -44,7 +66,7 @@ enum {
 
 qk_tap_dance_action_t tap_dance_actions[] = {
   // Tap once for shift, twice for Caps Lock
-  [TD_LSH_CAPS] = ACTION_TAP_DANCE_DOUBLE(KC_LSFT, KC_CAPS),
+  [TD_LSH_CAPS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, shft_finished, shft_reset),
   [TD_RSH_CAPS] = ACTION_TAP_DANCE_DOUBLE(KC_RSFT, KC_CAPS)
 };
 
@@ -184,4 +206,37 @@ static void set_led(uint8_t *hp, uint8_t *sp, uint8_t *vp){
 static bool led_equal(uint8_t h,   uint8_t s,   uint8_t v,
                       uint8_t *hp, uint8_t *sp, uint8_t *vp){
   return (h == *hp && s == *sp && v == *vp);
+}
+
+int cur_dance(qk_tap_dance_state_t *state){
+  if (state->count == 1) {
+    return SINGLE_TAP;
+  }
+  else if (state->count == 2) {
+    return DOUBLE_TAP;
+  }
+  else {
+    return 7; // The most powerful number
+  }
+}
+
+static tap shfttap_state = {
+  .state = 0
+};
+
+void shft_finished(qk_tap_dance_state_t *state, void *user_data) {
+  shfttap_state.state = cur_dance(state);
+  switch (shfttap_state.state) {
+    case SINGLE_TAP: register_code(KC_LSFT); break;
+    case DOUBLE_TAP: register_code(KC_CAPS); break;
+  }
+}
+
+void shft_reset(qk_tap_dance_state_t *state, void *user_data) {
+  shfttap_state.state = cur_dance(state);
+  switch (shfttap_state.state) {
+    case SINGLE_TAP: unregister_code(KC_LSFT); break;
+    case DOUBLE_TAP: unregister_code(KC_CAPS); break;
+  }
+  shfttap_state.state = 0;
 }
