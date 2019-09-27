@@ -40,6 +40,7 @@ static bool led_equal(LEDTRIPLE, PLEDTRIPLE);
 static void set_temporary_led(LEDTRIPLE);
 static void reset_temporary_led(void);
 static void set_permanent_led(LEDTRIPLE);
+static void caps_effect_toggle(void);
 
 // A tap dance state struct
 typedef struct {
@@ -56,7 +57,6 @@ enum {
 int cur_dance (qk_tap_dance_state_t *state);
 
 // Specific handler prototypes for the Shift tap dance
-void caps_effect_toggle(void);
 void shft_finished(qk_tap_dance_state_t *state, void *user_data);
 void shft_reset(qk_tap_dance_state_t *state, void *user_data);
 
@@ -141,6 +141,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 };
 
+// STANDARD FUNCTIONS /////////////////////////////////////////////////////////
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record){
   switch (keycode) {
     case RESET:
@@ -171,6 +173,8 @@ void keyboard_post_init_user(){
   set_permanent_led(HSV_ORANGE);
   rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
 }
+
+// LED CONTROL FUNCTIONS //////////////////////////////////////////////////////
 
 static void set_temporary_led(uint8_t h, uint8_t s, uint8_t v){
   if (led_equal(h, s, v, PCURLED)) {
@@ -223,6 +227,8 @@ void caps_effect_toggle(){
     rgblight_mode(RGBLIGHT_MODE_SNAKE + 5);
   }
 }
+
+// TAP DANCE CONTROL FUNCTIONS ////////////////////////////////////////////////
 
 int cur_dance(qk_tap_dance_state_t *state){
   if (state->count == 1) {
