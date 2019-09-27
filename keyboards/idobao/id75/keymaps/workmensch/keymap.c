@@ -157,7 +157,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
   switch (keycode) {
     case RESET:
       if (record->event.pressed){
-        rgblight_sethsv(HSV_RED);
+        rgblight_sethsv(RESET_LED_HSV);
       }
       else {
         // do fuck all
@@ -165,7 +165,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
       break;
     case MO(_FN):
       if (record->event.pressed){
-        set_temporary_led(HSV_WHITE);
+        set_temporary_led(_FN_LED_HSV);
       }
       else {
         reset_temporary_led();
@@ -180,8 +180,8 @@ void keyboard_post_init_user(){
   ch = 0; cs = 0; cv = 0;
   caps = false;
 
-  set_permanent_led(HSV_ORANGE);
-  rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
+  set_permanent_led(_WM_LED_HSV);
+  rgblight_mode_noeeprom(STARTUP_EFFECT);
 }
 
 // LED CONTROL FUNCTIONS //////////////////////////////////////////////////////
@@ -229,12 +229,12 @@ void caps_effect_toggle(){
   if (caps) {
     // Caps is on, turn off.
     caps = false;
-    rgblight_mode(RGBLIGHT_MODE_STATIC_LIGHT);
+    rgblight_mode(STARTUP_EFFECT);
   }
   else {
     // Caps is off, turn on.
     caps = true;
-    rgblight_mode(RGBLIGHT_MODE_SNAKE + 5);
+    rgblight_mode(CAPS_EFFECT);
   }
 }
 
