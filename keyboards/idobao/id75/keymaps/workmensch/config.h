@@ -20,6 +20,15 @@
 // place overrides here
 #define TAPPING_TERM 150
 
+// Define some LIGHTS and EFFECTS
+
+#define RESET_LED_HSV HSV_RED
+#define _WM_LED_HSV HSV_ORANGE
+#define _FN_LED_HSV HSV_WHITE
+
+#define STARTUP_EFFECT RGBLIGHT_MODE_STATIC_LIGHT
+#define CAPS_EFFECT RGBLIGHT_MODE_SNAKE + 5
+
 /* USB Device descriptor parameter */
 #undef VENDOR_ID
 #undef PRODUCT_ID
