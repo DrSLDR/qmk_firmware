@@ -56,6 +56,14 @@ enum custom_keycodes {
   SWE_SLS,
   SWE_BSL,
   SWE_SCL,
+  SWE_TLD,
+  SWE_2,
+  SWE_4,
+  SWE_6,
+  SWE_7,
+  SWE_8,
+  SWE_9,
+  SWE_0
 };
 
 // Keycode tapper - shorthand when doing SWE replacement
@@ -170,7 +178,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
  /* SWEDEN WORKMAN MONSTROSITY
   * .--------------------------------------------------------------------------------------------------------------------------------------.
-  * |        |        |        |        |        |        |        |        |        |        |        |        |        |        |        |
+  * | SE ~   |        | SE 2   |        | SE 4   |        |        |        |        | SE 6   | SE 7   | SE 8   | SE 9   | SE 0   |        |
   * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-----------------|
   * |        |        |        |        |        |        |        |        |        |        |        |        |        | SE ;   | SE \   |
   * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-----------------+--------|
@@ -183,7 +191,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   */
 
    [_SE] = LAYOUT_ortho_5x15( /* SWEWORKNOPE */
-     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
+     SWE_TLD, _______, SWE_2,   _______, SWE_4,   _______, _______, _______, _______, SWE_6,   SWE_7,   SWE_8,   SWE_9,   SWE_0,   _______, \
      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, SWE_SCL, SWE_BSL, \
      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, SWE_COM, SWE_PER, SWE_SLS, _______, \
@@ -277,6 +285,87 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
           register_mods(0x2); // LSFT
           reg_unreg_keycode(KC_COMM, record->event.pressed);
           unregister_mods(0x2);
+        }
+        return false;
+      case SWE_TLD:
+        if (keyboard_report->mods &(0x2|0x20)) {
+          uint8_t temp = keyboard_report->mods & (2|32);
+          unregister_mods(temp);
+          register_mods(0x40); // ALTGR
+          reg_unreg_keycode(KC_RBRC, record->event.pressed);
+          unregister_mods(0x40);
+          register_mods(temp);
+        }
+        else {
+          register_mods(0x2); // LSFT
+          reg_unreg_keycode(KC_EQL, record->event.pressed);
+          unregister_mods(0x2);
+        }
+        return false;
+      case SWE_2:
+        if (keyboard_report->mods &(0x2|0x20)) {
+          uint8_t temp = keyboard_report->mods & (2|32);
+          unregister_mods(temp);
+          register_mods(0x40); // ALTGR
+          reg_unreg_keycode(KC_2, record->event.pressed);
+          unregister_mods(0x40);
+          register_mods(temp);
+        }
+        else {
+          reg_unreg_keycode(KC_2, record->event.pressed);
+        }
+        return false;
+      case SWE_4:
+        if (keyboard_report->mods &(0x2|0x20)) {
+          uint8_t temp = keyboard_report->mods & (2|32);
+          unregister_mods(temp);
+          register_mods(0x40); // ALTGR
+          reg_unreg_keycode(KC_4, record->event.pressed);
+          unregister_mods(0x40);
+          register_mods(temp);
+        }
+        else {
+          reg_unreg_keycode(KC_4, record->event.pressed);
+        }
+        return false;
+      case SWE_6:
+        if (keyboard_report->mods &(0x2|0x20)) {
+          reg_unreg_keycode(KC_RBRC, record->event.pressed);
+        }
+        else {
+          reg_unreg_keycode(KC_6, record->event.pressed);
+        }
+        return false;
+      case SWE_7:
+        if (keyboard_report->mods &(0x2|0x20)) {
+          reg_unreg_keycode(KC_6, record->event.pressed);
+        }
+        else {
+          reg_unreg_keycode(KC_7, record->event.pressed);
+        }
+        return false;
+      case SWE_8:
+        if (keyboard_report->mods &(0x2|0x20)) {
+          reg_unreg_keycode(KC_NUHS, record->event.pressed);
+        }
+        else {
+          reg_unreg_keycode(KC_8, record->event.pressed);
+        }
+        return false;
+      case SWE_9:
+        if (keyboard_report->mods &(0x2|0x20)) {
+          reg_unreg_keycode(KC_8, record->event.pressed);
+        }
+        else {
+          reg_unreg_keycode(KC_9, record->event.pressed);
+        }
+        return false;
+      case SWE_0:
+        if (keyboard_report->mods &(0x2|0x20)) {
+          reg_unreg_keycode(KC_9, record->event.pressed);
+        }
+        else {
+          reg_unreg_keycode(KC_0, record->event.pressed);
         }
         return false;
   }
