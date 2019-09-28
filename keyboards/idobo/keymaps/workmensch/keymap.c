@@ -402,6 +402,50 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
           reg_unreg_keycode(KC_0, record->event.pressed);
         }
         return false;
+      case SWE_LBC:
+        register_mods(0x40); // ALTGR
+        reg_unreg_keycode(KC_8, record->event.pressed);
+        unregister_mods(0x40);
+        return false;
+      case SWE_RBC:
+        register_mods(0x40); // ALTGR
+        reg_unreg_keycode(KC_9, record->event.pressed);
+        unregister_mods(0x40);
+        return false;
+      case SWE_LCB:
+        register_mods(0x40); // ALTGR
+        reg_unreg_keycode(KC_7, record->event.pressed);
+        unregister_mods(0x40);
+        return false;
+      case SWE_RCB:
+        register_mods(0x40); // ALTGR
+        reg_unreg_keycode(KC_0, record->event.pressed);
+        unregister_mods(0x40);
+        return false;
+      case SWE_EQL:
+        register_mods(0x2); // LSHFT
+        reg_unreg_keycode(KC_0, record->event.pressed);
+        unregister_mods(0x2);
+        return false;
+      case SWE_PLS:
+        reg_unreg_keycode(KC_MINS, record->event.pressed);
+        return false;
+      case SWE_QOT:
+        reg_unreg_keycode(KC_NUHS, record->event.pressed);
+        return false;
+      case SWE_DQT:
+        register_mods(0x2); // LSHFT
+        reg_unreg_keycode(KC_2, record->event.pressed);
+        unregister_mods(0x2);
+        return false;
+      case SWE_MIN:
+        reg_unreg_keycode(KC_SLSH, record->event.pressed);
+        return false;
+      case SWE_USC:
+        register_mods(0x2); // LSHFT
+        reg_unreg_keycode(KC_SLSH, record->event.pressed);
+        unregister_mods(0x2);
+        return false;
   }
   return true;
 }
