@@ -116,7 +116,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------------------------+--------|
  * | LSHIFT | Z      | X      | C      | V      | B      |        |        |        | N      | M      | ,      | .      | /      | RSHIFT |
  * |--------+--------+--------+--------+--------+-----------------+--------+--------+--------+--------+-----------------+--------+--------|
- * | ESC    | LGUI   | FN     | LALT   | SPACE  | SPACE  |        |        |        | SPACE  | SPACE  | LEFT   | UP     | DOWN   | RIGHT  |
+ * | ESC    | LGUI   | FN     | LALT   | SPACE  | SPACE  |        |        | CMB TOG| SPACE  | SPACE  | LEFT   | UP     | DOWN   | RIGHT  |
  * '--------------------------------------------------------------------------------------------------------------------------------------'
  */
 
@@ -125,7 +125,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB,           KC_Q,    KC_D,    KC_R,    KC_W,    KC_B,    _______, _______, _______, KC_J,    KC_F,    KC_U,    KC_P,    KC_SCLN, KC_BSLS, \
     KC_LCTL,          KC_A,    KC_S,    KC_H,    KC_T,    KC_G,    _______, _______, _______, KC_Y,    KC_N,    KC_E,    KC_O,    KC_I,    KC_ENT,  \
     TD(TD_LSH_CAPS),  KC_Z,    KC_X,    KC_M,    KC_C,    KC_V,    _______, _______, _______, KC_K,    KC_L,    KC_COMM, KC_DOT,  KC_SLSH, TD(TD_RSH_CAPS), \
-    KC_ESC,           KC_LGUI, MO(_FN), KC_LALT, KC_SPC,  KC_SPC,  _______, _______, _______, KC_SPC,  KC_SPC,  KC_LEFT, KC_UP,   KC_DOWN, KC_RGHT  \
+    KC_ESC,           KC_LGUI, MO(_FN), KC_LALT, KC_SPC,  KC_SPC,  _______, _______, CMB_TOG, KC_SPC,  KC_SPC,  KC_LEFT, KC_UP,   KC_DOWN, KC_RGHT  \
  ),
 
 /* FUNCTION
@@ -204,6 +204,7 @@ void keyboard_post_init_user(){
 
   set_permanent_led(_WM_LED_HSV);
   rgblight_mode_noeeprom(STARTUP_EFFECT);
+  combo_disable();
 }
 
 // LED CONTROL FUNCTIONS //////////////////////////////////////////////////////
