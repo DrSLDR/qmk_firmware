@@ -19,6 +19,8 @@
 
 // place overrides here
 #define TAPPING_TERM 150
+#define COMBO_TERM 150
+#define COMBO_COUNT 4
 
 // Define some LIGHTS and EFFECTS
 
