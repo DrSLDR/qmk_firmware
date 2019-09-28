@@ -54,6 +54,9 @@ enum custom_keycodes {
   SWE_COM,
 };
 
+// Keycode tapper - shorthand when doing SWE replacement
+void reg_unreg_keycode(uint16_t keycode, bool pressed);
+
 // Combo keycodes
 enum combos {
   AA_SWE,
@@ -222,21 +225,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
       if (keyboard_report->mods &(0x2|0x20)) {
         uint8_t temp = keyboard_report->mods & (2|32);
         unregister_mods(temp);
-        if (record->event.pressed) {
-          register_code(KC_NUBS);
-        }
-        else {
-          unregister_code(KC_NUBS);
-        }
+        reg_unreg_keycode(KC_NUBS, record->event.pressed);
         register_mods(temp);
       }
       else {
-        if (record->event.pressed) {
-          register_code(KC_COMM);
-        }
-        else {
-          unregister_code(KC_COMM);
-        }
+        reg_unreg_keycode(KC_COMM, record->event.pressed);
       }
       return false;
   }
@@ -276,6 +269,17 @@ void move_layer(bool up) {
         set_permanent_led(_WM_LED_HSV);
       }
       break;
+  }
+}
+
+// KEY REPLACEMENT SHORTHAND FUNCTION /////////////////////////////////////////
+
+void reg_unreg_keycode(uint16_t keycode, bool pressed) {
+  if (pressed) {
+    register_code(keycode);
+  }
+  else {
+    unregister_code(keycode);
   }
 }
 
