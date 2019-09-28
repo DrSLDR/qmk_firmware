@@ -52,6 +52,10 @@ enum custom_keycodes {
   LY_UP = SAFE_RANGE,
   LY_DN,
   SWE_COM,
+  SWE_PER,
+  SWE_SLS,
+  SWE_BSL,
+  SWE_SCL,
 };
 
 // Keycode tapper - shorthand when doing SWE replacement
@@ -168,11 +172,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   * .--------------------------------------------------------------------------------------------------------------------------------------.
   * |        |        |        |        |        |        |        |        |        |        |        |        |        |        |        |
   * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-----------------|
-  * |        |        |        |        |        |        |        |        |        |        |        |        |        |        |        |
+  * |        |        |        |        |        |        |        |        |        |        |        |        |        | SE ;   | SE \   |
   * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-----------------+--------|
   * |        |        |        |        |        |        |        |        |        |        |        |        |        |        |        |
   * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-----------------+--------|
-  * |        |        |        |        |        |        |        |        |        |        |        | SE ,   |        |        |        |
+  * |        |        |        |        |        |        |        |        |        |        |        | SE ,   | SE .   | SE /   |        |
   * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
   * |        |        |        |        |        |        |        |        |        |        |        |        |        |        |        |
   * '--------------------------------------------------------------------------------------------------------------------------------------'
@@ -180,9 +184,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
    [_SE] = LAYOUT_ortho_5x15( /* SWEWORKNOPE */
      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
+     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, SWE_SCL, SWE_BSL, \
      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
-     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
-     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, SWE_COM, _______, _______, _______, \
+     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, SWE_COM, SWE_PER, SWE_SLS, _______, \
      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______  \
   ),
 };
@@ -232,6 +236,49 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
         reg_unreg_keycode(KC_COMM, record->event.pressed);
       }
       return false;
+    case SWE_PER:
+      if (keyboard_report->mods &(0x2|0x20)) {
+        reg_unreg_keycode(KC_NUBS, record->event.pressed);
+      }
+      else {
+        reg_unreg_keycode(KC_DOT, record->event.pressed);
+      }
+      return false;
+      case SWE_SLS:
+        if (keyboard_report->mods &(0x2|0x20)) {
+          reg_unreg_keycode(KC_MINS, record->event.pressed);
+        }
+        else {
+          register_mods(0x2);
+          reg_unreg_keycode(KC_7, record->event.pressed);
+          unregister_mods(0x2);
+        }
+        return false;
+      case SWE_BSL:
+        if (keyboard_report->mods &(0x2|0x20)) {
+          uint8_t temp = keyboard_report->mods & (2|32);
+          unregister_mods(temp);
+          register_mods(0x40); // ALTGR
+          reg_unreg_keycode(KC_NUBS, record->event.pressed);
+          unregister_mods(0x40);
+          register_mods(temp);
+        }
+        else {
+          register_mods(0x40); // ALTGR
+          reg_unreg_keycode(KC_MINS, record->event.pressed);
+          unregister_mods(0x40);
+        }
+        return false;
+      case SWE_SCL:
+        if (keyboard_report->mods &(0x2|0x20)) {
+          reg_unreg_keycode(KC_DOT, record->event.pressed);
+        }
+        else {
+          register_mods(0x2); // LSFT
+          reg_unreg_keycode(KC_COMM, record->event.pressed);
+          unregister_mods(0x2);
+        }
+        return false;
   }
   return true;
 }
