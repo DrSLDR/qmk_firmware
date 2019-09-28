@@ -17,8 +17,8 @@
 
 // Keyboard Layers
 #define _WM 0
-#define _FN 1
-#define _SE 2
+#define _SE 1
+#define _FN 2
 
 // Shorthand LED macros
 #define LEDTRIPLE uint8_t, uint8_t, uint8_t
@@ -30,6 +30,7 @@
 // Variable declarations
 static uint8_t ph, ps, pv, ch, cs, cv;
 static bool caps;
+static uint8_t active_base_layer;
 
 // Low level LED control
 void read_current_led(PLEDTRIPLE);
@@ -42,6 +43,15 @@ void reset_temporary_led(void);
 void set_permanent_led(LEDTRIPLE);
 void caps_effect_toggle(void);
 void set_temporary_fn_led(void);
+
+// Layer manager function
+void move_layer(bool up);
+
+// Custom keycodes
+enum custom_keycodes {
+  LY_UP = SAFE_RANGE,
+  LY_DN,
+};
 
 // Combo keycodes
 enum combos {
@@ -138,7 +148,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
  * |        | VOL-   | MUTE   | VOL+   |        |        | P1     | P2     | P3     | PENT   |        |        | MINS   | UNDS   |        |
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
- * |        |        | [TRNS] |        |        |        | RGB TG | P0     | PAUSE  | PENT   |        | HOME   | PG UP  | PG DN  | END    |
+ * |        |        | [TRNS] |        | LY DOWN|        | RGB TG | P0     | PAUSE  | PENT   | LY UP  | HOME   | PG UP  | PG DN  | END    |
  * '--------------------------------------------------------------------------------------------------------------------------------------'
  */
 
@@ -147,7 +157,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, _______, _______, _______, _______, KC_P7,   KC_P8,   KC_P9,   KC_MINS, KC_LCBR, KC_RCBR, KC_EQL,  KC_PLUS, _______, \
     _______, KC_MPRV, KC_MPLY, KC_MNXT, KC_MSTP, _______, KC_P4,   KC_P5,   KC_P6,   KC_PLUS, KC_LBRC, KC_RBRC, KC_QUOT, KC_DQUO, _______, \
     _______, KC_VOLD, KC_MUTE, KC_VOLU, _______, _______, KC_P1,   KC_P2,   KC_P3,   KC_PENT, _______, _______, KC_MINS, KC_UNDS, _______, \
-    _______, _______, KC_TRNS, _______, _______, _______, RGB_TOG, KC_P0,   KC_PAUS, KC_PENT, _______, KC_HOME, KC_PGUP, KC_PGDN, KC_END \
+    _______, _______, KC_TRNS, _______, LY_DN,   _______, RGB_TOG, KC_P0,   KC_PAUS, KC_PENT, LY_UP,   KC_HOME, KC_PGUP, KC_PGDN, KC_END \
  ),
 
  /* SWEDEN WORKMAN MONSTROSITY
@@ -193,6 +203,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
         reset_temporary_led();
       }
       break;
+    case LY_UP:
+      if (record->event.pressed){
+        move_layer(true);
+        return false;
+      }
+      break;
+    case LY_DN:
+      if (record->event.pressed){
+        move_layer(false);
+        return false;
+      }
+      break;
   }
   return true;
 }
@@ -201,10 +223,36 @@ void keyboard_post_init_user(){
   ph = 0; ps = 0; pv = 0;
   ch = 0; cs = 0; cv = 0;
   caps = false;
+  active_base_layer = _WM;
 
   set_permanent_led(_WM_LED_HSV);
   rgblight_mode_noeeprom(STARTUP_EFFECT);
   combo_disable();
+}
+
+// LAYER CONTROL FUNCTION /////////////////////////////////////////////////////
+
+void move_layer(bool up) {
+  switch (active_base_layer) {
+    case _WM:
+      if (up) {
+        active_base_layer = _SE;
+        layer_on(active_base_layer);
+        set_permanent_led(_SE_LED_HSV);
+      }
+      break;
+    case _SE:
+      if (up) {
+        // There is no higher layer
+        return;
+      }
+      else {
+        layer_off(active_base_layer);
+        active_base_layer = _WM;
+        set_permanent_led(_WM_LED_HSV);
+      }
+      break;
+  }
 }
 
 // LED CONTROL FUNCTIONS //////////////////////////////////////////////////////
