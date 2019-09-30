@@ -470,6 +470,8 @@ void move_layer(bool up) {
         active_base_layer = _SE;
         layer_on(active_base_layer);
         set_permanent_led(_SE_LED_HSV);
+        set_temporary_fn_led();
+        combo_enable();
       }
       break;
     case _SE:
@@ -481,6 +483,8 @@ void move_layer(bool up) {
         layer_off(active_base_layer);
         active_base_layer = _WM;
         set_permanent_led(_WM_LED_HSV);
+        set_temporary_fn_led();
+        combo_disable();
       }
       break;
   }
