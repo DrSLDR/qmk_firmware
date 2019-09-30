@@ -21,29 +21,13 @@
 #define _FN 2
 #define _SE_FN 3
 
-// Shorthand LED macros
-#define LEDTRIPLE uint8_t, uint8_t, uint8_t
-#define PLEDTRIPLE uint8_t*, uint8_t*, uint8_t*
-
-#define PCURLED &ch, &cs, &cv
-#define PPRELED &ph, &ps, &pv
-
 // Variable declarations
-static uint8_t ph, ps, pv, ch, cs, cv;
+static uint8_t prev_mode;
 static bool caps;
 static uint8_t active_base_layer;
 
-// Low level LED control
-void read_current_led(PLEDTRIPLE);
-void set_led(PLEDTRIPLE);
-bool led_equal(LEDTRIPLE, PLEDTRIPLE);
-
-// Higher level LED utility functions
-void set_temporary_led(LEDTRIPLE);
-void reset_temporary_led(void);
-void set_permanent_led(LEDTRIPLE);
+// Caps effect control
 void caps_effect_toggle(void);
-void set_temporary_fn_led(void);
 
 // Layer manager function
 void move_layer(bool up);
@@ -238,7 +222,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
   switch (keycode) {
     case RESET:
       if (record->event.pressed){
+        rgblight_mode(STARTUP_EFFECT);
         rgblight_sethsv(RESET_LED_HSV);
+        wait_ms(50);
       }
       else {
         // do fuck all
@@ -247,10 +233,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
     case MO(_SE_FN):
     case MO(_FN):
       if (record->event.pressed){
-        set_temporary_fn_led();
+        rgblight_mode(FN_EFFECT);
       }
       else {
-        reset_temporary_led();
+        rgblight_mode(prev_mode);
       }
       break;
     case LY_UP:
@@ -451,12 +437,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
 }
 
 void keyboard_post_init_user(){
-  ph = 0; ps = 0; pv = 0;
-  ch = 0; cs = 0; cv = 0;
   caps = false;
   active_base_layer = _WM;
 
-  set_permanent_led(_WM_LED_HSV);
+  rgblight_sethsv(_WM_LED_HSV);
   rgblight_mode_noeeprom(STARTUP_EFFECT);
   combo_disable();
 }
@@ -469,8 +453,7 @@ void move_layer(bool up) {
       if (up) {
         active_base_layer = _SE;
         layer_on(active_base_layer);
-        set_permanent_led(_SE_LED_HSV);
-        set_temporary_fn_led();
+        rgblight_sethsv(_SE_LED_HSV);
         combo_enable();
       }
       break;
@@ -482,8 +465,7 @@ void move_layer(bool up) {
       else {
         layer_off(active_base_layer);
         active_base_layer = _WM;
-        set_permanent_led(_WM_LED_HSV);
-        set_temporary_fn_led();
+        rgblight_sethsv(_WM_LED_HSV);
         combo_disable();
       }
       break;
@@ -501,63 +483,21 @@ void reg_unreg_keycode(uint16_t keycode, bool pressed) {
   }
 }
 
-// LED CONTROL FUNCTIONS //////////////////////////////////////////////////////
-
-void set_temporary_led(uint8_t h, uint8_t s, uint8_t v){
-  if (led_equal(h, s, v, PCURLED)) {
-    // Suggested color is the same as the recorded current, go no further
-    return;
-  }
-  read_current_led(PPRELED);
-  ch = h; cs = s; cv = v;
-  set_led(PCURLED);
-}
-
-void reset_temporary_led(){
-  if (0 == rgblight_get_mode()){
-    // Leds are turned off. Do nothing
-    return;
-  }
-  set_led(PPRELED);
-  ch = ph; cs = ps; cv = pv;
-}
-
-void set_permanent_led(uint8_t h, uint8_t s, uint8_t v){
-  ph = h; ps = s; pv = v;
-  set_led(PPRELED);
-}
-
-void read_current_led(uint8_t *hp, uint8_t *sp, uint8_t *vp){
-  *hp = rgblight_get_hue();
-  *sp = rgblight_get_sat();
-  *vp = rgblight_get_val();
-}
-
-void set_led(uint8_t *hp, uint8_t *sp, uint8_t *vp){
-  rgblight_sethsv(*hp, *sp, *vp);
-}
-
-bool led_equal(uint8_t h,   uint8_t s,   uint8_t v,
-                      uint8_t *hp, uint8_t *sp, uint8_t *vp){
-  return (h == *hp && s == *sp && v == *vp);
-}
+// CAPS CONTROL FUNCTION //////////////////////////////////////////////////////
 
 void caps_effect_toggle(){
   if (caps) {
     // Caps is on, turn off.
     caps = false;
     rgblight_mode(STARTUP_EFFECT);
+    prev_mode = STARTUP_EFFECT;
   }
   else {
     // Caps is off, turn on.
     caps = true;
     rgblight_mode(CAPS_EFFECT);
+    prev_mode = CAPS_EFFECT;
   }
-}
-
-void set_temporary_fn_led(){
-  uint8_t sat = ps / _FN_LED_SAT_DEN;
-  set_temporary_led(ph, sat, pv);
 }
 
 // TAP DANCE CONTROL FUNCTIONS ////////////////////////////////////////////////
