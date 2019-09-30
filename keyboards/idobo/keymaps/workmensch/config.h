@@ -25,7 +25,7 @@
 // Define some LIGHTS and EFFECTS
 
 #define RESET_LED_HSV HSV_RED
-#define _WM_LED_HSV HSV_ORANGE
+#define _WM_LED_HSV 20, 255, 255
 #define _SE_LED_HSV HSV_BLUE
 
 #define _FN_LED_SAT_DEN 2
