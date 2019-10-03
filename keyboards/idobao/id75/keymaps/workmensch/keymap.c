@@ -76,7 +76,7 @@ enum combos {
 const uint16_t PROGMEM aa_combo[] = {KC_A, KC_O, COMBO_END};
 const uint16_t PROGMEM ae_combo[] = {KC_A, KC_E, COMBO_END};
 const uint16_t PROGMEM oe_combo[] = {KC_O, KC_E, COMBO_END};
-const uint16_t PROGMEM ee_combo[] = {KC_E, KC_U, COMBO_END};
+const uint16_t PROGMEM ee_combo[] = {KC_E, KC_Y, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
   [AA_SWE] = COMBO(aa_combo, KC_LBRC),

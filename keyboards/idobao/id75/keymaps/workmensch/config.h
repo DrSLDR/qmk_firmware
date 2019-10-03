@@ -19,7 +19,7 @@
 
 // place overrides here
 #define TAPPING_TERM 150
-#define COMBO_TERM 150
+#define COMBO_TERM 50
 #define COMBO_COUNT 4
 
 // Define some LIGHTS and EFFECTS
@@ -32,7 +32,7 @@
 
 #define STARTUP_EFFECT RGBLIGHT_MODE_STATIC_LIGHT
 #define FN_EFFECT RGBLIGHT_MODE_SNAKE + 5
-#define CAPS_EFFECT RGBLIGHT_MODE_ALTERNATING
+#define CAPS_EFFECT RGBLIGHT_MODE_BREATHING + 3
 
 /* USB Device descriptor parameter */
 #undef VENDOR_ID
