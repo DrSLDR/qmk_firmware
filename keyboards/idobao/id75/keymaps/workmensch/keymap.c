@@ -59,7 +59,14 @@ enum custom_keycodes {
   SWE_QOT,
   SWE_DQT,
   SWE_MIN,
-  SWE_USC
+  SWE_USC,
+  SWE_AA,
+  SWE_AAS,
+  SWE_AE,
+  SWE_AES,
+  SWE_OE,
+  SWE_OES,
+  SWE_EE
 };
 
 // Keycode tapper - shorthand when doing SWE replacement
@@ -180,9 +187,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     * .--------------------------------------------------------------------------------------------------------------------------------------.
     * |        |        |        |        |        |        |        |        |        |        |        |        |        |        |        |
     * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-    * |        |        |        |        |        |        |        |        |        |        |        |        |        |        |        |
+    * |        |        |        |        |        |        |        |        |        |        | Å      | Ä      | Ö      |        |        |
     * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-    * |        |        |        |        |        |        |        |        |        |        |        |        |        |        |        |
+    * |        |        |        |        |        |        |        |        |        |        | å      | ä      | ö      |´       |        |
     * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
     * | CAPS   |        |        |        |        |        |        |        |        |        |        |        |        |        | CAPS   |
     * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
@@ -192,8 +199,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_OSM] = LAYOUT_ortho_5x15( /* ONE SHOT LAYER */
        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
-       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
-       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
+       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, SWE_AAS, SWE_AES, SWE_OES, _______, _______, \
+       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, SWE_AA,  SWE_AE,  SWE_OE,  SWE_EE,  _______, \
        KC_CAPS, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_CAPS, \
        _______, _______, _______, _______, XXXXXXX, _______, _______, _______, _______, _______, XXXXXXX, _______, _______, _______, _______  \
  ),
@@ -426,6 +433,33 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
         reg_unreg_keycode(KC_SLSH, record->event.pressed);
         unregister_mods(0x2);
         return false;
+      case SWE_AA:
+        reg_unreg_keycode(KC_LBRC, record->event.pressed);
+        break;
+      case SWE_AAS:
+        register_mods(0x2); // LSHFT
+        reg_unreg_keycode(KC_LBRC, record->event.pressed);
+        unregister_mods(0x2);
+        break;
+      case SWE_AE:
+        reg_unreg_keycode(KC_QUOT, record->event.pressed);
+        break;
+      case SWE_AES:
+        register_mods(0x2); // LSHFT
+        reg_unreg_keycode(KC_QUOT, record->event.pressed);
+        unregister_mods(0x2);
+        break;
+      case SWE_OE:
+        reg_unreg_keycode(KC_SCLN, record->event.pressed);
+        break;
+      case SWE_OES:
+        register_mods(0x2); // LSHFT
+        reg_unreg_keycode(KC_SCLN, record->event.pressed);
+        unregister_mods(0x2);
+        break;
+      case SWE_EE:
+        reg_unreg_keycode(KC_EQL, record->event.pressed);
+        break;
   }
   return true;
 }
