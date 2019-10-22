@@ -503,3 +503,21 @@ void caps_effect_toggle(){
     prev_mode = CAPS_EFFECT;
   }
 }
+
+// LED CONTROL FOR ONE SHOT LAYER //////////////////////////////////////////////
+
+void oneshot_layer_changed_user(uint8_t layer) {
+  if (layer == _OSM) {
+    rgblight_sethsv(_OSM_LED_HSV);
+  }
+  else {
+    switch (active_base_layer) {
+      case _WM:
+        rgblight_sethsv(_WM_LED_HSV);
+        break;
+      case _SE:
+        rgblight_sethsv(_SE_LED_HSV);
+        break;
+    }
+  }
+}
