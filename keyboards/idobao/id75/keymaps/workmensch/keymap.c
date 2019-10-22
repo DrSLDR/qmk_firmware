@@ -72,27 +72,6 @@ enum custom_keycodes {
 // Keycode tapper - shorthand when doing SWE replacement
 void reg_unreg_keycode(uint16_t keycode, bool pressed);
 
-// Combo keycodes
-enum combos {
-  AA_SWE,
-  AE_SWE,
-  OE_SWE,
-  EE_SWE
-};
-
-// Combo definitions
-const uint16_t PROGMEM aa_combo[] = {KC_A, KC_O, COMBO_END};
-const uint16_t PROGMEM ae_combo[] = {KC_A, KC_E, COMBO_END};
-const uint16_t PROGMEM oe_combo[] = {KC_O, KC_E, COMBO_END};
-const uint16_t PROGMEM ee_combo[] = {KC_E, KC_Y, COMBO_END};
-
-combo_t key_combos[COMBO_COUNT] = {
-  [AA_SWE] = COMBO(aa_combo, KC_LBRC),
-  [AE_SWE] = COMBO(ae_combo, KC_QUOT),
-  [OE_SWE] = COMBO(oe_combo, KC_SCLN),
-  [EE_SWE] = COMBO(ee_combo, KC_EQL)
-};
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* WORKMAN
@@ -470,7 +449,6 @@ void keyboard_post_init_user(){
 
   rgblight_sethsv(_WM_LED_HSV);
   rgblight_mode_noeeprom(STARTUP_EFFECT);
-  combo_disable();
 }
 
 // LAYER CONTROL FUNCTION /////////////////////////////////////////////////////
@@ -482,7 +460,6 @@ void move_layer(bool up) {
         active_base_layer = _SE;
         layer_on(active_base_layer);
         rgblight_sethsv(_SE_LED_HSV);
-        combo_enable();
       }
       break;
     case _SE:
@@ -494,7 +471,6 @@ void move_layer(bool up) {
         layer_off(active_base_layer);
         active_base_layer = _WM;
         rgblight_sethsv(_WM_LED_HSV);
-        combo_disable();
       }
       break;
   }
