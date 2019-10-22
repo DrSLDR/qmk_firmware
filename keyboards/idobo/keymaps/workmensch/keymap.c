@@ -86,46 +86,6 @@ combo_t key_combos[COMBO_COUNT] = {
   [EE_SWE] = COMBO(ee_combo, KC_EQL)
 };
 
-// A tap dance state struct
-typedef struct {
-  int state;
-} tap;
-
-// A tap dance type enum
-enum {
-  SINGLE_TAP = 1,
-  DOUBLE_TAP = 2
-};
-
-// General tap dance prototypes
-int cur_dance (qk_tap_dance_state_t *state);
-
-// Specific handler prototypes for the Shift tap dance
-void lshft_finished(qk_tap_dance_state_t *state, void *user_data);
-void lshft_reset(qk_tap_dance_state_t *state, void *user_data);
-void rshft_finished(qk_tap_dance_state_t *state, void *user_data);
-void rshft_reset(qk_tap_dance_state_t *state, void *user_data);
-
-// Specific shift tap dance state objects
-static tap lshfttap_state = {
-  .state = 0
-};
-static tap rshfttap_state = {
-  .state = 0
-};
-
-// Tap dance definitions
-enum {
-  TD_LSH_CAPS = 0,
-  TD_RSH_CAPS = 1
-};
-
-qk_tap_dance_action_t tap_dance_actions[] = {
-  // Tap once for shift, twice for Caps Lock
-  [TD_LSH_CAPS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, lshft_finished, lshft_reset),
-  [TD_RSH_CAPS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, rshft_finished, rshft_reset),
-};
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* WORKMAN
@@ -143,11 +103,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 
   [_WM] = LAYOUT_ortho_5x15( /* Workmensch */
-    KC_GRV,           KC_1,    KC_2,    KC_3,    KC_4,       KC_5,    _______, OSL(_OSM), _______, KC_6,    KC_7,       KC_8,    KC_9,    KC_0,    KC_BSPC, \
-    KC_TAB,           KC_Q,    KC_D,    KC_R,    KC_W,       KC_B,    KC_P7,   KC_P8,     KC_P9,   KC_J,    KC_F,       KC_U,    KC_P,    KC_SCLN, KC_BSLS, \
-    KC_LCTL,          KC_A,    KC_S,    KC_H,    KC_T,       KC_G,    KC_P4,   KC_P5,     KC_P6,   KC_Y,    KC_N,       KC_E,    KC_O,    KC_I,    KC_ENT,  \
-    TD(TD_LSH_CAPS),  KC_Z,    KC_X,    KC_M,    KC_C,       KC_V,    KC_P1,   KC_P2,     KC_P3,   KC_K,    KC_L,       KC_COMM, KC_DOT,  KC_SLSH, TD(TD_RSH_CAPS), \
-    KC_ESC,           KC_LGUI, MO(_FN), KC_LALT, OSL(_OSM),  KC_SPC,  KC_NLCK, KC_P0,     CMB_TOG, KC_SPC,  OSL(_OSM),  KC_LEFT, KC_UP,   KC_DOWN, KC_RGHT  \
+    KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,       KC_5,    _______, OSL(_OSM), _______, KC_6,    KC_7,       KC_8,    KC_9,    KC_0,    KC_BSPC, \
+    KC_TAB,  KC_Q,    KC_D,    KC_R,    KC_W,       KC_B,    KC_P7,   KC_P8,     KC_P9,   KC_J,    KC_F,       KC_U,    KC_P,    KC_SCLN, KC_BSLS, \
+    KC_LCTL, KC_A,    KC_S,    KC_H,    KC_T,       KC_G,    KC_P4,   KC_P5,     KC_P6,   KC_Y,    KC_N,       KC_E,    KC_O,    KC_I,    KC_ENT,  \
+    KC_LSFT, KC_Z,    KC_X,    KC_M,    KC_C,       KC_V,    KC_P1,   KC_P2,     KC_P3,   KC_K,    KC_L,       KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT, \
+    KC_ESC,  KC_LGUI, MO(_FN), KC_LALT, OSL(_OSM),  KC_SPC,  KC_NLCK, KC_P0,     CMB_TOG, KC_SPC,  OSL(_OSM),  KC_LEFT, KC_UP,   KC_DOWN, KC_RGHT  \
  ),
 
 /* FUNCTION
@@ -532,50 +492,4 @@ void caps_effect_toggle(){
     rgblight_mode(CAPS_EFFECT);
     prev_mode = CAPS_EFFECT;
   }
-}
-
-// TAP DANCE CONTROL FUNCTIONS ////////////////////////////////////////////////
-
-int cur_dance(qk_tap_dance_state_t *state){
-  if (state->count == 1) {
-    return SINGLE_TAP;
-  }
-  else if (state->count == 2) {
-    return DOUBLE_TAP;
-  }
-  else {
-    return 7; // The most powerful number
-  }
-}
-
-void lshft_finished(qk_tap_dance_state_t *state, void *user_data) {
-  lshfttap_state.state = cur_dance(state);
-  switch (lshfttap_state.state) {
-    case SINGLE_TAP: register_code(KC_LSFT); break;
-    case DOUBLE_TAP: register_code(KC_CAPS); break;
-  }
-}
-
-void lshft_reset(qk_tap_dance_state_t *state, void *user_data) {
-  switch (lshfttap_state.state) {
-    case SINGLE_TAP: unregister_code(KC_LSFT); break;
-    case DOUBLE_TAP: unregister_code(KC_CAPS); caps_effect_toggle(); break;
-  }
-  lshfttap_state.state = 0;
-}
-
-void rshft_finished(qk_tap_dance_state_t *state, void *user_data) {
-  rshfttap_state.state = cur_dance(state);
-  switch (rshfttap_state.state) {
-    case SINGLE_TAP: register_code(KC_RSFT); break;
-    case DOUBLE_TAP: register_code(KC_CAPS); break;
-  }
-}
-
-void rshft_reset(qk_tap_dance_state_t *state, void *user_data) {
-  switch (rshfttap_state.state) {
-    case SINGLE_TAP: unregister_code(KC_RSFT); break;
-    case DOUBLE_TAP: unregister_code(KC_CAPS); caps_effect_toggle(); break;
-  }
-  rshfttap_state.state = 0;
 }
