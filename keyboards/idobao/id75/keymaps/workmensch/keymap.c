@@ -131,44 +131,44 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * .--------------------------------------------------------------------------------------------------------------------------------------.
  * | GRAVE  | 1      | 2      | 3      | 4      | 5      |        |        |        | 6      | 7      | 8      | 9      | 0      | BACKSP |
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-----------------|
- * | TAB    | Q      | W      | E      | R      | T      |        |        |        | Y      | U      | I      | O      | P      | \      |
+ * | TAB    | Q      | W      | E      | R      | T      | P7     | P8     | P9     | Y      | U      | I      | O      | P      | \      |
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-----------------+--------|
- * | LCTRL  | A      | S      | D      | F      | G      |        |        |        | H      | J      | K      | L      | ;      | ENTER  |
+ * | LCTRL  | A      | S      | D      | F      | G      | P4     | P5     | P6     | H      | J      | K      | L      | ;      | ENTER  |
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------------------------+--------|
- * | LSHIFT | Z      | X      | C      | V      | B      |        |        |        | N      | M      | ,      | .      | /      | RSHIFT |
+ * | LSHIFT | Z      | X      | C      | V      | B      | P1     | P2     | P3     | N      | M      | ,      | .      | /      | RSHIFT |
  * |--------+--------+--------+--------+--------+-----------------+--------+--------+--------+--------+-----------------+--------+--------|
- * | ESC    | LGUI   | FN     | LALT   | SPACE  | SPACE  |        |        | CMB TOG| SPACE  | SPACE  | LEFT   | UP     | DOWN   | RIGHT  |
+ * | ESC    | LGUI   | FN     | LALT   | SPACE  | SPACE  | NUMLCK | P0     | CMB TOG| SPACE  | SPACE  | LEFT   | UP     | DOWN   | RIGHT  |
  * '--------------------------------------------------------------------------------------------------------------------------------------'
  */
 
   [_WM] = LAYOUT_ortho_5x15( /* Workmensch */
     KC_GRV,           KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    _______, _______, _______, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC, \
-    KC_TAB,           KC_Q,    KC_D,    KC_R,    KC_W,    KC_B,    _______, _______, _______, KC_J,    KC_F,    KC_U,    KC_P,    KC_SCLN, KC_BSLS, \
-    KC_LCTL,          KC_A,    KC_S,    KC_H,    KC_T,    KC_G,    _______, _______, _______, KC_Y,    KC_N,    KC_E,    KC_O,    KC_I,    KC_ENT,  \
-    TD(TD_LSH_CAPS),  KC_Z,    KC_X,    KC_M,    KC_C,    KC_V,    _______, _______, _______, KC_K,    KC_L,    KC_COMM, KC_DOT,  KC_SLSH, TD(TD_RSH_CAPS), \
-    KC_ESC,           KC_LGUI, MO(_FN), KC_LALT, KC_SPC,  KC_SPC,  _______, _______, CMB_TOG, KC_SPC,  KC_SPC,  KC_LEFT, KC_UP,   KC_DOWN, KC_RGHT  \
+    KC_TAB,           KC_Q,    KC_D,    KC_R,    KC_W,    KC_B,    KC_P7,   KC_P8,   KC_P9,   KC_J,    KC_F,    KC_U,    KC_P,    KC_SCLN, KC_BSLS, \
+    KC_LCTL,          KC_A,    KC_S,    KC_H,    KC_T,    KC_G,    KC_P4,   KC_P5,   KC_P6,   KC_Y,    KC_N,    KC_E,    KC_O,    KC_I,    KC_ENT,  \
+    TD(TD_LSH_CAPS),  KC_Z,    KC_X,    KC_M,    KC_C,    KC_V,    KC_P1,   KC_P2,   KC_P3,   KC_K,    KC_L,    KC_COMM, KC_DOT,  KC_SLSH, TD(TD_RSH_CAPS), \
+    KC_ESC,           KC_LGUI, MO(_FN), KC_LALT, KC_SPC,  KC_SPC,  KC_NLCK, KC_P0,   CMB_TOG, KC_SPC,  KC_SPC,  KC_LEFT, KC_UP,   KC_DOWN, KC_RGHT  \
  ),
 
 /* FUNCTION
  * .--------------------------------------------------------------------------------------------------------------------------------------.
  * |        | F1     | F2     | F3     | F4     | F5     | F11    | RESET  | F12    | F6     | F7     | F8     | F9     | F10    | DEL    |
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
- * |        |        |        |        |        |        | P7     | P8     | P9     | -      | {      | }      | EQL    | PLUS   |        |
+ * |        |        |        |        |        |        | 7      | 8      | 9      | -      | {      | }      | EQL    | PLUS   |        |
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
- * |        | PREV   | PLAY   | NEXT   | STOP   |        | P4     | P5     | P6     | +      | [      | ]      | QUOT   | DQUO   |        |
+ * |        | PREV   | PLAY   | NEXT   | STOP   |        | 4      | 5      | 6      | +      | [      | ]      | QUOT   | DQUO   |        |
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
- * |        | VOL-   | MUTE   | VOL+   |        |        | P1     | P2     | P3     | PENT   |        |        | MINS   | UNDS   |        |
+ * |        | VOL-   | MUTE   | VOL+   |        |        | 1      | 2      | 3      | PENT   |        |        | MINS   | UNDS   |        |
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
- * |        |        | [TRNS] |        | LY DOWN|        | RGB TG | P0     | PAUSE  | PENT   | LY UP  | HOME   | PG UP  | PG DN  | END    |
+ * |        |        | [TRNS] |        | LY DOWN|        | RGB TG | 0      | PAUSE  | PENT   | LY UP  | HOME   | PG UP  | PG DN  | END    |
  * '--------------------------------------------------------------------------------------------------------------------------------------'
  */
 
  [_FN] = LAYOUT_ortho_5x15( /* FUNCTION */
     _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F11,  RESET,   KC_F12,  KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_DEL,  \
-    _______, _______, _______, _______, _______, _______, KC_P7,   KC_P8,   KC_P9,   KC_MINS, KC_LCBR, KC_RCBR, KC_EQL,  KC_PLUS, _______, \
-    _______, KC_MPRV, KC_MPLY, KC_MNXT, KC_MSTP, _______, KC_P4,   KC_P5,   KC_P6,   KC_PLUS, KC_LBRC, KC_RBRC, KC_QUOT, KC_DQUO, _______, \
-    _______, KC_VOLD, KC_MUTE, KC_VOLU, _______, _______, KC_P1,   KC_P2,   KC_P3,   KC_PENT, _______, _______, KC_MINS, KC_UNDS, _______, \
-    _______, _______, KC_TRNS, _______, LY_DN,   _______, RGB_TOG, KC_P0,   KC_PAUS, KC_PENT, LY_UP,   KC_HOME, KC_PGUP, KC_PGDN, KC_END \
+    _______, _______, _______, _______, _______, _______, KC_7,    KC_8,    KC_9,    KC_MINS, KC_LCBR, KC_RCBR, KC_EQL,  KC_PLUS, _______, \
+    _______, KC_MPRV, KC_MPLY, KC_MNXT, KC_MSTP, _______, KC_4,    KC_5,    KC_6,    KC_PLUS, KC_LBRC, KC_RBRC, KC_QUOT, KC_DQUO, _______, \
+    _______, KC_VOLD, KC_MUTE, KC_VOLU, _______, _______, KC_1,    KC_2,    KC_3,    KC_PENT, _______, _______, KC_MINS, KC_UNDS, _______, \
+    _______, _______, KC_TRNS, _______, LY_DN,   _______, RGB_TOG, KC_0,    KC_PAUS, KC_PENT, LY_UP,   KC_HOME, KC_PGUP, KC_PGDN, KC_END \
  ),
 
  /* SWEDEN WORKMAN MONSTROSITY
