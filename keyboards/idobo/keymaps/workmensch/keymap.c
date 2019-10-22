@@ -280,6 +280,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
         return false;
       }
       break;
+    case KC_CAPS:
+      if (record->event.pressed){
+        caps_effect_toggle();
+      }
+      break;
 
     // Special edition Swedish keycodes
     case SWE_COM:
