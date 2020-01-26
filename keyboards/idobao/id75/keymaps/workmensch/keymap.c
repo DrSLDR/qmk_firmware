@@ -68,7 +68,8 @@ enum custom_keycodes {
   SWE_OES,
   SWE_ACU,
   SKY_S1,     // Skyrim, sell 1
-  SKY_MK      // Skyrim, make thing
+  SKY_MK,     // Skyrim, make thing
+  SKY_MK2     // Skyrim, make thing but differently
 };
 
 // Keycode tapper - shorthand when doing SWE replacement
@@ -102,7 +103,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * .--------------------------------------------------------------------------------------------------------------------------------------.
  * |        | F1     | F2     | F3     | F4     | F5     | F11    | RESET  | F12    | F6     | F7     | F8     | F9     | F10    | DEL    |
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
- * |        | SKY S1 | SKY MK |        |        |        | 7      | 8      | 9      | -      | {      | }      | EQL    | PLUS   |        |
+ * |        | SKY S1 | SKY MK | SKY MK2|        |        | 7      | 8      | 9      | -      | {      | }      | EQL    | PLUS   |        |
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
  * |        | PREV   | PLAY   | NEXT   | STOP   |        | 4      | 5      | 6      | +      | [      | ]      | QUOT   | DQUO   |        |
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
@@ -114,7 +115,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
  [_FN] = LAYOUT_ortho_5x15( /* FUNCTION */
     _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F11,  RESET,   KC_F12,  KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_DEL,  \
-    _______, SKY_S1,  SKY_MK,  _______, _______, _______, KC_7,    KC_8,    KC_9,    KC_MINS, KC_LCBR, KC_RCBR, KC_EQL,  KC_PLUS, _______, \
+    _______, SKY_S1,  SKY_MK,  SKY_MK2, _______, _______, KC_7,    KC_8,    KC_9,    KC_MINS, KC_LCBR, KC_RCBR, KC_EQL,  KC_PLUS, _______, \
     _______, KC_MPRV, KC_MPLY, KC_MNXT, KC_MSTP, _______, KC_4,    KC_5,    KC_6,    KC_PLUS, KC_LBRC, KC_RBRC, KC_QUOT, KC_DQUO, _______, \
     _______, KC_VOLD, KC_MUTE, KC_VOLU, KC_PSCR, _______, KC_1,    KC_2,    KC_3,    KC_PENT, _______, _______, KC_MINS, KC_UNDS, _______, \
     _______, _______, KC_TRNS, _______, LY_DN,   _______, RGB_TOG, KC_0,    KC_PAUS, _______, LY_UP,   KC_HOME, KC_PGUP, KC_PGDN, KC_END \
@@ -451,6 +452,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
       case SKY_MK:
         if(record->event.pressed){
           SEND_STRING("ry");
+        }
+        break;
+      case SKY_MK2:
+        if(record->event.pressed){
+          SEND_STRING("wy");
         }
         break;
   }
