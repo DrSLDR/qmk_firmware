@@ -19,6 +19,8 @@
 
 // place overrides here
 #define ONESHOT_TIMEOUT 3000
+#undef DEBOUNCE
+#define DEBOUNCE 5
 
 // Define some LIGHTS and EFFECTS
 
