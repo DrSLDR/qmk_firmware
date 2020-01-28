@@ -35,6 +35,11 @@
 #define FN_EFFECT RGBLIGHT_MODE_SNAKE + 5
 #define CAPS_EFFECT RGBLIGHT_MODE_BREATHING + 3
 
+// Skyrim macro stuff
+#define SKY_INTERACT_KEY KC_MS_BTN5
+#define SKY_SMITH_KEY KC_R
+#define SKY_KEY_DELAY 10
+
 /* USB Device descriptor parameter */
 #undef VENDOR_ID
 #undef PRODUCT_ID
