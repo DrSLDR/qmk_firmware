@@ -444,19 +444,25 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
       break;
     case SKY_S1:
       if(record->event.pressed){
-        SEND_STRING("r");
+        tap_code(KC_ENT);
+        wait_ms(SKY_KEY_DELAY);
         tap_code(KC_HOME);
+        wait_ms(SKY_KEY_DELAY);
         tap_code(KC_ENT);
       }
       break;
     case SKY_MK:
       if(record->event.pressed){
-        SEND_STRING("ry");
+        tap_code(SKY_INTERACT_KEY);
+        wait_ms(SKY_KEY_DELAY);
+        tap_code(KC_Y);
       }
       break;
     case SKY_MK2:
       if(record->event.pressed){
-        SEND_STRING("wy");
+        tap_code(SKY_SMITH_KEY);
+        wait_ms(SKY_KEY_DELAY);
+        tap_code(KC_Y);
       }
       break;
   }
