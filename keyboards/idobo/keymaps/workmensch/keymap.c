@@ -460,7 +460,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
       break;
     case SKY_MK2:
       if(record->event.pressed){
-        tap_code(SKY_SMITH_KEY);
+        tap_code(SKY_READY_KEY);
         wait_ms(SKY_KEY_DELAY);
         tap_code(KC_Y);
       }
