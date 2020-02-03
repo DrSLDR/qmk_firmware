@@ -36,9 +36,9 @@
 #define CAPS_EFFECT RGBLIGHT_MODE_BREATHING + 3
 
 // Skyrim macro stuff
-#define SKY_INTERACT_KEY KC_MS_BTN5
-#define SKY_READY_KEY KC_R
-#define SKY_KEY_DELAY 10
+#define SKY_INTERACT_KEY KC_R
+#define SKY_READY_KEY KC_T
+#define SKY_KEY_DELAY 25
 
 /* USB Device descriptor parameter */
 #undef VENDOR_ID
