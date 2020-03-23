@@ -35,41 +35,41 @@ void move_layer(bool up);
 
 // Custom keycodes
 enum custom_keycodes {
-  LY_UP = SAFE_RANGE,
-  LY_DN,
-  SWE_COM,
-  SWE_PER,
-  SWE_SLS,
-  SWE_BSL,
-  SWE_SCL,
-  SWE_TLD,
-  SWE_2,
-  SWE_4,
-  SWE_6,
-  SWE_7,
-  SWE_8,
-  SWE_9,
-  SWE_0,
-  SWE_LCB,
-  SWE_RCB,
-  SWE_LBC,
-  SWE_RBC,
-  SWE_EQL,
-  SWE_PLS,
-  SWE_QOT,
-  SWE_DQT,
-  SWE_MIN,
-  SWE_USC,
-  SWE_AA,
-  SWE_AAS,
-  SWE_AE,
-  SWE_AES,
-  SWE_OE,
-  SWE_OES,
-  SWE_ACU,
-  SKY_S1,     // Skyrim, sell 1
-  SKY_MK,     // Skyrim, make thing
-  SKY_MK2     // Skyrim, make thing but differently
+    LY_UP = SAFE_RANGE
+  , LY_DN
+  , SWE_COM
+  , SWE_PER
+  , SWE_SLS
+  , SWE_BSL
+  , SWE_SCL
+  , SWE_TLD
+  , SWE_2
+  , SWE_4
+  , SWE_6
+  , SWE_7
+  , SWE_8
+  , SWE_9
+  , SWE_0
+  , SWE_LCB
+  , SWE_RCB
+  , SWE_LBC
+  , SWE_RBC
+  , SWE_EQL
+  , SWE_PLS
+  , SWE_QOT
+  , SWE_DQT
+  , SWE_MIN
+  , SWE_USC
+  , SWE_AA
+  , SWE_AAS
+  , SWE_AE
+  , SWE_AES
+  , SWE_OE
+  , SWE_OES
+  , SWE_ACU
+  , SKY_S1     // Skyrim, sell 1
+  , SKY_MK     // Skyrim, make thing
+  , SKY_MK2    // Skyrim, make thing but differently
 };
 
 // Keycode tapper - shorthand when doing SWE replacement
@@ -442,6 +442,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
     case SWE_ACU:
       reg_unreg_keycode(KC_EQL, record->event.pressed);
       break;
+
+    // MACROS AND OTHER HELPFUL STUFF
     case SKY_S1:
       if(record->event.pressed){
         tap_code(KC_ENT);
