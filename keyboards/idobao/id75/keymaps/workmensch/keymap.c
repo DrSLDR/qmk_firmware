@@ -471,12 +471,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
       break;
     case HLP_AR1:
       if(record->event.pressed){
-        SEND_STRING("->");
+        switch (active_base_layer) {
+          case _WM:
+            SEND_STRING("->");
+            break;
+          case _SE:
+            tap_code(KC_SLSH);
+            tap_code16(S(KC_NUBS));
+            break;
+        }
       }
       break;
     case HLP_AR2:
       if(record->event.pressed){
-        SEND_STRING("=>");
+        switch (active_base_layer) {
+          case _WM:
+            SEND_STRING("=>");
+            break;
+          case _SE:
+          tap_code16(S(KC_0));
+          tap_code16(S(KC_NUBS));
+          break;
+        }
       }
       break;
   }
