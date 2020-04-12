@@ -22,6 +22,16 @@
 #define _SE_FN 3
 #define _OSM 4
 
+// Modifier macros
+#define _MOD_LCTL 0x1
+#define _MOD_LSFT 0x2
+#define _MOD_LALT 0x4
+#define _MOD_LGUI 0x8
+#define _MOD_RCTL 0x10
+#define _MOD_RSFT 0x20
+#define _MOD_RALT 0x40
+#define _MOD_RGUI 0x80
+
 // Variable declarations
 static uint8_t prev_mode;
 static bool caps;
@@ -239,7 +249,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
 
     // Special edition Swedish keycodes
     case SWE_COM:
-      if (keyboard_report->mods &(0x2|0x20)) {
+      if (keyboard_report->mods &(_MOD_LSFT|_MOD_RSFT)) {
         uint8_t temp = keyboard_report->mods & (2|32);
         unregister_mods(temp);
         reg_unreg_keycode(KC_NUBS, record->event.pressed);
@@ -250,7 +260,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
       }
       return false;
     case SWE_PER:
-      if (keyboard_report->mods &(0x2|0x20)) {
+      if (keyboard_report->mods &(_MOD_LSFT|_MOD_RSFT)) {
         reg_unreg_keycode(KC_NUBS, record->event.pressed);
       }
       else {
@@ -258,17 +268,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
       }
       return false;
     case SWE_SLS:
-      if (keyboard_report->mods &(0x2|0x20)) {
+      if (keyboard_report->mods &(_MOD_LSFT|_MOD_RSFT)) {
         reg_unreg_keycode(KC_MINS, record->event.pressed);
       }
       else {
-        register_mods(0x2);
+        register_mods(_MOD_LSFT);
         reg_unreg_keycode(KC_7, record->event.pressed);
-        unregister_mods(0x2);
+        unregister_mods(_MOD_LSFT);
       }
       return false;
     case SWE_BSL:
-      if (keyboard_report->mods &(0x2|0x20)) {
+      if (keyboard_report->mods &(_MOD_LSFT|_MOD_RSFT)) {
         uint8_t temp = keyboard_report->mods & (2|32);
         unregister_mods(temp);
         register_mods(0x40); // ALTGR
@@ -283,17 +293,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
       }
       return false;
     case SWE_SCL:
-      if (keyboard_report->mods &(0x2|0x20)) {
+      if (keyboard_report->mods &(_MOD_LSFT|_MOD_RSFT)) {
         reg_unreg_keycode(KC_DOT, record->event.pressed);
       }
       else {
-        register_mods(0x2); // LSFT
+        register_mods(_MOD_LSFT); // LSFT
         reg_unreg_keycode(KC_COMM, record->event.pressed);
-        unregister_mods(0x2);
+        unregister_mods(_MOD_LSFT);
       }
       return false;
     case SWE_TLD:
-      if (keyboard_report->mods &(0x2|0x20)) {
+      if (keyboard_report->mods &(_MOD_LSFT|_MOD_RSFT)) {
         uint8_t temp = keyboard_report->mods & (2|32);
         unregister_mods(temp);
         register_mods(0x40); // ALTGR
@@ -302,13 +312,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
         register_mods(temp);
       }
       else {
-        register_mods(0x2); // LSFT
+        register_mods(_MOD_LSFT); // LSFT
         reg_unreg_keycode(KC_EQL, record->event.pressed);
-        unregister_mods(0x2);
+        unregister_mods(_MOD_LSFT);
       }
       return false;
     case SWE_2:
-      if (keyboard_report->mods &(0x2|0x20)) {
+      if (keyboard_report->mods &(_MOD_LSFT|_MOD_RSFT)) {
         uint8_t temp = keyboard_report->mods & (2|32);
         unregister_mods(temp);
         register_mods(0x40); // ALTGR
@@ -321,7 +331,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
       }
       return false;
     case SWE_4:
-      if (keyboard_report->mods &(0x2|0x20)) {
+      if (keyboard_report->mods &(_MOD_LSFT|_MOD_RSFT)) {
         uint8_t temp = keyboard_report->mods & (2|32);
         unregister_mods(temp);
         register_mods(0x40); // ALTGR
@@ -334,7 +344,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
       }
       return false;
     case SWE_6:
-      if (keyboard_report->mods &(0x2|0x20)) {
+      if (keyboard_report->mods &(_MOD_LSFT|_MOD_RSFT)) {
         reg_unreg_keycode(KC_RBRC, record->event.pressed);
       }
       else {
@@ -342,7 +352,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
       }
       return false;
     case SWE_7:
-      if (keyboard_report->mods &(0x2|0x20)) {
+      if (keyboard_report->mods &(_MOD_LSFT|_MOD_RSFT)) {
         reg_unreg_keycode(KC_6, record->event.pressed);
       }
       else {
@@ -350,7 +360,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
       }
       return false;
     case SWE_8:
-      if (keyboard_report->mods &(0x2|0x20)) {
+      if (keyboard_report->mods &(_MOD_LSFT|_MOD_RSFT)) {
         reg_unreg_keycode(KC_NUHS, record->event.pressed);
       }
       else {
@@ -358,7 +368,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
       }
       return false;
     case SWE_9:
-      if (keyboard_report->mods &(0x2|0x20)) {
+      if (keyboard_report->mods &(_MOD_LSFT|_MOD_RSFT)) {
         reg_unreg_keycode(KC_8, record->event.pressed);
       }
       else {
@@ -366,7 +376,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
       }
       return false;
     case SWE_0:
-      if (keyboard_report->mods &(0x2|0x20)) {
+      if (keyboard_report->mods &(_MOD_LSFT|_MOD_RSFT)) {
         reg_unreg_keycode(KC_9, record->event.pressed);
       }
       else {
@@ -394,9 +404,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
       unregister_mods(0x40);
       return false;
     case SWE_EQL:
-      register_mods(0x2); // LSHFT
+      register_mods(_MOD_LSFT); // LSHFT
       reg_unreg_keycode(KC_0, record->event.pressed);
-      unregister_mods(0x2);
+      unregister_mods(_MOD_LSFT);
       return false;
     case SWE_PLS:
       reg_unreg_keycode(KC_MINS, record->event.pressed);
@@ -405,41 +415,41 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
       reg_unreg_keycode(KC_NUHS, record->event.pressed);
       return false;
     case SWE_DQT:
-      register_mods(0x2); // LSHFT
+      register_mods(_MOD_LSFT); // LSHFT
       reg_unreg_keycode(KC_2, record->event.pressed);
-      unregister_mods(0x2);
+      unregister_mods(_MOD_LSFT);
       return false;
     case SWE_MIN:
       reg_unreg_keycode(KC_SLSH, record->event.pressed);
       return false;
     case SWE_USC:
-      register_mods(0x2); // LSHFT
+      register_mods(_MOD_LSFT); // LSHFT
       reg_unreg_keycode(KC_SLSH, record->event.pressed);
-      unregister_mods(0x2);
+      unregister_mods(_MOD_LSFT);
       return false;
     case SWE_AA:
       reg_unreg_keycode(KC_LBRC, record->event.pressed);
       break;
     case SWE_AAS:
-      register_mods(0x2); // LSHFT
+      register_mods(_MOD_LSFT); // LSHFT
       reg_unreg_keycode(KC_LBRC, record->event.pressed);
-      unregister_mods(0x2);
+      unregister_mods(_MOD_LSFT);
       break;
     case SWE_AE:
       reg_unreg_keycode(KC_QUOT, record->event.pressed);
       break;
     case SWE_AES:
-      register_mods(0x2); // LSHFT
+      register_mods(_MOD_LSFT); // LSHFT
       reg_unreg_keycode(KC_QUOT, record->event.pressed);
-      unregister_mods(0x2);
+      unregister_mods(_MOD_LSFT);
       break;
     case SWE_OE:
       reg_unreg_keycode(KC_SCLN, record->event.pressed);
       break;
     case SWE_OES:
-      register_mods(0x2); // LSHFT
+      register_mods(_MOD_LSFT); // LSHFT
       reg_unreg_keycode(KC_SCLN, record->event.pressed);
-      unregister_mods(0x2);
+      unregister_mods(_MOD_LSFT);
       break;
     case SWE_ACU:
       reg_unreg_keycode(KC_EQL, record->event.pressed);
