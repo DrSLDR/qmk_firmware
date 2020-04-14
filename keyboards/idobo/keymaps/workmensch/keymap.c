@@ -78,13 +78,6 @@ enum custom_keycodes {
   , SWE_DQT
   , SWE_MIN
   , SWE_USC
-  , SWE_AA
-  , SWE_AAS
-  , SWE_AE
-  , SWE_AES
-  , SWE_OE
-  , SWE_OES
-  , SWE_ACU
   , SKY_S1     // Skyrim, sell 1
   , SKY_MK     // Skyrim, make thing
   , SKY_MK2    // Skyrim, make thing but differently
@@ -187,11 +180,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
    /* SUPER ONE-SHOT STUFF
     * .--------------------------------------------------------------------------------------------------------------------------------------.
-    * |        |        |        |        |        |        |        | NOOP   |        |        |        |        |        |        |        |
+    * |        |        |        |        |        |        |        |        |        |        |        |        |        |        |        |
     * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-    * |        | Å      |        |        |        |        |        |        |        |        | Å      | Ä      | Ö      |        |        |
+    * |        | Å      |        |        |        |        |        |        |        |        | Å      | Ä      | Ö      | É      |        |
     * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-    * |        | å      |        |        |        |        |        |        |        |        | å      | ä      | ö      |´       |        |
+    * |        | å      |        |        |        |        |        |        |        |        | å      | ä      | ö      | é      |        |
     * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
     * | CAPS   |        |        |        |        |        |        |        |        |        |        |        | ->     | =>     | CAPS   |
     * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
@@ -200,11 +193,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     */
 
     [_OSM] = LAYOUT_ortho_5x15( /* ONE SHOT LAYER */
-       _______, _______, _______, _______, _______, _______, _______, XXXXXXX, _______, _______, _______, _______, _______, _______, _______, \
-       _______, UC(0xc5), _______, _______, _______, _______, _______, _______, _______, _______, SWE_AAS, SWE_AES, SWE_OES, _______, _______, \
-       _______, UC(0xe5),  _______, _______, _______, _______, _______, _______, _______, _______, SWE_AA,  SWE_AE,  SWE_OE,  SWE_ACU, _______, \
-       KC_CAPS, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, HLP_AR1, HLP_AR2, KC_CAPS, \
-       _______, _______, _______, _______, XXXXXXX, _______, _______, _______, _______, _______, XXXXXXX, _______, _______, _______, _______  \
+       _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______,  _______,  _______,  _______, \
+       _______, UC(0xc5), _______, _______, _______, _______, _______, _______, _______, _______, UC(0xc5), UC(0xc4), UC(0xd6), UC(0xc9),  _______, \
+       _______, UC(0xe5), _______, _______, _______, _______, _______, _______, _______, _______, UC(0xe5), UC(0xe4), UC(0xf6), UC(0xe9), _______, \
+       KC_CAPS, _______,  _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______,  HLP_AR1,  HLP_AR2,  KC_CAPS, \
+       _______, _______,  _______, _______, XXXXXXX, _______, _______, _______, _______, _______, XXXXXXX,  _______,  _______,  _______,  _______  \
  ),
 };
 
@@ -440,33 +433,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
       reg_unreg_keycode(KC_SLSH, record->event.pressed);
       unregister_mods(_MOD_LSFT);
       return false;
-    case SWE_AA:
-      reg_unreg_keycode(KC_LBRC, record->event.pressed);
-      break;
-    case SWE_AAS:
-      register_mods(_MOD_LSFT); // LSHFT
-      reg_unreg_keycode(KC_LBRC, record->event.pressed);
-      unregister_mods(_MOD_LSFT);
-      break;
-    case SWE_AE:
-      reg_unreg_keycode(KC_QUOT, record->event.pressed);
-      break;
-    case SWE_AES:
-      register_mods(_MOD_LSFT); // LSHFT
-      reg_unreg_keycode(KC_QUOT, record->event.pressed);
-      unregister_mods(_MOD_LSFT);
-      break;
-    case SWE_OE:
-      reg_unreg_keycode(KC_SCLN, record->event.pressed);
-      break;
-    case SWE_OES:
-      register_mods(_MOD_LSFT); // LSHFT
-      reg_unreg_keycode(KC_SCLN, record->event.pressed);
-      unregister_mods(_MOD_LSFT);
-      break;
-    case SWE_ACU:
-      reg_unreg_keycode(KC_EQL, record->event.pressed);
-      break;
 
     // MACROS AND OTHER HELPFUL STUFF
     case SKY_S1:
