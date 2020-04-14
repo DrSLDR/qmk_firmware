@@ -36,9 +36,13 @@
 static uint8_t prev_mode;
 static bool caps;
 static uint8_t active_base_layer;
+static uint8_t active_compose;
 
 // Caps effect control
 void caps_effect_toggle(void);
+
+// Compose effect control
+void compose_cycle(void);
 
 // Color triple decomposer
 void decompose_triple(uint8_t, uint8_t, uint8_t, uint8_t*, uint8_t*, uint8_t*);
@@ -50,6 +54,7 @@ void move_layer(bool up);
 enum custom_keycodes {
     LY_UP = SAFE_RANGE
   , LY_DN
+  , COMP_SW   // Switch compose mode
   , SWE_COM
   , SWE_PER
   , SWE_SLS
@@ -94,7 +99,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* WORKMAN
  * .--------------------------------------------------------------------------------------------------------------------------------------.
- * | GRAVE  | 1      | 2      | 3      | 4      | 5      |        | OSL    |        | 6      | 7      | 8      | 9      | 0      | BACKSP |
+ * | GRAVE  | 1      | 2      | 3      | 4      | 5      |        | COMPSW |        | 6      | 7      | 8      | 9      | 0      | BACKSP |
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-----------------|
  * | TAB    | Q      | W      | E      | R      | T      | P7     | P8     | P9     | Y      | U      | I      | O      | P      | \      |
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-----------------+--------|
@@ -107,11 +112,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 
   [_WM] = LAYOUT_ortho_5x15( /* Workmensch */
-    KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,       KC_5,    _______, OSL(_OSM), _______, KC_6,    KC_7,       KC_8,    KC_9,    KC_0,    KC_BSPC, \
-    KC_TAB,  KC_Q,    KC_D,    KC_R,    KC_W,       KC_B,    KC_P7,   KC_P8,     KC_P9,   KC_J,    KC_F,       KC_U,    KC_P,    KC_SCLN, KC_BSLS, \
-    KC_LCTL, KC_A,    KC_S,    KC_H,    KC_T,       KC_G,    KC_P4,   KC_P5,     KC_P6,   KC_Y,    KC_N,       KC_E,    KC_O,    KC_I,    KC_ENT,  \
-    KC_LSFT, KC_Z,    KC_X,    KC_M,    KC_C,       KC_V,    KC_P1,   KC_P2,     KC_P3,   KC_K,    KC_L,       KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT, \
-    KC_ESC,  KC_LGUI, MO(_FN), KC_LALT, OSL(_OSM),  KC_SPC,  KC_NLCK, KC_P0,     _______, KC_SPC,  OSL(_OSM),  KC_LEFT, KC_UP,   KC_DOWN, KC_RGHT  \
+    KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,       KC_5,    _______, COMP_SW, _______, KC_6,    KC_7,       KC_8,    KC_9,    KC_0,    KC_BSPC, \
+    KC_TAB,  KC_Q,    KC_D,    KC_R,    KC_W,       KC_B,    KC_P7,   KC_P8,   KC_P9,   KC_J,    KC_F,       KC_U,    KC_P,    KC_SCLN, KC_BSLS, \
+    KC_LCTL, KC_A,    KC_S,    KC_H,    KC_T,       KC_G,    KC_P4,   KC_P5,   KC_P6,   KC_Y,    KC_N,       KC_E,    KC_O,    KC_I,    KC_ENT,  \
+    KC_LSFT, KC_Z,    KC_X,    KC_M,    KC_C,       KC_V,    KC_P1,   KC_P2,   KC_P3,   KC_K,    KC_L,       KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT, \
+    KC_ESC,  KC_LGUI, MO(_FN), KC_LALT, OSL(_OSM),  KC_SPC,  KC_NLCK, KC_P0,   _______, KC_SPC,  OSL(_OSM),  KC_LEFT, KC_UP,   KC_DOWN, KC_RGHT  \
  ),
 
 /* FUNCTION
@@ -196,8 +201,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_OSM] = LAYOUT_ortho_5x15( /* ONE SHOT LAYER */
        _______, _______, _______, _______, _______, _______, _______, XXXXXXX, _______, _______, _______, _______, _______, _______, _______, \
-       _______, SWE_AAS, _______, _______, _______, _______, _______, _______, _______, _______, SWE_AAS, SWE_AES, SWE_OES, _______, _______, \
-       _______, SWE_AA,  _______, _______, _______, _______, _______, _______, _______, _______, SWE_AA,  SWE_AE,  SWE_OE,  SWE_ACU, _______, \
+       _______, UC(0xc5), _______, _______, _______, _______, _______, _______, _______, _______, SWE_AAS, SWE_AES, SWE_OES, _______, _______, \
+       _______, UC(0xe5),  _______, _______, _______, _______, _______, _______, _______, _______, SWE_AA,  SWE_AE,  SWE_OE,  SWE_ACU, _______, \
        KC_CAPS, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, HLP_AR1, HLP_AR2, KC_CAPS, \
        _______, _______, _______, _______, XXXXXXX, _______, _______, _______, _______, _______, XXXXXXX, _______, _______, _______, _______  \
  ),
@@ -247,6 +252,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
     case KC_CAPS:
       if (record->event.pressed){
         caps_effect_toggle();
+      }
+      break;
+    case COMP_SW:
+      if (record->event.pressed){
+        compose_cycle();
       }
       break;
 
@@ -515,9 +525,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
 void keyboard_post_init_user(){
   caps = false;
   active_base_layer = _WM;
+  active_compose = UC_LNX;
 
   rgblight_sethsv(_WM_LED_HSV);
   rgblight_mode_noeeprom(STARTUP_EFFECT);
+  set_unicode_input_mode(active_compose);
 }
 
 // LAYER CONTROL FUNCTION /////////////////////////////////////////////////////
@@ -580,6 +592,39 @@ void caps_effect_toggle(){
     rgblight_mode(CAPS_EFFECT);
     prev_mode = CAPS_EFFECT;
   }
+}
+
+// COMPOSE METHOD CYCLE ////////////////////////////////////////////////////////
+
+void compose_cycle(){
+  uint8_t h, h0, s, s0, v, v0;
+  switch (active_compose){
+    case UC_LNX:
+      active_compose = UC_WINC;
+      decompose_triple(COMP_WINC_LED_HSV, &h, &s, &v);
+      break;
+    case UC_WINC:
+      active_compose = UC_LNX;
+      decompose_triple(COMP_LNX_LED_HSV, &h, &s, &v);
+      break;
+  }
+  set_unicode_input_mode(active_compose);
+  switch (active_base_layer){
+    case _WM:
+      decompose_triple(_WM_LED_HSV, &h0, &s0, &v0);
+      break;
+    case _SE:
+      decompose_triple(_SE_LED_HSV, &h0, &s0, &v0);
+      break;
+  }
+  rgblight_sethsv(h, s, v);
+  wait_ms(COMPOSE_FLASH_DELAY);
+  rgblight_sethsv(h0, s0, v0);
+  wait_ms(COMPOSE_FLASH_DELAY);
+  rgblight_sethsv(h, s, v);
+  wait_ms(COMPOSE_FLASH_DELAY);
+  rgblight_sethsv(h0, s0, v0);
+  wait_ms(COMPOSE_FLASH_DELAY);
 }
 
 // LED CONTROL FOR ONE SHOT LAYER //////////////////////////////////////////////
