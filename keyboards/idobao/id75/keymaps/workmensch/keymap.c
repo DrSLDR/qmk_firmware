@@ -40,6 +40,9 @@ static uint8_t active_base_layer;
 // Caps effect control
 void caps_effect_toggle(void);
 
+// Color triple decomposer
+void decompose_triple(uint8_t, uint8_t, uint8_t, uint8_t*, uint8_t*, uint8_t*);
+
 // Layer manager function
 void move_layer(bool up);
 
@@ -540,6 +543,15 @@ void move_layer(bool up) {
       }
       break;
   }
+}
+
+// COLOR DECOMPOSE FUNCTION ////////////////////////////////////////////////////
+
+void decompose_triple(uint8_t h, uint8_t s, uint8_t v,
+                      uint8_t *hp, uint8_t *sp, uint8_t *vp){
+  *hp = h;
+  *sp = s;
+  *vp = v;
 }
 
 // KEY REPLACEMENT SHORTHAND FUNCTION /////////////////////////////////////////
