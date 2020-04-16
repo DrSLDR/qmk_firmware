@@ -44,7 +44,7 @@
 #define SKY_KEY_DELAY 25
 
 // Compose flash delay
-#define COMPOSE_FLASH_DELAY 75
+#define COMPOSE_FLASH_DELAY 100
 
 // Enable NKRO by great force
 #define FORCE_NKRO
