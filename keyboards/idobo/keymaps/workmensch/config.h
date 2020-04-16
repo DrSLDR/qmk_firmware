@@ -46,6 +46,9 @@
 // Compose flash delay
 #define COMPOSE_FLASH_DELAY 75
 
+// Enable NKRO by great force
+#define FORCE_NKRO
+
 /* USB Device descriptor parameter */
 #undef VENDOR_ID
 #undef PRODUCT_ID
