@@ -14,3 +14,5 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 UNICODE_ENABLE = yes
+MOUSEKEY_ENABLE = no
+NKRO_ENABLE = yes
