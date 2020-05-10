@@ -281,9 +281,11 @@ void compose_cycle(){
   switch (active_compose){
     case UC_LNX:
       active_compose = UC_WINC;
+      SEND_STRING("WIN");
       break;
     case UC_WINC:
       active_compose = UC_LNX;
+      SEND_STRING("LNX");
       break;
   }
   set_unicode_input_mode(active_compose);
