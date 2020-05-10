@@ -26,11 +26,7 @@
 
 #define RESET_LED_HSV HSV_RED
 #define _WM_LED_HSV 20, 255, 255
-#define _SE_LED_HSV HSV_BLUE
 #define _OSM_LED_HSV HSV_GREEN
-
-#define COMP_LNX_LED_HSV HSV_RED
-#define COMP_WINC_LED_HSV 139, 232, 255
 
 #define _FN_LED_SAT_DEN 2
 
@@ -42,9 +38,6 @@
 #define SKY_INTERACT_KEY KC_R
 #define SKY_READY_KEY KC_T
 #define SKY_KEY_DELAY 25
-
-// Compose flash delay
-#define COMPOSE_FLASH_DELAY 100
 
 // Enable NKRO by great force
 #define FORCE_NKRO

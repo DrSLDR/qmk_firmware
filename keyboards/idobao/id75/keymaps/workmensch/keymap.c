@@ -17,10 +17,8 @@
 
 // Keyboard Layers
 #define _WM 0
-#define _SE 1
-#define _FN 2
-#define _SE_FN 3
-#define _OSM 4
+#define _FN 1
+#define _OSM 2
 
 // Modifier macros
 #define _MOD_LCTL 0x1
@@ -54,39 +52,13 @@ void move_layer(bool up);
 enum custom_keycodes {
     LY_UP = SAFE_RANGE
   , LY_DN
-  , COMP_SW   // Switch compose mode
-  , SWE_COM
-  , SWE_PER
-  , SWE_SLS
-  , SWE_BSL
-  , SWE_SCL
-  , SWE_TLD
-  , SWE_2
-  , SWE_4
-  , SWE_6
-  , SWE_7
-  , SWE_8
-  , SWE_9
-  , SWE_0
-  , SWE_LCB
-  , SWE_RCB
-  , SWE_LBC
-  , SWE_RBC
-  , SWE_EQL
-  , SWE_PLS
-  , SWE_QOT
-  , SWE_DQT
-  , SWE_MIN
-  , SWE_USC
+  , COMP_SW    // Switch compose mode
   , SKY_S1     // Skyrim, sell 1
   , SKY_MK     // Skyrim, make thing
   , SKY_MK2    // Skyrim, make thing but differently
   , HLP_AR1    // Helper arrow ->
   , HLP_AR2    // Helper arrow =>
 };
-
-// Keycode tapper - shorthand when doing SWE replacement
-void reg_unreg_keycode(uint16_t keycode, bool pressed);
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -134,70 +106,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, KC_TRNS, _______, LY_DN,   _______, _______, COMP_SW, _______, _______, LY_UP,   KC_HOME, KC_PGUP, KC_PGDN, KC_END \
  ),
 
- /* SWEDEN WORKMAN MONSTROSITY
-  * .--------------------------------------------------------------------------------------------------------------------------------------.
-  * | SE ~   |        | SE 2   |        | SE 4   |        |        |        |        | SE 6   | SE 7   | SE 8   | SE 9   | SE 0   |        |
-  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-----------------|
-  * |        |        |        |        |        |        |        |        |        |        |        |        |        | SE ;   | SE \   |
-  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-----------------+--------|
-  * |        |        |        |        |        |        |        |        |        |        |        |        |        |        |        |
-  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-----------------+--------|
-  * |        |        |        |        |        |        |        |        |        |        |        | SE ,   | SE .   | SE /   |        |
-  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-  * |        |        | FN     |        |        |        |        |        |        |        |        |        |        |        |        |
-  * '--------------------------------------------------------------------------------------------------------------------------------------'
-  */
+/* SUPER ONE-SHOT STUFF
+ * .--------------------------------------------------------------------------------------------------------------------------------------.
+ * |        |        |        |        |        |        |        |        |        |        |        |        |        |        |        |
+ * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
+ * |        | Å      | Ŝ      | Ĥ      |        | Ĝ      |        |        |        | Ĵ      | Å      | Ä      | Ö      | É      |        |
+ * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
+ * |        | å      | ŝ      | ĥ      |        | ĝ      |        |        |        | ĵ      | å      | ä      | ö      | é      |        |
+ * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
+ * | CAPS   |        |        |        | ĉ      | Ĉ      |        |        |        | Ŭ      | ŭ      |        | ->     | =>     | CAPS   |
+ * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
+ * |        |        |        |        | NOOP   |        |        |        |        |        | NOOP   |        |        |        |        |
+ * '--------------------------------------------------------------------------------------------------------------------------------------'
+ */
 
-   [_SE] = LAYOUT_ortho_5x15( /* SWEWORKNOPE */
-     SWE_TLD, _______, SWE_2,      _______, SWE_4,   _______, _______, _______, _______, SWE_6,   SWE_7,   SWE_8,   SWE_9,   SWE_0,   _______, \
-     _______, _______, _______,    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, SWE_SCL, SWE_BSL, \
-     _______, _______, _______,    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
-     _______, _______, _______,    _______, _______, _______, _______, _______, _______, _______, _______, SWE_COM, SWE_PER, SWE_SLS, _______, \
-     _______, _______, MO(_SE_FN), _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______  \
- ),
-
-  /* SPECIFIC SWEDISH FUNCTION OVERRIDES
-   * .--------------------------------------------------------------------------------------------------------------------------------------.
-   * |        |        |        |        |        |        |        |        |        |        |        |        |        |        |        |
-   * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-   * |        |        |        |        |        |        |        |        |        |        | SE {   | SE }   | SE =   | SE +   |        |
-   * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-   * |        |        |        |        |        |        |        |        |        |        | SE [   | SE ]   | SE '   | SE "   |        |
-   * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-   * |        |        |        |        |        |        |        |        |        |        |        |        | SE -   | SE _   |        |
-   * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-   * |        |        | [TRNS] |        |        |        |        |        |        |        |        |        |        |        |        |
-   * '--------------------------------------------------------------------------------------------------------------------------------------'
-   */
-
-   [_SE_FN] = LAYOUT_ortho_5x15( /* SWEDISH FUNCTION */
-      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
-      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, SWE_LCB, SWE_RCB, SWE_EQL, SWE_PLS, _______, \
-      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, SWE_LBC, SWE_RBC, SWE_QOT, SWE_DQT, _______, \
-      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, SWE_MIN, SWE_USC, _______, \
-      _______, _______, KC_TRNS, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______  \
- ),
-
-   /* SUPER ONE-SHOT STUFF
-    * .--------------------------------------------------------------------------------------------------------------------------------------.
-    * |        |        |        |        |        |        |        |        |        |        |        |        |        |        |        |
-    * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-    * |        | Å      | Ŝ      | Ĥ      |        | Ĝ      |        |        |        | Ĵ      | Å      | Ä      | Ö      | É      |        |
-    * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-    * |        | å      | ŝ      | ĥ      |        | ĝ      |        |        |        | ĵ      | å      | ä      | ö      | é      |        |
-    * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-    * | CAPS   |        |        |        | ĉ      | Ĉ      |        |        |        | Ŭ      | ŭ      |        | ->     | =>     | CAPS   |
-    * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-    * |        |        |        |        | NOOP   |        |        |        |        |        | NOOP   |        |        |        |        |
-    * '--------------------------------------------------------------------------------------------------------------------------------------'
-    */
-
-    [_OSM] = LAYOUT_ortho_5x15( /* ONE SHOT LAYER */
-       _______, _______,  _______,   _______,   _______,   _______,   _______, _______, _______, _______,   _______,   _______,  _______,  _______,  _______, \
-       _______, UC(0xc5), UC(0x15c), UC(0x124), _______,   UC(0x11c), _______, _______, _______, UC(0x134), UC(0xc5),  UC(0xc4), UC(0xd6), UC(0xc9), _______, \
-       _______, UC(0xe5), UC(0x15d), UC(0x125), _______,   UC(0x11d), _______, _______, _______, UC(0x135), UC(0xe5),  UC(0xe4), UC(0xf6), UC(0xe9), _______, \
-       KC_CAPS, _______,  _______,   _______,   UC(0x109), UC(0x108), _______, _______, _______, UC(0x16c), UC(0x16d), _______,  HLP_AR1,  HLP_AR2,  KC_CAPS, \
-       _______, _______,  _______,   _______,   XXXXXXX,   _______,   _______, _______, _______, _______,   XXXXXXX,   _______,  _______,  _______,  _______  \
+  [_OSM] = LAYOUT_ortho_5x15( /* ONE SHOT LAYER */
+    _______, _______,  _______,   _______,   _______,   _______,   _______, _______, _______, _______,   _______,   _______,  _______,  _______,  _______, \
+    _______, UC(0xc5), UC(0x15c), UC(0x124), _______,   UC(0x11c), _______, _______, _______, UC(0x134), UC(0xc5),  UC(0xc4), UC(0xd6), UC(0xc9), _______, \
+    _______, UC(0xe5), UC(0x15d), UC(0x125), _______,   UC(0x11d), _______, _______, _______, UC(0x135), UC(0xe5),  UC(0xe4), UC(0xf6), UC(0xe9), _______, \
+    KC_CAPS, _______,  _______,   _______,   UC(0x109), UC(0x108), _______, _______, _______, UC(0x16c), UC(0x16d), _______,  HLP_AR1,  HLP_AR2,  KC_CAPS, \
+    _______, _______,  _______,   _______,   XXXXXXX,   _______,   _______, _______, _______, _______,   XXXXXXX,   _______,  _______,  _______,  _______  \
  ),
 };
 
@@ -215,13 +143,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
         // do fuck all
       }
       break;
-    case MO(_SE_FN):
-      if (record->event.pressed){
-        layer_on(_FN);
-      }
-      else {
-        layer_off(_FN);
-      }
     case MO(_FN):
       if (record->event.pressed){
         rgblight_mode(FN_EFFECT);
@@ -253,187 +174,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
       }
       break;
 
-    // Special edition Swedish keycodes
-    case SWE_COM:
-      if (keyboard_report->mods &(_MOD_LSFT|_MOD_RSFT)) {
-        uint8_t temp = keyboard_report->mods & (2|32);
-        unregister_mods(temp);
-        reg_unreg_keycode(KC_NUBS, record->event.pressed);
-        register_mods(temp);
-      }
-      else {
-        reg_unreg_keycode(KC_COMM, record->event.pressed);
-      }
-      return false;
-    case SWE_PER:
-      if (keyboard_report->mods &(_MOD_LSFT|_MOD_RSFT)) {
-        reg_unreg_keycode(KC_NUBS, record->event.pressed);
-      }
-      else {
-        reg_unreg_keycode(KC_DOT, record->event.pressed);
-      }
-      return false;
-    case SWE_SLS:
-      if (keyboard_report->mods &(_MOD_LSFT|_MOD_RSFT)) {
-        reg_unreg_keycode(KC_MINS, record->event.pressed);
-      }
-      else {
-        register_mods(_MOD_LSFT);
-        reg_unreg_keycode(KC_7, record->event.pressed);
-        unregister_mods(_MOD_LSFT);
-      }
-      return false;
-    case SWE_BSL:
-      if (keyboard_report->mods &(_MOD_LSFT|_MOD_RSFT)) {
-        uint8_t temp = keyboard_report->mods & (2|32);
-        unregister_mods(temp);
-        register_mods(0x40); // ALTGR
-        reg_unreg_keycode(KC_NUBS, record->event.pressed);
-        unregister_mods(0x40);
-        register_mods(temp);
-      }
-      else {
-        register_mods(0x40); // ALTGR
-        reg_unreg_keycode(KC_MINS, record->event.pressed);
-        unregister_mods(0x40);
-      }
-      return false;
-    case SWE_SCL:
-      if (keyboard_report->mods &(_MOD_LSFT|_MOD_RSFT)) {
-        reg_unreg_keycode(KC_DOT, record->event.pressed);
-      }
-      else {
-        register_mods(_MOD_LSFT); // LSFT
-        reg_unreg_keycode(KC_COMM, record->event.pressed);
-        unregister_mods(_MOD_LSFT);
-      }
-      return false;
-    case SWE_TLD:
-      if (keyboard_report->mods &(_MOD_LSFT|_MOD_RSFT)) {
-        uint8_t temp = keyboard_report->mods & (2|32);
-        unregister_mods(temp);
-        register_mods(0x40); // ALTGR
-        reg_unreg_keycode(KC_RBRC, record->event.pressed);
-        unregister_mods(0x40);
-        register_mods(temp);
-      }
-      else {
-        register_mods(_MOD_LSFT); // LSFT
-        reg_unreg_keycode(KC_EQL, record->event.pressed);
-        unregister_mods(_MOD_LSFT);
-      }
-      return false;
-    case SWE_2:
-      if (keyboard_report->mods &(_MOD_LSFT|_MOD_RSFT)) {
-        uint8_t temp = keyboard_report->mods & (2|32);
-        unregister_mods(temp);
-        register_mods(0x40); // ALTGR
-        reg_unreg_keycode(KC_2, record->event.pressed);
-        unregister_mods(0x40);
-        register_mods(temp);
-      }
-      else {
-        reg_unreg_keycode(KC_2, record->event.pressed);
-      }
-      return false;
-    case SWE_4:
-      if (keyboard_report->mods &(_MOD_LSFT|_MOD_RSFT)) {
-        uint8_t temp = keyboard_report->mods & (2|32);
-        unregister_mods(temp);
-        register_mods(0x40); // ALTGR
-        reg_unreg_keycode(KC_4, record->event.pressed);
-        unregister_mods(0x40);
-        register_mods(temp);
-      }
-      else {
-        reg_unreg_keycode(KC_4, record->event.pressed);
-      }
-      return false;
-    case SWE_6:
-      if (keyboard_report->mods &(_MOD_LSFT|_MOD_RSFT)) {
-        reg_unreg_keycode(KC_RBRC, record->event.pressed);
-      }
-      else {
-        reg_unreg_keycode(KC_6, record->event.pressed);
-      }
-      return false;
-    case SWE_7:
-      if (keyboard_report->mods &(_MOD_LSFT|_MOD_RSFT)) {
-        reg_unreg_keycode(KC_6, record->event.pressed);
-      }
-      else {
-        reg_unreg_keycode(KC_7, record->event.pressed);
-      }
-      return false;
-    case SWE_8:
-      if (keyboard_report->mods &(_MOD_LSFT|_MOD_RSFT)) {
-        reg_unreg_keycode(KC_NUHS, record->event.pressed);
-      }
-      else {
-        reg_unreg_keycode(KC_8, record->event.pressed);
-      }
-      return false;
-    case SWE_9:
-      if (keyboard_report->mods &(_MOD_LSFT|_MOD_RSFT)) {
-        reg_unreg_keycode(KC_8, record->event.pressed);
-      }
-      else {
-        reg_unreg_keycode(KC_9, record->event.pressed);
-      }
-      return false;
-    case SWE_0:
-      if (keyboard_report->mods &(_MOD_LSFT|_MOD_RSFT)) {
-        reg_unreg_keycode(KC_9, record->event.pressed);
-      }
-      else {
-        reg_unreg_keycode(KC_0, record->event.pressed);
-      }
-      return false;
-    case SWE_LBC:
-      register_mods(0x40); // ALTGR
-      reg_unreg_keycode(KC_8, record->event.pressed);
-      unregister_mods(0x40);
-      return false;
-    case SWE_RBC:
-      register_mods(0x40); // ALTGR
-      reg_unreg_keycode(KC_9, record->event.pressed);
-      unregister_mods(0x40);
-      return false;
-    case SWE_LCB:
-      register_mods(0x40); // ALTGR
-      reg_unreg_keycode(KC_7, record->event.pressed);
-      unregister_mods(0x40);
-      return false;
-    case SWE_RCB:
-      register_mods(0x40); // ALTGR
-      reg_unreg_keycode(KC_0, record->event.pressed);
-      unregister_mods(0x40);
-      return false;
-    case SWE_EQL:
-      register_mods(_MOD_LSFT); // LSHFT
-      reg_unreg_keycode(KC_0, record->event.pressed);
-      unregister_mods(_MOD_LSFT);
-      return false;
-    case SWE_PLS:
-      reg_unreg_keycode(KC_MINS, record->event.pressed);
-      return false;
-    case SWE_QOT:
-      reg_unreg_keycode(KC_NUHS, record->event.pressed);
-      return false;
-    case SWE_DQT:
-      register_mods(_MOD_LSFT); // LSHFT
-      reg_unreg_keycode(KC_2, record->event.pressed);
-      unregister_mods(_MOD_LSFT);
-      return false;
-    case SWE_MIN:
-      reg_unreg_keycode(KC_SLSH, record->event.pressed);
-      return false;
-    case SWE_USC:
-      register_mods(_MOD_LSFT); // LSHFT
-      reg_unreg_keycode(KC_SLSH, record->event.pressed);
-      unregister_mods(_MOD_LSFT);
-      return false;
-
     // MACROS AND OTHER HELPFUL STUFF
     case SKY_S1:
       if(record->event.pressed){
@@ -460,28 +200,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
       break;
     case HLP_AR1:
       if(record->event.pressed){
-        switch (active_base_layer) {
-          case _WM:
-            SEND_STRING("->");
-            break;
-          case _SE:
-            tap_code(KC_SLSH);
-            tap_code16(S(KC_NUBS));
-            break;
-        }
+        SEND_STRING("->");
       }
       break;
     case HLP_AR2:
       if(record->event.pressed){
-        switch (active_base_layer) {
-          case _WM:
-            SEND_STRING("=>");
-            break;
-          case _SE:
-          tap_code16(S(KC_0));
-          tap_code16(S(KC_NUBS));
-          break;
-        }
+        SEND_STRING("=>");
       }
       break;
   }
@@ -501,26 +225,28 @@ void keyboard_post_init_user(){
 // LAYER CONTROL FUNCTION /////////////////////////////////////////////////////
 
 void move_layer(bool up) {
-  switch (active_base_layer) {
-    case _WM:
-      if (up) {
-        active_base_layer = _SE;
-        layer_on(active_base_layer);
-        rgblight_sethsv(_SE_LED_HSV);
-      }
-      break;
-    case _SE:
-      if (up) {
-        // There is no higher layer
-        return;
-      }
-      else {
-        layer_off(active_base_layer);
-        active_base_layer = _WM;
-        rgblight_sethsv(_WM_LED_HSV);
-      }
-      break;
-  }
+  // Keep the function for later, but do nothing
+  // switch (active_base_layer) {
+  //   case _WM:
+  //     if (up) {
+  //       active_base_layer = _SE;
+  //       layer_on(active_base_layer);
+  //       rgblight_sethsv(_SE_LED_HSV);
+  //     }
+  //     break;
+  //   case _SE:
+  //     if (up) {
+  //       // There is no higher layer
+  //       return;
+  //     }
+  //     else {
+  //       layer_off(active_base_layer);
+  //       active_base_layer = _WM;
+  //       rgblight_sethsv(_WM_LED_HSV);
+  //     }
+  //     break;
+  // }
+  return;
 }
 
 // COLOR DECOMPOSE FUNCTION ////////////////////////////////////////////////////
@@ -530,17 +256,6 @@ void decompose_triple(uint8_t h, uint8_t s, uint8_t v,
   *hp = h;
   *sp = s;
   *vp = v;
-}
-
-// KEY REPLACEMENT SHORTHAND FUNCTION /////////////////////////////////////////
-
-void reg_unreg_keycode(uint16_t keycode, bool pressed) {
-  if (pressed) {
-    register_code(keycode);
-  }
-  else {
-    unregister_code(keycode);
-  }
 }
 
 // CAPS CONTROL FUNCTION //////////////////////////////////////////////////////
@@ -563,34 +278,15 @@ void caps_effect_toggle(){
 // COMPOSE METHOD CYCLE ////////////////////////////////////////////////////////
 
 void compose_cycle(){
-  uint8_t h, h0, s, s0, v, v0;
   switch (active_compose){
     case UC_LNX:
       active_compose = UC_WINC;
-      decompose_triple(COMP_WINC_LED_HSV, &h, &s, &v);
       break;
     case UC_WINC:
       active_compose = UC_LNX;
-      decompose_triple(COMP_LNX_LED_HSV, &h, &s, &v);
       break;
   }
   set_unicode_input_mode(active_compose);
-  switch (active_base_layer){
-    case _WM:
-      decompose_triple(_WM_LED_HSV, &h0, &s0, &v0);
-      break;
-    case _SE:
-      decompose_triple(_SE_LED_HSV, &h0, &s0, &v0);
-      break;
-  }
-  rgblight_sethsv(h, s, v);
-  wait_ms(COMPOSE_FLASH_DELAY);
-  rgblight_sethsv(h0, s0, v0);
-  wait_ms(COMPOSE_FLASH_DELAY);
-  rgblight_sethsv(h, s, v);
-  wait_ms(COMPOSE_FLASH_DELAY);
-  rgblight_sethsv(h0, s0, v0);
-  wait_ms(COMPOSE_FLASH_DELAY);
 }
 
 // LED CONTROL FOR ONE SHOT LAYER //////////////////////////////////////////////
@@ -600,13 +296,6 @@ void oneshot_layer_changed_user(uint8_t layer) {
     rgblight_sethsv(_OSM_LED_HSV);
   }
   else {
-    switch (active_base_layer) {
-      case _WM:
-        rgblight_sethsv(_WM_LED_HSV);
-        break;
-      case _SE:
-        rgblight_sethsv(_SE_LED_HSV);
-        break;
-    }
+    rgblight_sethsv(_WM_LED_HSV);
   }
 }
