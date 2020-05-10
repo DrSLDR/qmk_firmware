@@ -60,6 +60,53 @@ enum custom_keycodes {
   , HLP_AR2    // Helper arrow =>
 };
 
+// Unicode keycodes and map
+enum unicode_names {
+  SLAR,
+  CLAR,
+  SLAD,
+  CLAD,
+  SLOD,
+  CLOD,
+  SLEA,
+  CLEA,
+  SLJC,
+  CLJC,
+  SLSC,
+  CLSC,
+  SLHC,
+  CLHC,
+  SLCC,
+  CLCC,
+  SLGC,
+  CLGC,
+  SLUB,
+  CLUB
+};
+
+const uint32_t PROGMEM unicode_map[] = {
+  [SLAR] = 0xe5,  // SMALL LETTER A WITH RING ABOVE    (å)
+  [CLAR] = 0xc5,  // CAPITAL LETTER A WITH RING ABOVE  (Å)
+  [SLAD] = 0xe4,  // SMALL LETTER A WITH DIAERESIS     (ä)
+  [CLAD] = 0xc4,  // CAPITAL LETTER A WITH DIAERESIS   (Ä)
+  [SLOD] = 0xf6,  // SMALL LETTER O WITH DIAERESIS     (ö)
+  [CLOD] = 0xd6,  // CAPITAL LETTER O WITH DIAERESIS   (Ö)
+  [SLEA] = 0xe9,  // SMALL LETTER E WITH ACUTE         (é)
+  [CLEA] = 0xc9,  // CAPITAL LETTER E WITH ACUTE       (É)
+  [SLJC] = 0x135, // SMALL LETTER J WITH CIRCUMFLEX    (ĵ)
+  [CLJC] = 0x134, // CAPITAL LETTER J WITH CIRCUMFLEX  (Ĵ)
+  [SLSC] = 0x15d, // SMALL LETTER S WITH CIRCUMFLEX    (ŝ)
+  [CLSC] = 0x15c, // CAPITAL LETTER S WITH CIRCUMFLEX  (Ŝ)
+  [SLHC] = 0x125, // SMALL LETTER H WITH CIRCUMFLEX    (ĥ)
+  [CLHC] = 0x124, // CAPITAL LETTER H WITH CIRCUMFLEX  (Ĥ)
+  [SLCC] = 0x109, // SMALL LETTER C WITH CIRCUMFLEX    (ĉ)
+  [CLCC] = 0x108, // CAPITAL LETTER C WITH CIRCUMFLEX  (Ĉ)
+  [SLGC] = 0x11D, // SMALL LETTER G WITH CIRCUMFLEX    (ĝ)
+  [CLGC] = 0x11C, // CAPITAL LETTER G WITH CIRCUMFLEX  (Ĝ)
+  [SLUB] = 0x16D, // SMALL LETTER U WITH BREVE         (ŭ)
+  [CLUB] = 0x16C, // CAPITAL LETTER U WITH BREVE       (Ŭ)
+};
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* WORKMAN
@@ -110,22 +157,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * .--------------------------------------------------------------------------------------------------------------------------------------.
  * |        |        |        |        |        |        |        |        |        |        |        |        |        |        |        |
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
- * |        | Å      | Ŝ      | Ĥ      |        | Ĝ      |        |        |        | Ĵ      | Å      | Ä      | Ö      | É      |        |
+ * |        |        |        |        |        |        |        |        |        | Ĵ      |        | Ŭ      |        |        |        |
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
- * |        | å      | ŝ      | ĥ      |        | ĝ      |        |        |        | ĵ      | å      | ä      | ö      | é      |        |
+ * |        | Å      | Ŝ      | Ĥ      |        | Ĝ      |        |        |        |        | Å      | Ä      | Ö      | É      |        |
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
- * | CAPS   |        |        |        | ĉ      | Ĉ      |        |        |        | Ŭ      | ŭ      |        | ->     | =>     | CAPS   |
+ * | CAPS   |        |        |        | Ĉ      |        |        |        |        |        |        |        | ->     | =>     | CAPS   |
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
  * |        |        |        |        | NOOP   |        |        |        |        |        | NOOP   |        |        |        |        |
  * '--------------------------------------------------------------------------------------------------------------------------------------'
  */
 
   [_OSM] = LAYOUT_ortho_5x15( /* ONE SHOT LAYER */
-    _______, _______,  _______,   _______,   _______,   _______,   _______, _______, _______, _______,   _______,   _______,  _______,  _______,  _______, \
-    _______, UC(0xc5), UC(0x15c), UC(0x124), _______,   UC(0x11c), _______, _______, _______, UC(0x134), UC(0xc5),  UC(0xc4), UC(0xd6), UC(0xc9), _______, \
-    _______, UC(0xe5), UC(0x15d), UC(0x125), _______,   UC(0x11d), _______, _______, _______, UC(0x135), UC(0xe5),  UC(0xe4), UC(0xf6), UC(0xe9), _______, \
-    KC_CAPS, _______,  _______,   _______,   UC(0x109), UC(0x108), _______, _______, _______, UC(0x16c), UC(0x16d), _______,  HLP_AR1,  HLP_AR2,  KC_CAPS, \
-    _______, _______,  _______,   _______,   XXXXXXX,   _______,   _______, _______, _______, _______,   XXXXXXX,   _______,  _______,  _______,  _______  \
+    _______, _______,        _______,        _______,        _______,        _______,        _______, _______, _______, _______,        _______,        _______,        _______,        _______,        _______, \
+    _______, _______,        _______,        _______,        _______,        _______,        _______, _______, _______, XP(SLJC, CLJC), _______,        XP(SLUB, CLUB), _______,        _______,        _______, \
+    _______, XP(SLAR, CLAR), XP(SLSC, CLSC), XP(SLHC, CLHC), _______,        XP(SLGC, CLGC), _______, _______, _______, _______,        XP(SLAR, CLAR), XP(SLAD, CLAD), XP(SLOD, CLOD), XP(SLEA, CLEA), _______, \
+    KC_CAPS, _______,        _______,        _______,        XP(SLCC, CLCC), _______,        _______, _______, _______, _______,        _______,        _______,        HLP_AR1,        HLP_AR2,        KC_CAPS, \
+    _______, _______,        _______,        _______,        XXXXXXX,        _______,        _______, _______, _______, _______,        XXXXXXX,        _______,        _______,        _______,        _______  \
  ),
 };
 
