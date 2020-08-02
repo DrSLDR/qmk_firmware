@@ -26,6 +26,7 @@
 
 #define RESET_LED_HSV HSV_RED
 #define _WM_LED_HSV 20, 255, 255
+#define _QW_LED_HSV HSV_WHITE
 #define _OSM_LED_HSV HSV_GREEN
 
 #define _FN_LED_SAT_DEN 2
