@@ -82,7 +82,9 @@ enum unicode_names {
   SLGC,
   CLGC,
   SLUB,
-  CLUB
+  CLUB,
+  STHO,
+  CTHO
 };
 
 const uint32_t PROGMEM unicode_map[] = {
@@ -102,10 +104,12 @@ const uint32_t PROGMEM unicode_map[] = {
   [CLHC] = 0x124, // CAPITAL LETTER H WITH CIRCUMFLEX  (Ĥ)
   [SLCC] = 0x109, // SMALL LETTER C WITH CIRCUMFLEX    (ĉ)
   [CLCC] = 0x108, // CAPITAL LETTER C WITH CIRCUMFLEX  (Ĉ)
-  [SLGC] = 0x11D, // SMALL LETTER G WITH CIRCUMFLEX    (ĝ)
-  [CLGC] = 0x11C, // CAPITAL LETTER G WITH CIRCUMFLEX  (Ĝ)
-  [SLUB] = 0x16D, // SMALL LETTER U WITH BREVE         (ŭ)
-  [CLUB] = 0x16C, // CAPITAL LETTER U WITH BREVE       (Ŭ)
+  [SLGC] = 0x11d, // SMALL LETTER G WITH CIRCUMFLEX    (ĝ)
+  [CLGC] = 0x11c, // CAPITAL LETTER G WITH CIRCUMFLEX  (Ĝ)
+  [SLUB] = 0x16d, // SMALL LETTER U WITH BREVE         (ŭ)
+  [CLUB] = 0x16c, // CAPITAL LETTER U WITH BREVE       (Ŭ)
+  [STHO] = 0xfe,  // SMALL LETTER THORN                (þ)
+  [CTHO] = 0xde   // CAPITAL LETTER THORN              (Þ)
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -182,7 +186,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
  * |        |        |        |        |        |        |        |        |        | Ĵ      |        | Ŭ      |        |        |        |
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
- * |        | Å      | Ŝ      | Ĥ      |        | Ĝ      |        |        |        |        | Å      | Ä      | Ö      | É      |        |
+ * |        | Å      | Ŝ      | Ĥ      | Þ      | Ĝ      |        |        |        |        | Å      | Ä      | Ö      | É      |        |
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
  * | CAPS   |        |        |        | Ĉ      |        |        |        |        |        |        |        | ->     | =>     | CAPS   |
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
@@ -193,7 +197,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_OSM] = LAYOUT_ortho_5x15( /* ONE SHOT LAYER */
     _______, _______,        _______,        _______,        _______,        _______,        _______, _______, _______, _______,        _______,        _______,        _______,        _______,        _______, \
     _______, _______,        _______,        _______,        _______,        _______,        _______, _______, _______, XP(SLJC, CLJC), _______,        XP(SLUB, CLUB), _______,        _______,        _______, \
-    _______, XP(SLAR, CLAR), XP(SLSC, CLSC), XP(SLHC, CLHC), _______,        XP(SLGC, CLGC), _______, _______, _______, _______,        XP(SLAR, CLAR), XP(SLAD, CLAD), XP(SLOD, CLOD), XP(SLEA, CLEA), _______, \
+    _______, XP(SLAR, CLAR), XP(SLSC, CLSC), XP(SLHC, CLHC), XP(STHO, CTHO), XP(SLGC, CLGC), _______, _______, _______, _______,        XP(SLAR, CLAR), XP(SLAD, CLAD), XP(SLOD, CLOD), XP(SLEA, CLEA), _______, \
     KC_CAPS, _______,        _______,        _______,        XP(SLCC, CLCC), _______,        _______, _______, _______, _______,        _______,        _______,        HLP_AR1,        HLP_AR2,        KC_CAPS, \
     _______, _______,        _______,        _______,        XXXXXXX,        _______,        _______, _______, _______, _______,        XXXXXXX,        _______,        _______,        _______,        _______  \
  ),
