@@ -114,16 +114,19 @@ const uint32_t PROGMEM unicode_map[] = {
 
 // Combo things
 enum combos {
-  AB_ESC,
-  JK_TAB
+  AO_ARING,
+  ZE_ADIAE,
+  EO_ODIAE
 };
 
-const uint16_t PROGMEM ab_combo[] = {KC_A, KC_B, COMBO_END};
-const uint16_t PROGMEM jk_combo[] = {KC_J, KC_K, COMBO_END};
+const uint16_t PROGMEM ao_combo[] = {KC_A, KC_O, COMBO_END};
+const uint16_t PROGMEM ze_combo[] = {KC_Z, KC_E, COMBO_END};
+const uint16_t PROGMEM eo_combo[] = {KC_E, KC_O, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
-  [AB_ESC] = COMBO(ab_combo, KC_ESC),
-  [JK_TAB] = COMBO_ACTION(jk_combo)
+  [AO_ARING] = COMBO_ACTION(ao_combo),
+  [ZE_ADIAE] = COMBO_ACTION(ze_combo),
+  [EO_ODIAE] = COMBO_ACTION(eo_combo)
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -304,9 +307,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
   switch(combo_index) {
-    case JK_TAB:
+    case AO_ARING:
       if (pressed) {
         tap_code16(RALT(KC_A));
+      }
+      break;
+    case ZE_ADIAE:
+      if (pressed) {
+        tap_code16(RALT(KC_QUOT));
+      }
+      break;
+    case EO_ODIAE:
+      if (pressed) {
+        tap_code16(RALT(KC_O));
       }
       break;
   }
