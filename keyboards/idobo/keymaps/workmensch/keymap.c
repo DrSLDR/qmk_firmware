@@ -112,6 +112,20 @@ const uint32_t PROGMEM unicode_map[] = {
   [CTHO] = 0xde   // CAPITAL LETTER THORN              (Þ)
 };
 
+// Combo things
+enum combos {
+  AB_ESC,
+  JK_TAB
+};
+
+const uint16_t PROGMEM ab_combo[] = {KC_A, KC_B, COMBO_END};
+const uint16_t PROGMEM jk_combo[] = {KC_J, KC_K, COMBO_END};
+
+combo_t key_combos[COMBO_COUNT] = {
+  [AB_ESC] = COMBO(ab_combo, KC_ESC),
+  [JK_TAB] = COMBO_ACTION(jk_combo)
+};
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* WORKMAN
@@ -284,6 +298,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
       break;
   }
   return true;
+}
+
+// COMBO HANDLER //////////////////////////////////////////////////////////////
+
+void process_combo_event(uint16_t combo_index, bool pressed) {
+  switch(combo_index) {
+    case JK_TAB:
+      if (pressed) {
+        tap_code16(RALT(KC_A));
+      }
+      break;
+  }
 }
 
 // INIT FUNCTION //////////////////////////////////////////////////////////////
