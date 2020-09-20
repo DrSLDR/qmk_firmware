@@ -33,6 +33,10 @@
 #define FN_EFFECT RGBLIGHT_MODE_SNAKE + 5
 #define CAPS_EFFECT RGBLIGHT_MODE_KNIGHT + 1
 
+// Combo stuff
+#define COMBO_COUNT 2
+#define COMBO_TERM 200
+
 // Skyrim macro stuff
 #define SKY_INTERACT_KEY KC_R
 #define SKY_READY_KEY KC_T
