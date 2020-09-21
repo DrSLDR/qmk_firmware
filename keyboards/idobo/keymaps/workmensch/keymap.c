@@ -115,17 +115,17 @@ const uint32_t PROGMEM unicode_map[] = {
 // Combo things
 enum combos {
   AO_ARING,
-  AG_ADIAE,
+  AE_ADIAE,
   EO_ODIAE
 };
 
 const uint16_t PROGMEM ao_combo[] = {KC_A, KC_O, COMBO_END};
-const uint16_t PROGMEM ag_combo[] = {KC_A, KC_G, COMBO_END};
+const uint16_t PROGMEM ae_combo[] = {KC_A, KC_E, COMBO_END};
 const uint16_t PROGMEM eo_combo[] = {KC_E, KC_O, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
   [AO_ARING] = COMBO_ACTION(ao_combo),
-  [AG_ADIAE] = COMBO_ACTION(ag_combo),
+  [AE_ADIAE] = COMBO_ACTION(ae_combo),
   [EO_ODIAE] = COMBO_ACTION(eo_combo)
 };
 
@@ -312,7 +312,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         tap_code16(RALT(KC_A));
       }
       break;
-    case AG_ADIAE:
+    case AE_ADIAE:
       if (pressed) {
         tap_code16(RALT(KC_QUOT));
       }
