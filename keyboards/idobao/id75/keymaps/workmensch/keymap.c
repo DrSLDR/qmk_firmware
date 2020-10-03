@@ -114,25 +114,25 @@ const uint32_t PROGMEM unicode_map[] = {
 
 // Combo things
 enum combos {
-  AO_ARING,
-  AE_ADIAE,
-  EO_ODIAE,
-  EY_EACUT,
-  PAR_SECT
+  AO_ARING,       // Å, å
+  AE_ADIAE,       // Ä, ä
+  EO_ODIAE,       // Ö, ö
+  EY_EACUT,       // É, é
+  PAR_SECT        // §
 };
 
-const uint16_t PROGMEM ao_combo[] = {KC_A, KC_O, COMBO_END};
-const uint16_t PROGMEM ae_combo[] = {KC_A, KC_E, COMBO_END};
-const uint16_t PROGMEM eo_combo[] = {KC_E, KC_O, COMBO_END};
-const uint16_t PROGMEM ey_combo[] = {KC_E, KC_Y, COMBO_END};
-const uint16_t PROGMEM par_combo[] = {KC_P, KC_A, KC_R, COMBO_END};
+const uint16_t PROGMEM ao_combo[] = {KC_A, KC_O, COMBO_END};        // Å, å
+const uint16_t PROGMEM ae_combo[] = {KC_A, KC_E, COMBO_END};        // Ä, ä
+const uint16_t PROGMEM eo_combo[] = {KC_E, KC_O, COMBO_END};        // Ö, ö
+const uint16_t PROGMEM ey_combo[] = {KC_E, KC_Y, COMBO_END};        // É, é
+const uint16_t PROGMEM par_combo[] = {KC_P, KC_A, KC_R, COMBO_END}; // §
 
 combo_t key_combos[COMBO_COUNT] = {
-  [AO_ARING] = COMBO_ACTION(ao_combo),
-  [AE_ADIAE] = COMBO_ACTION(ae_combo),
-  [EO_ODIAE] = COMBO_ACTION(eo_combo),
-  [EY_EACUT] = COMBO_ACTION(ey_combo),
-  [PAR_SECT] = COMBO_ACTION(par_combo)
+  [AO_ARING] = COMBO_ACTION(ao_combo),      // Å, å
+  [AE_ADIAE] = COMBO_ACTION(ae_combo),      // Ä, ä
+  [EO_ODIAE] = COMBO_ACTION(eo_combo),      // Ö, ö
+  [EY_EACUT] = COMBO_ACTION(ey_combo),      // É, é
+  [PAR_SECT] = COMBO_ACTION(par_combo)      // §
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -315,27 +315,27 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
   switch(combo_index) {
     case AO_ARING:
       if (pressed) {
-        tap_code16(RALT(KC_A));
+        tap_code16(RALT(KC_A));         // Å, å
       }
       break;
     case AE_ADIAE:
       if (pressed) {
-        tap_code16(RALT(KC_QUOT));
+        tap_code16(RALT(KC_QUOT));      // Ä, ä
       }
       break;
     case EO_ODIAE:
       if (pressed) {
-        tap_code16(RALT(KC_O));
+        tap_code16(RALT(KC_O));         // Ö, ö
       }
       break;
     case EY_EACUT:
       if (pressed) {
-        tap_code16(RALT(KC_Y));
+        tap_code16(RALT(KC_Y));         // É, é
       }
       break;
     case PAR_SECT:
       if (pressed) {
-        tap_code16(RALT(KC_2));
+        tap_code16(RALT(KC_2));         // §
       }
       break;
   }
