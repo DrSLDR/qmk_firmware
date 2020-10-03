@@ -35,7 +35,7 @@
 
 // Combo stuff
 #define COMBO_COUNT 3
-#define COMBO_TERM 100
+#define COMBO_TERM 50
 
 // Skyrim macro stuff
 #define SKY_INTERACT_KEY KC_R
