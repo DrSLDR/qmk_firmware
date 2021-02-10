@@ -121,10 +121,10 @@ enum combos {
   PAR_SECT        // §
 };
 
-const uint16_t PROGMEM ao_combo[] = {KC_A, KC_O, COMBO_END};        // Å, å
-const uint16_t PROGMEM ae_combo[] = {KC_A, KC_E, COMBO_END};        // Ä, ä
-const uint16_t PROGMEM eo_combo[] = {KC_E, KC_O, COMBO_END};        // Ö, ö
-const uint16_t PROGMEM ey_combo[] = {KC_E, KC_Y, COMBO_END};        // É, é
+const uint16_t PROGMEM ao_combo[]  = {KC_A, KC_O, COMBO_END};       // Å, å
+const uint16_t PROGMEM ae_combo[]  = {KC_A, KC_E, COMBO_END};       // Ä, ä
+const uint16_t PROGMEM eo_combo[]  = {KC_E, KC_O, COMBO_END};       // Ö, ö
+const uint16_t PROGMEM ey_combo[]  = {KC_E, KC_Y, COMBO_END};       // É, é
 const uint16_t PROGMEM par_combo[] = {KC_P, KC_A, KC_R, COMBO_END}; // §
 
 combo_t key_combos[COMBO_COUNT] = {
