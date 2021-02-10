@@ -34,7 +34,7 @@
 #define CAPS_EFFECT RGBLIGHT_MODE_KNIGHT + 1
 
 // Combo stuff
-#define COMBO_COUNT 10
+#define COMBO_COUNT 12
 #define COMBO_TERM 50
 
 // Skyrim macro stuff
