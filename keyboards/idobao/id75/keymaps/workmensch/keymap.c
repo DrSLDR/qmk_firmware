@@ -118,7 +118,7 @@ enum combos {
   AE_ADIAE,       // Ä, ä
   EO_ODIAE,       // Ö, ö
   EY_EACUT,       // É, é
-  PAR_SECT,       // §
+  PAR_SECT,       // °, §
   LAM_LAMB,       // Λ, λ
   DEL_DELT        // Δ, δ
 };
@@ -127,7 +127,7 @@ const uint16_t PROGMEM ao_combo[]  = {KC_A, KC_O, COMBO_END};       // Å, å
 const uint16_t PROGMEM ae_combo[]  = {KC_A, KC_E, COMBO_END};       // Ä, ä
 const uint16_t PROGMEM eo_combo[]  = {KC_E, KC_O, COMBO_END};       // Ö, ö
 const uint16_t PROGMEM ey_combo[]  = {KC_E, KC_Y, COMBO_END};       // É, é
-const uint16_t PROGMEM par_combo[] = {KC_P, KC_A, KC_R, COMBO_END}; // §
+const uint16_t PROGMEM par_combo[] = {KC_P, KC_A, KC_R, COMBO_END}; // °, §
 const uint16_t PROGMEM lam_combo[] = {KC_L, KC_A, KC_M, COMBO_END}; // Λ, λ
 const uint16_t PROGMEM del_combo[] = {KC_D, KC_E, KC_L, COMBO_END}; // Δ, δ
 
@@ -136,7 +136,7 @@ combo_t key_combos[COMBO_COUNT] = {
   [AE_ADIAE] = COMBO_ACTION(ae_combo),      // Ä, ä
   [EO_ODIAE] = COMBO_ACTION(eo_combo),      // Ö, ö
   [EY_EACUT] = COMBO_ACTION(ey_combo),      // É, é
-  [PAR_SECT] = COMBO_ACTION(par_combo),     // §
+  [PAR_SECT] = COMBO_ACTION(par_combo),     // °, §
   [LAM_LAMB] = COMBO_ACTION(lam_combo),     // Λ, λ
   [DEL_DELT] = COMBO_ACTION(del_combo)      // Δ, δ
 };
@@ -341,7 +341,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
       break;
     case PAR_SECT:
       if (pressed) {
-        tap_code16(RALT(KC_2));         // §
+        tap_code16(RALT(KC_2));         // °, §
       }
       break;
     case LAM_LAMB:
