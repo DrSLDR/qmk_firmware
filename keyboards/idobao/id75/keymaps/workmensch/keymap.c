@@ -123,7 +123,9 @@ enum combos {
   LAM_LAMB,       // Λ, λ
   DEL_DELT,       // Δ, δ
   LEM_INFT,       // ™, ∞ - lemniscate
-  TM_TRADM        // ™, ∞ - shortcut to the trademark sign
+  TM_TRADM,       // ™, ∞ - shortcut to the trademark sign
+  EUR_EURO,       // €
+  THO_THRN        // Þ, þ
 };
 
 const uint16_t PROGMEM ao_combo[]  = {KC_A, KC_O, COMBO_END};       // Å, å
@@ -136,6 +138,8 @@ const uint16_t PROGMEM lam_combo[] = {KC_L, KC_A, KC_M, COMBO_END}; // Λ, λ
 const uint16_t PROGMEM del_combo[] = {KC_D, KC_E, KC_L, COMBO_END}; // Δ, δ
 const uint16_t PROGMEM lem_combo[] = {KC_L, KC_E, KC_M, COMBO_END}; // ™, ∞
 const uint16_t PROGMEM tm_combo[]  = {KC_T, KC_M, COMBO_END};       // ™, ∞
+const uint16_t PROGMEM eur_combo[] = {KC_E, KC_U, KC_R, COMBO_END}; // €
+const uint16_t PROGMEM tho_combo[] = {KC_T, KC_H, KC_O, COMBO_END}; // Þ, þ
 
 combo_t key_combos[COMBO_COUNT] = {
   [AO_ARING] = COMBO_ACTION(ao_combo),      // Å, å
@@ -147,7 +151,9 @@ combo_t key_combos[COMBO_COUNT] = {
   [LAM_LAMB] = COMBO_ACTION(lam_combo),     // Λ, λ
   [DEL_DELT] = COMBO_ACTION(del_combo),     // Δ, δ
   [LEM_INFT] = COMBO_ACTION(lem_combo),     // ™, ∞
-  [TM_TRADM] = COMBO_ACTION(tm_combo)       // ™, ∞
+  [TM_TRADM] = COMBO_ACTION(tm_combo),      // ™, ∞
+  [EUR_EURO] = COMBO_ACTION(eur_combo),     // €
+  [THO_THRN] = COMBO_ACTION(tho_combo)      // Þ, þ
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -376,6 +382,16 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
     case TM_TRADM:
       if (pressed) {
         tap_code16(SAGR(KC_1));         // ™, ∞
+      }
+      break;
+    case EUR_EURO:
+      if (pressed) {
+        tap_code16(RALT(KC_E));         // €
+      }
+      break;
+    case THO_THRN:
+      if (pressed) {
+        tap_code16(RALT(KC_T));         // Þ, þ
       }
       break;
   }
