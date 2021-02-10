@@ -121,7 +121,9 @@ enum combos {
   PAR_SECT,       // °, §
   DEG_DEGR,       // °, § - shortcut to the degree sign
   LAM_LAMB,       // Λ, λ
-  DEL_DELT        // Δ, δ
+  DEL_DELT,       // Δ, δ
+  LEM_INFT,       // ™, ∞ - lemniscate
+  TM_TRADM        // ™, ∞ - shortcut to the trademark sign
 };
 
 const uint16_t PROGMEM ao_combo[]  = {KC_A, KC_O, COMBO_END};       // Å, å
@@ -132,6 +134,8 @@ const uint16_t PROGMEM par_combo[] = {KC_P, KC_A, KC_R, COMBO_END}; // °, §
 const uint16_t PROGMEM deg_combo[] = {KC_D, KC_E, KC_G, COMBO_END}; // °, §
 const uint16_t PROGMEM lam_combo[] = {KC_L, KC_A, KC_M, COMBO_END}; // Λ, λ
 const uint16_t PROGMEM del_combo[] = {KC_D, KC_E, KC_L, COMBO_END}; // Δ, δ
+const uint16_t PROGMEM lem_combo[] = {KC_L, KC_E, KC_M, COMBO_END}; // ™, ∞
+const uint16_t PROGMEM tm_combo[]  = {KC_T, KC_M, COMBO_END};       // ™, ∞
 
 combo_t key_combos[COMBO_COUNT] = {
   [AO_ARING] = COMBO_ACTION(ao_combo),      // Å, å
@@ -141,7 +145,9 @@ combo_t key_combos[COMBO_COUNT] = {
   [PAR_SECT] = COMBO_ACTION(par_combo),     // °, §
   [DEG_DEGR] = COMBO_ACTION(deg_combo),     // °, §
   [LAM_LAMB] = COMBO_ACTION(lam_combo),     // Λ, λ
-  [DEL_DELT] = COMBO_ACTION(del_combo)      // Δ, δ
+  [DEL_DELT] = COMBO_ACTION(del_combo),     // Δ, δ
+  [LEM_INFT] = COMBO_ACTION(lem_combo),     // ™, ∞
+  [TM_TRADM] = COMBO_ACTION(tm_combo)       // ™, ∞
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -360,6 +366,16 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
     case DEL_DELT:
       if (pressed) {
         tap_code16(RALT(KC_5));         // Δ, δ
+      }
+      break;
+    case LEM_INFT:
+      if (pressed) {
+        tap_code16(RALT(KC_1));         // ™, ∞
+      }
+      break;
+    case TM_TRADM:
+      if (pressed) {
+        tap_code16(SAGR(KC_1));         // ™, ∞
       }
       break;
   }
