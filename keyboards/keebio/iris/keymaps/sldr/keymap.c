@@ -6,6 +6,56 @@
 #define _RAISE 2
 #define _FN 4
 
+// Combo things
+enum combos {
+  AO_ARING,       // Å, å
+  AE_ADIAE,       // Ä, ä
+  EO_ODIAE,       // Ö, ö
+  EU_EACUT,       // É, é
+  PAR_SECT,       // °, §
+  DEG_DEGR,       // °, § - shortcut to the degree sign
+  LAM_LAMB,       // Λ, λ
+  DEL_DELT,       // Δ, δ
+  LEM_INFT,       // ™, ∞ - lemniscate
+  TM_TRADM,       // ™, ∞ - shortcut to the trademark sign
+  EUR_EURO,       // €
+  THO_THRN,       // Þ, þ
+  LAR_LARR,       // ←
+  RAW_RARR        // →
+};
+
+const uint16_t PROGMEM ao_combo[]  = {KC_A, KC_O, COMBO_END};       // Å, å
+const uint16_t PROGMEM ae_combo[]  = {KC_A, KC_E, COMBO_END};       // Ä, ä
+const uint16_t PROGMEM eo_combo[]  = {KC_E, KC_O, COMBO_END};       // Ö, ö
+const uint16_t PROGMEM eu_combo[]  = {KC_E, KC_U, COMBO_END};       // É, é
+const uint16_t PROGMEM par_combo[] = {KC_P, KC_A, KC_R, COMBO_END}; // °, §
+const uint16_t PROGMEM deg_combo[] = {KC_D, KC_E, KC_G, COMBO_END}; // °, §
+const uint16_t PROGMEM lam_combo[] = {KC_L, KC_A, KC_M, COMBO_END}; // Λ, λ
+const uint16_t PROGMEM del_combo[] = {KC_D, KC_E, KC_L, COMBO_END}; // Δ, δ
+const uint16_t PROGMEM lem_combo[] = {KC_L, KC_E, KC_M, COMBO_END}; // ™, ∞
+const uint16_t PROGMEM tm_combo[]  = {KC_T, KC_M, COMBO_END};       // ™, ∞
+const uint16_t PROGMEM eur_combo[] = {KC_E, KC_U, KC_R, COMBO_END}; // €
+const uint16_t PROGMEM tho_combo[] = {KC_T, KC_H, KC_O, COMBO_END}; // Þ, þ
+const uint16_t PROGMEM lar_combo[] = {KC_L, KC_A, KC_R, COMBO_END}; // ←
+const uint16_t PROGMEM raw_combo[] = {KC_R, KC_A, KC_W, COMBO_END}; // →
+
+combo_t key_combos[COMBO_COUNT] = {
+  [AO_ARING] = COMBO_ACTION(ao_combo),      // Å, å
+  [AE_ADIAE] = COMBO_ACTION(ae_combo),      // Ä, ä
+  [EO_ODIAE] = COMBO_ACTION(eo_combo),      // Ö, ö
+  [EU_EACUT] = COMBO_ACTION(eu_combo),      // É, é
+  [PAR_SECT] = COMBO_ACTION(par_combo),     // °, §
+  [DEG_DEGR] = COMBO_ACTION(deg_combo),     // °, §
+  [LAM_LAMB] = COMBO_ACTION(lam_combo),     // Λ, λ
+  [DEL_DELT] = COMBO_ACTION(del_combo),     // Δ, δ
+  [LEM_INFT] = COMBO_ACTION(lem_combo),     // ™, ∞
+  [TM_TRADM] = COMBO_ACTION(tm_combo),      // ™, ∞
+  [EUR_EURO] = COMBO_ACTION(eur_combo),     // €
+  [THO_THRN] = COMBO_ACTION(tho_combo),     // Þ, þ
+  [LAR_LARR] = COMBO_ACTION(lar_combo),     // ←
+  [RAW_RARR] = COMBO_ACTION(raw_combo)      // →
+};
+
 enum custom_keycodes {
   LUP = SAFE_RANGE,
   LDOWN
@@ -72,4 +122,79 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   return true;
+}
+
+void process_combo_event(uint16_t combo_index, bool pressed) {
+   switch(combo_index) {
+      case AO_ARING:
+      if (pressed) {
+        tap_code16(RALT(KC_A));         // Å, å
+      }
+      break;
+    case AE_ADIAE:
+      if (pressed) {
+        tap_code16(RALT(KC_QUOT));      // Ä, ä
+      }
+      break;
+    case EO_ODIAE:
+      if (pressed) {
+        tap_code16(RALT(KC_O));         // Ö, ö
+      }
+      break;
+    case EU_EACUT:
+      if (pressed) {
+        tap_code16(RALT(KC_Y));         // É, é
+      }
+      break;
+    case PAR_SECT:
+      if (pressed) {
+        tap_code16(RALT(KC_2));         // °, §
+      }
+      break;
+    case DEG_DEGR:
+      if (pressed) {
+        tap_code16(SAGR(KC_2));         // °, §
+      }
+      break;
+    case LAM_LAMB:
+      if (pressed) {
+        tap_code16(RALT(KC_4));         // Λ, λ
+      }
+      break;
+    case DEL_DELT:
+      if (pressed) {
+        tap_code16(RALT(KC_5));         // Δ, δ
+      }
+      break;
+    case LEM_INFT:
+      if (pressed) {
+        tap_code16(RALT(KC_1));         // ™, ∞
+      }
+      break;
+    case TM_TRADM:
+      if (pressed) {
+        tap_code16(SAGR(KC_1));         // ™, ∞
+      }
+      break;
+    case EUR_EURO:
+      if (pressed) {
+        tap_code16(RALT(KC_E));         // €
+      }
+      break;
+    case THO_THRN:
+      if (pressed) {
+        tap_code16(RALT(KC_T));         // Þ, þ
+      }
+      break;
+    case LAR_LARR:
+      if (pressed) {
+        tap_code16(RALT(KC_0));         // ←
+      }
+      break;
+    case RAW_RARR:
+      if (pressed) {
+        tap_code16(RALT(KC_MINS));      // →
+      }
+      break;
+   }
 }
