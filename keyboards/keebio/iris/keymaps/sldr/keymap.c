@@ -2,9 +2,9 @@
 
 
 #define _WM 0
-#define _FN 1
-#define _LOWER 4
+#define _LOWER 3
 #define _RAISE 2
+#define _FN 4
 
 enum custom_keycodes {
   LUP = SAFE_RANGE,
