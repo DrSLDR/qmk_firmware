@@ -13,6 +13,12 @@
 #define CLEFT C(KC_LEFT)
 #define ESCFN LT(_FN, KC_ESC)
 
+// Variables
+static uint8_t active_base_layer;
+
+// Layer manager
+void move_layer(bool up);
+
 // Combo things
 enum combos {
   AO_ARING,       // Å, å
@@ -127,9 +133,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 };
 
+// INIT FUNCTION ///////////////////////////////////////////////////////////////
+
+void keyboard_post_init_user(){
+  active_base_layer = _WM;
+}
+
+// CUSTOM KEYCODING ////////////////////////////////////////////////////////////
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   return true;
 }
+
+// COMBOS //////////////////////////////////////////////////////////////////////
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
    switch(combo_index) {
