@@ -139,9 +139,31 @@ void keyboard_post_init_user(){
   active_base_layer = _WM;
 }
 
+// LAYER CONTROL ///////////////////////////////////////////////////////////////
+
+void move_layer(bool up){
+  switch(active_base_layer){
+    
+  }
+}
+
 // CUSTOM KEYCODING ////////////////////////////////////////////////////////////
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  switch(keycode){
+    case LUP: // Layer up
+      if(record->event.pressed){
+        move_layer(true);
+        return false;
+      }
+      break;
+    case LDOWN: // Layer down
+      if(record->event.pressed){
+        move_layer(false);
+        return false;
+      }
+      break;
+  }
   return true;
 }
 
