@@ -3,8 +3,7 @@
 
 #define _WM 0
 #define _QWER 1
-#define _LOWER 3
-#define _RAISE 2
+#define _NUMP 2
 #define _FN 4
 #define _OSL 5
 
@@ -18,6 +17,10 @@
 
 // Variables
 static uint8_t active_base_layer;
+
+// Cute shortcuts
+#define ABL_ON layer_on(active_base_layer)
+#define ABL_OFF layer_off(active_base_layer)
 
 // Layer manager
 void move_layer(bool up);
@@ -137,15 +140,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
 
-  [_RAISE] = LAYOUT(
+  [_NUMP] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
-     KC_F12,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                              KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
+     _______, _______, _______, _______, _______, _______,                            KC_NLCK, KC_P7,   KC_P8,   KC_P9,   KC_P0,   _______,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     RGB_TOG, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                            KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, _______,
+     _______, _______, _______, _______, _______, _______,                            _______, KC_P4,   KC_P5,   KC_P6,   _______, _______,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     RGB_MOD, KC_MPRV, KC_MNXT, KC_VOLU, KC_PGUP, KC_UNDS,                            KC_EQL,  KC_HOME, RGB_HUI, RGB_SAI, RGB_VAI, _______,
+     _______, _______, _______, _______, _______, _______,                            _______, KC_P1,   KC_P2,   KC_P3,   _______, _______,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_MUTE, KC_MSTP, KC_MPLY, KC_VOLD, KC_PGDN, KC_MINS, KC_LPRN,          _______, KC_PLUS, KC_END,  RGB_HUD, RGB_SAD, RGB_VAD, _______,
+     _______, _______, _______, _______, _______, _______, _______,          _______, _______, _______, _______, _______, _______, _______,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
                                     _______, _______, _______,                   _______, _______, _______
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
@@ -165,18 +168,29 @@ void move_layer(bool up){
     case _WM:
       if(up){
         active_base_layer = _QWER;
-        layer_on(_QWER);
+        ABL_ON;
       }
       break;
     case _QWER:
       if(up){
+        ABL_OFF;
+        active_base_layer = _NUMP;
+        ABL_ON;
+      }
+      else {
+        ABL_OFF;
+        active_base_layer = _WM;
+      }
+      break;
+    case _NUMP:
+      if(up){
 
       }
       else {
-        active_base_layer = _WM;
-        layer_off(_QWER);
+        ABL_OFF;
+        active_base_layer = _QWER;
+        ABL_ON;
       }
-      break;
   }
 }
 
