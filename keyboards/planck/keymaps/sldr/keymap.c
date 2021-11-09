@@ -22,7 +22,8 @@ enum planck_layers {
   _WM,
   _LOWER,
   _RAISE,
-  _ADJUST
+  _ADJUST,
+  _UTF
 };
 
 enum planck_keycodes {
@@ -32,6 +33,11 @@ enum planck_keycodes {
 #define LOWER MO(_LOWER)
 #define RAISE MO(_RAISE)
 #define PIPE  S(KC_BSLS)
+#define OSLUT OSL(_UTF)
+#define ARING RALT(KC_A)    // Å, å
+#define ADIAE RALT(KC_QUOT) // Ä, ä
+#define ODIAE RALT(KC_O)    // Ö, ö
+#define EACUT RALT(KC_Y)    // É, é
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -43,14 +49,32 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Shift|   Z  |   X  |   M  |   C  |   V  |   K  |   L  |   ,  |   .  |   /  | Shift|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Esc  | Ctrl | Alt  | Meta | Lower| Space| Enter| Raise| Left | Up   | Down |Right |
+ * | Esc  | Alt  | UTF  | Meta | Lower| Space| Enter| Raise| Left | Up   | Down |Right |
  * `-----------------------------------------------------------------------------------'
  */
 [_WM] = LAYOUT_planck_grid(
     KC_TAB,  KC_Q,    KC_D,    KC_R,    KC_W,    KC_B,    KC_J,    KC_F,    KC_U,    KC_P,    KC_SCLN, KC_BSPC,
     KC_LCTL, KC_A,    KC_S,    KC_H,    KC_T,    KC_G,    KC_Y,    KC_N,    KC_E,    KC_O,    KC_I,    KC_QUOT,
     KC_LSFT, KC_Z,    KC_X,    KC_M,    KC_C,    KC_V,    KC_K,    KC_L,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
-    KC_ESC,  AU_ON,   KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_ENT,  RAISE,   KC_LEFT, KC_UP,   KC_DOWN, KC_RGHT
+    KC_ESC,  KC_LALT, OSLUT,   KC_LGUI, LOWER,   KC_SPC,  KC_ENT,  RAISE,   KC_LEFT, KC_UP,   KC_DOWN, KC_RGHT
+),
+
+/* Swenglish hacks and friends
+ * ,-----------------------------------------------------------------------------------.
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |   Å  |      |      |      |      |      |  É   |  Ä   |  Ö   |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * `-----------------------------------------------------------------------------------'
+ */
+[_UTF] = LAYOUT_planck_grid(
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+    _______, ARING,   _______, _______, _______, _______, _______, EACUT,   ADIAE,   ODIAE,   _______, _______,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),
 
 /* Lower
