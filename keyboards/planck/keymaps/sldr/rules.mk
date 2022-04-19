@@ -2,3 +2,4 @@ SRC += muse.c
 AUDIO_ENABLE = yes
 BOOTMAGIC_ENABLE = lite
 CONSOLE_ENABLE = no
+COMBO_ENABLE = yes
