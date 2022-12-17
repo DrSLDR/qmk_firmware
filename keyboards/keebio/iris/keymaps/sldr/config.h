@@ -49,6 +49,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define VENDOR_ID       0x51dc
 #define PRODUCT_ID      0x005e
 #define DEVICE_VER      0x0002
-#define MANUFACTURER    SLDR
-#define PRODUCT         Iris rev2.7
-#define DESCRIPTION     Keeb.io Iris Split Keyboard
+#define MANUFACTURER    "SLDR"
+#define PRODUCT         "Iris rev2.7"
+#define DESCRIPTION     "Keeb.io Iris Split Keyboard"
