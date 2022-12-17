@@ -36,7 +36,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /* Combo funstuff */
 
-#define COMBO_COUNT 14
+#define COMBO_COUNT 12
 #define COMBO_TERM 50
 
 /* USB Device descriptor parameter */
