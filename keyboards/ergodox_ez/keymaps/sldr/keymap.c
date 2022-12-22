@@ -34,8 +34,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                        | App  | LGui |       | Alt  |Ctrl/Esc|
  *                                 ,------|------|------|       |------+--------+------.
  *                                 |      |      | Home |       | PgUp |        |      |
- *                                 | Space|Backsp|------|       |------|  Tab   |Enter |
- *                                 |      |ace   | End  |       | PgDn |        |      |
+ *                                 | Space| Tab  |------|       |------| Bspc   |Enter |
+ *                                 |      |      | End  |       | PgDn |        |      |
  *                                 `--------------------'       `----------------------'
  */
 [BASE] = LAYOUT_ergodox_pretty(
@@ -47,7 +47,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_ESC,  KC_QUOT, LALT(KC_LSFT), KC_LEFT, KC_LGUI,                                              MO(SYMB),   KC_LEFT, KC_UP,   KC_DOWN, KC_RIGHT,
                                                            ALT_T(KC_APP), KC_LGUI,                KC_LALT, CTL_T(KC_ESC),
                                                                           KC_HOME,                 KC_PGUP,
-                                                         KC_SPC, KC_BSPC, KC_END,                  KC_PGDN, KC_TAB, KC_ENT
+                                                         KC_SPC, KC_TAB,  KC_END,                  KC_PGDN, KC_BSPC, KC_ENT
 ),
 /* Keymap 1: Symbol Layer
  *
