@@ -211,9 +211,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define DEBUG_MATRIX_SCAN_RATE
 
 // Begin SLDR stuff
-/* Set a key repeat override */
-// #define KEY
-
 /* Combo definitions */
 #define COMBO_COUNT 12
 #define COMBO_TERM 50
