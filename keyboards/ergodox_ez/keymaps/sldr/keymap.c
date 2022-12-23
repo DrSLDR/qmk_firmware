@@ -12,6 +12,7 @@ enum custom_keycodes {
     VRSN = EZ_SAFE_RANGE,
 #else
     VRSN = SAFE_RANGE,
+    QMAK
 #endif
 };
 
@@ -110,7 +111,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, _______, _______, _______, _______, _______, _______,     _______, _______, _______, KC_MPRV, KC_MNXT, _______, _______,
   _______, _______, _______, KC_BTN1, KC_BTN2,                                         KC_VOLU, KC_VOLD, KC_MUTE, _______, _______,
 
-                                               VRSN,    QK_MAKE,     QK_BOOT, _______,
+                                               VRSN,    QMAK,        QK_BOOT, _______,
                                                         _______,     _______,
                                       _______, _______, _______,     _______, _______, KC_WBAK
 ),
@@ -122,6 +123,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         switch (keycode) {
             case VRSN:
                 SEND_STRING(QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
+                return false;
+            case QMAK:
+                SEND_STRING("qmk compile -j 2 --keyboard " QMK_KEYBOARD " --keymap " QMK_KEYMAP);
                 return false;
         }
     }
