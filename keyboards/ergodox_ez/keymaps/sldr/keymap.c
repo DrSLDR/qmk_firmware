@@ -16,6 +16,9 @@ enum custom_keycodes {
 #endif
 };
 
+// Declare variables we'll play with later
+uint8_t mods;
+
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Keymap 0: Basic layer
@@ -125,7 +128,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 SEND_STRING(QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
                 return false;
             case QMAK:
-                SEND_STRING("qmk compile -j 2 --keyboard " QMK_KEYBOARD " --keymap " QMK_KEYMAP);
+                mods = get_mods();
+                if (mods & (MOD_MASK_CSA)) {
+                    clear_mods();
+                    SEND_STRING("qmk flash -j 2 --keyboard " QMK_KEYBOARD " --keymap " QMK_KEYMAP);
+                    wait_ms(150);
+                    tap_code(KC_ENT);
+                    reset_keyboard();
+                } else if (mods & (MOD_MASK_SHIFT)) {
+                    clear_mods();
+                    SEND_STRING("qmk flash -j 2 --keyboard " QMK_KEYBOARD " --keymap " QMK_KEYMAP);
+                } else {
+                    SEND_STRING("qmk compile -j 2 --keyboard " QMK_KEYBOARD " --keymap " QMK_KEYMAP);
+                }
                 return false;
         }
     }
