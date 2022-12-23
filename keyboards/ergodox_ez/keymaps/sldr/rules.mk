@@ -40,3 +40,6 @@ BACKLIGHT_SUPPORTED = no
 MOUSE_SHARED_EP = no
 
 DEFAULT_FOLDER = ergodox_ez/base
+
+# Combos, tho
+COMBO_ENABLE = yes
