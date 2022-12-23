@@ -24,7 +24,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Keymap 0: Basic layer
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
- * |   `    |   1  |   2  |   3  |   4  |   5  | LEFT |           | RIGHT|   6  |   7  |   8  |   9  |   0  | Bsp/MED|
+ * |   `    |   1  |   2  |   3  |   4  |   5  | NOOP |           | NOOP |   6  |   7  |   8  |   9  |   0  | Bsp/MED|
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
  * | Del    |   Q  |   D  |   R  |   W  |   B  |  L1  |           |  L1  |   J  |   F  |   U  |   P  |   ;  |   \    |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
@@ -32,7 +32,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------| Hyper|           | Meh  |------+------+------+------+------+--------|
  * | LShift |   Z  |   X  |   M  |   C  |   V  |      |           |      |   K  |   L  |   ,  |   .  |   /  | RShift |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   | Esc  |  '"  |AltShf| Left | LGui |                                       | UTIL | Left |  Up  | Down | Right |
+ *   | Esc  | NOOP | NOOP | NOOP | LGui |                                       | UTIL | Left |  Up  | Down | Right |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
  *                                        | App  | LGui |       | Alt  |Ctrl/Esc|
@@ -44,11 +44,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [BASE] = LAYOUT_ergodox_pretty(
   // left hand
-  KC_GRV,  KC_1,    KC_2,          KC_3,    KC_4,    KC_5,    KC_LEFT,              KC_RGHT,      KC_6,       KC_7,    KC_8,    KC_9,    KC_0,     LT(MDIA,KC_BSPC),
-  KC_DEL,  KC_Q,    KC_D,          KC_R,    KC_W,    KC_B,    TG(UTIL),             TG(UTIL),     KC_J,       KC_F,    KC_U,    KC_P,    KC_SCLN,  KC_BSLS,
-  KC_LCTL, KC_A,    KC_S,          KC_H,    KC_T,    KC_G,                                        KC_Y,       KC_N,    KC_E,    KC_O,    KC_I,     KC_QUOT,
-  KC_LSFT, KC_Z,    KC_X,          KC_M,    KC_C,    KC_V,    ALL_T(KC_NO),         MEH_T(KC_NO), KC_K,       KC_L,    KC_COMM, KC_DOT,  KC_SLSH,  KC_RSFT,
-  KC_ESC,  KC_QUOT, LALT(KC_LSFT), KC_LEFT, KC_LGUI,                                              MO(UTIL),   KC_LEFT, KC_UP,   KC_DOWN, KC_RIGHT,
+  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    XXXXXXX,              XXXXXXX,      KC_6,       KC_7,    KC_8,    KC_9,    KC_0,     LT(MDIA,KC_BSPC),
+  KC_DEL,  KC_Q,    KC_D,    KC_R,    KC_W,    KC_B,    LSA(KC_NO),           TG(UTIL),     KC_J,       KC_F,    KC_U,    KC_P,    KC_SCLN,  KC_BSLS,
+  KC_LCTL, KC_A,    KC_S,    KC_H,    KC_T,    KC_G,                                        KC_Y,       KC_N,    KC_E,    KC_O,    KC_I,     KC_QUOT,
+  KC_LSFT, KC_Z,    KC_X,    KC_M,    KC_C,    KC_V,    ALL_T(KC_NO),         MEH_T(KC_NO), KC_K,       KC_L,    KC_COMM, KC_DOT,  KC_SLSH,  KC_RSFT,
+  KC_ESC,  XXXXXXX, XXXXXXX, XXXXXXX, KC_LGUI,                                              MO(UTIL),   KC_LEFT, KC_UP,   KC_DOWN, KC_RIGHT,
                                                            ALT_T(KC_APP), KC_LGUI,                KC_LALT, CTL_T(KC_ESC),
                                                                           KC_HOME,                 KC_PGUP,
                                                          KC_SPC, KC_TAB,  KC_END,                  KC_PGDN, KC_BSPC, KC_ENT
