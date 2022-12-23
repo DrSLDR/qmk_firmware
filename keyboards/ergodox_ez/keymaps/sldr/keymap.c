@@ -180,7 +180,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             case QMAK:
                 mods = get_mods();
-                if (mods & (MOD_MASK_CSA)) {
+                if ((mods & (MOD_MASK_SHIFT)) && (mods & (MOD_MASK_CTRL))) {
                     clear_mods();
                     SEND_STRING("qmk flash -j 2 --keyboard " QMK_KEYBOARD " --keymap " QMK_KEYMAP);
                     wait_ms(150);
