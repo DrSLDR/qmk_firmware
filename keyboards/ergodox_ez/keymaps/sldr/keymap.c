@@ -13,12 +13,22 @@ enum custom_keycodes {
     VRSN = EZ_SAFE_RANGE,
 #else
     VRSN = SAFE_RANGE,
-    QMAK
+    QMAK,
+    LUP,
+    LDN,
 #endif
 };
 
 // Declare variables we'll play with later
 uint8_t mods;
+static uint8_t active_base_layer;
+
+// Declare the layer management function
+void move_layer(bool up);
+
+// Layer management shortcuts
+#define ABL_ON layer_on(active_base_layer)
+#define ABL_OFF layer_off(active_base_layer)
 
 // Helpful shorthands
 #define CRGHT C(KC_RGHT)
@@ -122,9 +132,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                        ,-------------.       ,-------------.
  *                                        |      |      |       |      |      |
  *                                 ,------|------|------|       |------+------+------.
- *                                 |      |      |      |       |      |      |      |
+ *                                 |      |      |      |       | LyUP |      |      |
  *                                 |      |      |------|       |------|      |      |
- *                                 |      |      |      |       |      |      |      |
+ *                                 |      |      |      |       | LyDN |      |      |
  *                                 `--------------------'       `--------------------'
  */
 [UTIL] = LAYOUT_ergodox_pretty(
@@ -136,8 +146,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, _______, _______, _______, _______,                                         _______, _______, _______, _______, _______,
 
                                                _______, _______,     _______, _______,
-                                                        _______,     _______,
-                                      _______, _______, _______,     _______, _______, _______
+                                                        _______,     LUP,
+                                      _______, _______, _______,     LDN,     _______, _______
 ),
 /* Keymap 2: Media keys and other fun modifiers
  *
@@ -229,6 +239,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     SEND_STRING("qmk compile -j 2 --keyboard " QMK_KEYBOARD " --keymap " QMK_KEYMAP);
                 }
                 return false;
+            case LUP:
+                move_layer(true);
+                return false;
+            case LDN:
+                move_layer(false);
+                return false;
         }
     }
     return true;
@@ -236,6 +252,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 // Runs just one time when the keyboard initializes.
 void keyboard_post_init_user(void) {
+  active_base_layer = BASE;
 #ifdef RGBLIGHT_COLOR_LAYER_0
     rgblight_setrgb(RGBLIGHT_COLOR_LAYER_0);
 #endif
@@ -373,4 +390,23 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
       }
       break;
    }
+}
+
+// Layer manager
+void move_layer(bool up){
+  switch(active_base_layer){
+    case BASE:
+      if(up) {
+        active_base_layer = NMPD;
+        ABL_ON;
+      }
+      break;
+    case NMPD:
+      if(!up) {
+        ABL_OFF;
+        active_base_layer = BASE;
+      }
+    default:
+      break;
+  }
 }
