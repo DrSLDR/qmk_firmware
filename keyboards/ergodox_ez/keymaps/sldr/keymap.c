@@ -90,7 +90,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                 ,------|------|------|       |------+------+------.
  *                                 |      |      | NOOP |       | NOOP |      |      |
  *                                 | Tab  | Space|------|       |------| Enter| Bspc |
- *                                 |      |      | NOOP |       | NOOP |      |      |
+ *                                 |      |      |Esc/ut|       | NOOP |      |      |
  *                                 `--------------------'       `--------------------'
  */
 [BASE] = LAYOUT_ergodox_pretty(
@@ -102,7 +102,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ESCUT,   KC_LALT, XXXXXXX, XXXXXXX, KC_LGUI,                                              MO(UTIL),   KC_LEFT, KC_UP,   KC_DOWN, KC_RIGHT,
                                               KC_PSCR,  XXXXXXX,              XXXXXXX,      KC_MPLY,
                                                         XXXXXXX,              XXXXXXX,
-                                      KC_TAB, KC_SPC,   XXXXXXX,              XXXXXXX,      KC_ENT,     KC_BSPC
+                                      KC_TAB, KC_SPC,   ESCUT,                XXXXXXX,      KC_ENT,     KC_BSPC
 ),
 /* Keymap 1: Utility layer
  *
