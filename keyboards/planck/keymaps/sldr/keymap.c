@@ -44,6 +44,8 @@ static bool swe_mode;
 // Ugly QMK hackarounds
 #define RESET QK_BOOTLOADER
 #define DEBUG QK_DEBUG_TOGGLE
+// More Swedish-mode hackery
+#define SWE_AO KC_LBRC
 
 // Combo things
 enum combos {
@@ -282,11 +284,15 @@ bool music_mask_user(uint16_t keycode) {
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
    switch(combo_index) {
-      case AO_ARING:
+      case AO_ARING:                  // Å, å
       if (pressed) {
-        tap_code16(RALT(KC_A));         // Å, å
+        if (swe_mode) {
+          tap_code(SWE_AO);
+        } else {
+          tap_code16(RALT(KC_A));
+        }
       }
-      break;
+      return;
     case AE_ADIAE:
       if (pressed) {
         tap_code16(RALT(KC_QUOT));      // Ä, ä
