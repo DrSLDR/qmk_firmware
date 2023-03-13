@@ -19,11 +19,11 @@
 
 
 enum planck_layers {
+  _SE,
   _WM,
   _LOWER,
   _RAISE,
   _ADJUST,
-  _UTF
 };
 
 enum planck_keycodes {
@@ -33,11 +33,13 @@ enum planck_keycodes {
 #define LOWER MO(_LOWER)
 #define RAISE MO(_RAISE)
 #define PIPE  S(KC_BSLS)
-#define OSLUT OSL(_UTF)
 #define ARING RALT(KC_A)    // Å, å
 #define ADIAE RALT(KC_QUOT) // Ä, ä
 #define ODIAE RALT(KC_O)    // Ö, ö
 #define EACUT RALT(KC_Y)    // É, é
+// Ugly QMK hackarounds
+#define RESET QK_BOOTLOADER
+#define DEBUG QK_DEBUG_TOGGLE
 
 // Combo things
 enum combos {
@@ -46,44 +48,44 @@ enum combos {
   EO_ODIAE,       // Ö, ö
   EU_EACUT,       // É, é
   PAR_SECT,       // °, §
-  DEG_DEGR,       // °, § - shortcut to the degree sign
-  LAM_LAMB,       // Λ, λ
-  DEL_DELT,       // Δ, δ
-  LEM_INFT,       // ™, ∞ - lemniscate
-  TM_TRADM,       // ™, ∞ - shortcut to the trademark sign
   EUR_EURO,       // €
-  THO_THRN,       // Þ, þ
 };
 
 const uint16_t PROGMEM ao_combo[]  = {KC_A, KC_O, COMBO_END};       // Å, å
 const uint16_t PROGMEM ae_combo[]  = {KC_A, KC_E, COMBO_END};       // Ä, ä
 const uint16_t PROGMEM eo_combo[]  = {KC_E, KC_O, COMBO_END};       // Ö, ö
 const uint16_t PROGMEM eu_combo[]  = {KC_E, KC_U, COMBO_END};       // É, é
-const uint16_t PROGMEM par_combo[] = {KC_P, KC_A, KC_R, COMBO_END}; // °, §
-const uint16_t PROGMEM deg_combo[] = {KC_D, KC_E, KC_G, COMBO_END}; // °, §
-const uint16_t PROGMEM lam_combo[] = {KC_L, KC_A, KC_M, COMBO_END}; // Λ, λ
-const uint16_t PROGMEM del_combo[] = {KC_D, KC_E, KC_L, COMBO_END}; // Δ, δ
-const uint16_t PROGMEM lem_combo[] = {KC_L, KC_E, KC_M, COMBO_END}; // ™, ∞
-const uint16_t PROGMEM tm_combo[]  = {KC_T, KC_M, COMBO_END};       // ™, ∞
+const uint16_t PROGMEM par_combo[] = {KC_P, KC_A, KC_R, COMBO_END}; // §
 const uint16_t PROGMEM eur_combo[] = {KC_E, KC_U, KC_R, COMBO_END}; // €
-const uint16_t PROGMEM tho_combo[] = {KC_T, KC_H, KC_O, COMBO_END}; // Þ, þ
 
 combo_t key_combos[COMBO_COUNT] = {
   [AO_ARING] = COMBO_ACTION(ao_combo),      // Å, å
   [AE_ADIAE] = COMBO_ACTION(ae_combo),      // Ä, ä
   [EO_ODIAE] = COMBO_ACTION(eo_combo),      // Ö, ö
   [EU_EACUT] = COMBO_ACTION(eu_combo),      // É, é
-  [PAR_SECT] = COMBO_ACTION(par_combo),     // °, §
-  [DEG_DEGR] = COMBO_ACTION(deg_combo),     // °, §
-  [LAM_LAMB] = COMBO_ACTION(lam_combo),     // Λ, λ
-  [DEL_DELT] = COMBO_ACTION(del_combo),     // Δ, δ
-  [LEM_INFT] = COMBO_ACTION(lem_combo),     // ™, ∞
-  [TM_TRADM] = COMBO_ACTION(tm_combo),      // ™, ∞
+  [PAR_SECT] = COMBO_ACTION(par_combo),     // §
   [EUR_EURO] = COMBO_ACTION(eur_combo),     // €
-  [THO_THRN] = COMBO_ACTION(tho_combo),     // Þ, þ
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+
+ /* Swedish
+ * ,-----------------------------------------------------------------------------------.
+ * | Tab  |   Q  |   D  |   R  |   W  |   B  |   J  |   F  |   U  |   P  |   P  |  <-  |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * | Ctrl |   A  |   S  |   H  |   T  |   G  |   Y  |   N  |   E  |   O  |   I  |  '   |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * | Shift|   Z  |   X  |   M  |   C  |   V  |   K  |   L  |   ,  |   .  |   /  | Shift|
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * | Esc  | Alt  | NOOP | Meta | Lower| Space| Enter| Raise| Left | Up   | Down |Right |
+ * `-----------------------------------------------------------------------------------'
+ */
+[_WM] = LAYOUT_planck_grid(
+    KC_TAB,  KC_Q,    KC_D,    KC_R,    KC_W,    KC_B,    KC_J,    KC_F,    KC_U,    KC_P,    KC_SCLN, KC_BSPC,
+    KC_LCTL, KC_A,    KC_S,    KC_H,    KC_T,    KC_G,    KC_Y,    KC_N,    KC_E,    KC_O,    KC_I,    KC_QUOT,
+    KC_LSFT, KC_Z,    KC_X,    KC_M,    KC_C,    KC_V,    KC_K,    KC_L,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
+    KC_ESC,  KC_LALT, XXXXXXX, KC_LGUI, LOWER,   KC_SPC,  KC_ENT,  RAISE,   KC_LEFT, KC_UP,   KC_DOWN, KC_RGHT
+),
 
 /* Workman
  * ,-----------------------------------------------------------------------------------.
@@ -93,32 +95,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Shift|   Z  |   X  |   M  |   C  |   V  |   K  |   L  |   ,  |   .  |   /  | Shift|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Esc  | Alt  | UTF  | Meta | Lower| Space| Enter| Raise| Left | Up   | Down |Right |
+ * | Esc  | Alt  | NOOP | Meta | Lower| Space| Enter| Raise| Left | Up   | Down |Right |
  * `-----------------------------------------------------------------------------------'
  */
 [_WM] = LAYOUT_planck_grid(
     KC_TAB,  KC_Q,    KC_D,    KC_R,    KC_W,    KC_B,    KC_J,    KC_F,    KC_U,    KC_P,    KC_SCLN, KC_BSPC,
     KC_LCTL, KC_A,    KC_S,    KC_H,    KC_T,    KC_G,    KC_Y,    KC_N,    KC_E,    KC_O,    KC_I,    KC_QUOT,
     KC_LSFT, KC_Z,    KC_X,    KC_M,    KC_C,    KC_V,    KC_K,    KC_L,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
-    KC_ESC,  KC_LALT, OSLUT,   KC_LGUI, LOWER,   KC_SPC,  KC_ENT,  RAISE,   KC_LEFT, KC_UP,   KC_DOWN, KC_RGHT
-),
-
-/* Swenglish hacks and friends
- * ,-----------------------------------------------------------------------------------.
- * |      |      |      |      |      |      |      |      |      |      |      |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |   Å  |      |      |      |      |      |  É   |  Ä   |  Ö   |      |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      |      |
- * `-----------------------------------------------------------------------------------'
- */
-[_UTF] = LAYOUT_planck_grid(
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-    _______, ARING,   _______, _______, _______, _______, _______, EACUT,   ADIAE,   ODIAE,   _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+    KC_ESC,  KC_LALT, XXXXXXX, KC_LGUI, LOWER,   KC_SPC,  KC_ENT,  RAISE,   KC_LEFT, KC_UP,   KC_DOWN, KC_RGHT
 ),
 
 /* Lower
@@ -171,8 +155,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_ADJUST] = LAYOUT_planck_grid(
     _______, RESET,   DEBUG,   RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD,  RGB_VAI, RGB_VAD, KC_DEL ,
-    _______, _______, MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, _______, _______,  _______, _______, _______,
-    _______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  TERM_ON, TERM_OFF, _______, _______, _______,
+    _______, _______, _______, AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, _______, _______,  _______, _______, _______,
+    _______, _______, _______, MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _______, _______,  _______, _______, _______,
     _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______
 )
 
@@ -330,39 +314,9 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         tap_code16(RALT(KC_2));         // °, §
       }
       break;
-    case DEG_DEGR:
-      if (pressed) {
-        tap_code16(SAGR(KC_2));         // °, §
-      }
-      break;
-    case LAM_LAMB:
-      if (pressed) {
-        tap_code16(RALT(KC_4));         // Λ, λ
-      }
-      break;
-    case DEL_DELT:
-      if (pressed) {
-        tap_code16(RALT(KC_5));         // Δ, δ
-      }
-      break;
-    case LEM_INFT:
-      if (pressed) {
-        tap_code16(RALT(KC_1));         // ™, ∞
-      }
-      break;
-    case TM_TRADM:
-      if (pressed) {
-        tap_code16(SAGR(KC_1));         // ™, ∞
-      }
-      break;
     case EUR_EURO:
       if (pressed) {
         tap_code16(RALT(KC_E));         // €
-      }
-      break;
-    case THO_THRN:
-      if (pressed) {
-        tap_code16(RALT(KC_T));         // Þ, þ
       }
       break;
    }
