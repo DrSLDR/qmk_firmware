@@ -27,7 +27,12 @@ enum planck_layers {
 
 enum planck_keycodes {
   QWERTY = SAFE_RANGE,
+  // Swedish-mode hackery
+  SWE_TOG,
 };
+
+// Declare a "we are in Sweden" toggle
+static bool swe_mode;
 
 #define LOWER MO(_LOWER)
 #define RAISE MO(_RAISE)
@@ -138,14 +143,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, RESET,   DEBUG,   RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD,  RGB_VAI, RGB_VAD, KC_DEL ,
     _______, _______, _______, AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, _______, _______,  _______, _______, _______,
     _______, _______, _______, MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _______, _______,  _______, _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______
+    SE_TOGG, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______
 )
 
 };
 
 // INIT FUNCTION ///////////////////////////////////////////////////////////////
 
-void keyboard_post_init_user(){}
+void keyboard_post_init_user(){
+  swe_mode = true;
+}
 
 // MISC ////////////////////////////////////////////////////////////////////////
 
@@ -160,6 +167,11 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
+    case SWE_TOG:
+      if(record->event.pressed) {
+        swe_mode = !swe_mode;
+      }
+      return false;
   }
   return true;
 }
