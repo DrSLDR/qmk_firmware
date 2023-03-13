@@ -51,7 +51,11 @@ static bool swe_mode;
 #define RESET QK_BOOTLOADER
 #define DEBUG QK_DEBUG_TOGGLE
 // More Swedish-mode hackery
-#define SWE_AO KC_LBRC
+#define SWE_AO     KC_LBRC
+#define SWE_AE     KC_QUOT
+#define SWE_OE     KC_SCLN
+#define SWE_PAR    KC_GRV
+#define SWE_GRV_16 S(KC_EQL)
 
 // Combo things
 enum combos {
@@ -317,33 +321,53 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         if (swe_mode) {
           tap_code(SWE_AO);
         } else {
-          tap_code16(RALT(KC_A));
+          tap_code16(ALGR(KC_A));
         }
       }
       return;
-    case AE_ADIAE:
+    case AE_ADIAE:                    // Ä, ä
       if (pressed) {
-        tap_code16(RALT(KC_QUOT));      // Ä, ä
+        if (swe_mode) {
+          tap_code(SWE_AE);
+        } else {
+          tap_code16(ALGR(KC_QUOT));
+        }
       }
-      break;
-    case EO_ODIAE:
+      return;
+    case EO_ODIAE:                    // Ö, ö
       if (pressed) {
-        tap_code16(RALT(KC_O));         // Ö, ö
+        if (swe_mode) {
+          tap_code(SWE_OE);
+        } else {
+          tap_code16(ALGR(KC_O));
+        }
       }
-      break;
-    case EU_EACUT:
+      return;
+    case EU_EACUT:                    // É, é
       if (pressed) {
-        tap_code16(RALT(KC_Y));         // É, é
+        if (swe_mode) {
+          mods = get_mods();
+          clear_mods();
+          tap_code16(SWE_GRV_16);
+          set_mods(mods);
+          tap_code(KC_E);
+        } else {
+          tap_code16(ALGR(KC_Y));
+        }
       }
-      break;
-    case PAR_SECT:
+      return;
+    case PAR_SECT:                    // §
       if (pressed) {
-        tap_code16(RALT(KC_2));         // °, §
+        if (swe_mode) {
+          tap_code(SWE_PAR);
+        } else {
+          tap_code16(ALGR(KC_2));
+        }
       }
-      break;
-    case EUR_EURO:
+      return;
+    case EUR_EURO:                    // €
       if (pressed) {
-        tap_code16(RALT(KC_E));         // €
+        tap_code16(ALGR(KC_E));
       }
       break;
    }
