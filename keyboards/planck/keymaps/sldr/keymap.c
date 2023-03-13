@@ -19,7 +19,6 @@
 
 
 enum planck_layers {
-  _SE,
   _WM,
   _LOWER,
   _RAISE,
@@ -68,24 +67,6 @@ combo_t key_combos[COMBO_COUNT] = {
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-
- /* Swedish
- * ,-----------------------------------------------------------------------------------.
- * | Tab  |   Q  |   D  |   R  |   W  |   B  |   J  |   F  |   U  |   P  |   P  |  <-  |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Ctrl |   A  |   S  |   H  |   T  |   G  |   Y  |   N  |   E  |   O  |   I  |  '   |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Shift|   Z  |   X  |   M  |   C  |   V  |   K  |   L  |   ,  |   .  |   /  | Shift|
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Esc  | Alt  | NOOP | Meta | Lower| Space| Enter| Raise| Left | Up   | Down |Right |
- * `-----------------------------------------------------------------------------------'
- */
-[_WM] = LAYOUT_planck_grid(
-    KC_TAB,  KC_Q,    KC_D,    KC_R,    KC_W,    KC_B,    KC_J,    KC_F,    KC_U,    KC_P,    KC_SCLN, KC_BSPC,
-    KC_LCTL, KC_A,    KC_S,    KC_H,    KC_T,    KC_G,    KC_Y,    KC_N,    KC_E,    KC_O,    KC_I,    KC_QUOT,
-    KC_LSFT, KC_Z,    KC_X,    KC_M,    KC_C,    KC_V,    KC_K,    KC_L,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
-    KC_ESC,  KC_LALT, XXXXXXX, KC_LGUI, LOWER,   KC_SPC,  KC_ENT,  RAISE,   KC_LEFT, KC_UP,   KC_DOWN, KC_RGHT
-),
 
 /* Workman
  * ,-----------------------------------------------------------------------------------.
