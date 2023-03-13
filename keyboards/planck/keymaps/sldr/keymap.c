@@ -176,21 +176,25 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case VRSN:
-      SEND_STRING(QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
+      if (record->event.pressed) {
+        SEND_STRING(QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
+      }
       return false;
     case QMAK:
-      mods = get_mods();
-      if ((mods & (MOD_MASK_SHIFT)) && (mods & (MOD_MASK_CTRL))) {
-        clear_mods();
-        SEND_STRING("qmk flash -j 2 --keyboard " QMK_KEYBOARD " --keymap " QMK_KEYMAP);
-        wait_ms(150);
-        tap_code(KC_ENT);
-        reset_keyboard();
-      } else if (mods & (MOD_MASK_SHIFT)) {
-        clear_mods();
-        SEND_STRING("qmk flash -j 2 --keyboard " QMK_KEYBOARD " --keymap " QMK_KEYMAP);
-      } else {
-        SEND_STRING("qmk compile -j 2 --keyboard " QMK_KEYBOARD " --keymap " QMK_KEYMAP);
+      if (record->event.pressed) {
+        mods = get_mods();
+        if ((mods & (MOD_MASK_SHIFT)) && (mods & (MOD_MASK_CTRL))) {
+          clear_mods();
+          SEND_STRING("qmk flash -j 2 --keyboard " QMK_KEYBOARD " --keymap " QMK_KEYMAP);
+          wait_ms(150);
+          tap_code(KC_ENT);
+          reset_keyboard();
+        } else if (mods & (MOD_MASK_SHIFT)) {
+          clear_mods();
+          SEND_STRING("qmk flash -j 2 --keyboard " QMK_KEYBOARD " --keymap " QMK_KEYMAP);
+        } else {
+          SEND_STRING("qmk compile -j 2 --keyboard " QMK_KEYBOARD " --keymap " QMK_KEYMAP);
+        }
       }
       return false;
     case SWE_TOG:
