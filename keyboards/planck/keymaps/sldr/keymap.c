@@ -15,6 +15,7 @@
  */
 
 #include QMK_KEYBOARD_H
+#include "version.h"
 #include "muse.h"
 
 
@@ -27,10 +28,15 @@ enum planck_layers {
 
 enum planck_keycodes {
   QWERTY = SAFE_RANGE,
+  // QMK bonus points
+  VRSN,
+  QMAK,
   // Swedish-mode hackery
   SWE_TOG,
 };
 
+// Modifier store we will need later
+uint8_t mods;
 // Declare a "we are in Sweden" toggle
 static bool swe_mode;
 
@@ -132,20 +138,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Adjust (Lower + Raise)
  *                      v------------------------RGB CONTROL--------------------v
  * ,-----------------------------------------------------------------------------------.
- * |      | Reset|Debug | RGB  |RGBMOD| HUE+ | HUE- | SAT+ | SAT- |BRGTH+|BRGTH-|  Del |
+ * | MAKE | Reset|Debug | RGB  |RGBMOD| HUE+ | HUE- | SAT+ | SAT- |BRGTH+|BRGTH-|  Del |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |MUSmod|Aud on|Audoff|AGnorm|AGswap|      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |Voice-|Voice+|Mus on|Musoff|MIDIon|MIDIof|TermOn|TermOf|      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |             |      |      |      |      |      |
+ * | SEMOD|      |      |      |      |  VERSION    |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 [_ADJUST] = LAYOUT_planck_grid(
-    _______, RESET,   DEBUG,   RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD,  RGB_VAI, RGB_VAD, KC_DEL ,
+    QMAK,    RESET,   DEBUG,   RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD,  RGB_VAI, RGB_VAD, KC_DEL ,
     _______, _______, _______, AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, _______, _______,  _______, _______, _______,
     _______, _______, _______, MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _______, _______,  _______, _______, _______,
-    SE_TOGG, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______
+    SE_TOGG, _______, _______, _______, _______, VRSN,    VRSN   , _______, _______,  _______, _______, _______
 )
 
 };
@@ -169,6 +175,24 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
+    case VRSN:
+      SEND_STRING(QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
+      return false;
+    case QMAK:
+      mods = get_mods();
+      if ((mods & (MOD_MASK_SHIFT)) && (mods & (MOD_MASK_CTRL))) {
+        clear_mods();
+        SEND_STRING("qmk flash -j 2 --keyboard " QMK_KEYBOARD " --keymap " QMK_KEYMAP);
+        wait_ms(150);
+        tap_code(KC_ENT);
+        reset_keyboard();
+      } else if (mods & (MOD_MASK_SHIFT)) {
+        clear_mods();
+        SEND_STRING("qmk flash -j 2 --keyboard " QMK_KEYBOARD " --keymap " QMK_KEYMAP);
+      } else {
+        SEND_STRING("qmk compile -j 2 --keyboard " QMK_KEYBOARD " --keymap " QMK_KEYMAP);
+      }
+      return false;
     case SWE_TOG:
       if(record->event.pressed) {
         swe_mode = !swe_mode;
