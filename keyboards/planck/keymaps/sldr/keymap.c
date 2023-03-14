@@ -51,12 +51,12 @@ static bool swe_mode;
 #define RESET QK_BOOTLOADER
 #define DEBUG QK_DEBUG_TOGGLE
 // More Swedish-mode hackery
-#define SWE_AO     KC_LBRC
-#define SWE_AE     KC_QUOT
-#define SWE_OE     KC_SCLN
-#define SWE_PAR    KC_GRV
-#define SWE_ACT    KC_EQL
-#define SWE_GRV_16 S(KC_EQL)
+#define KC_SWE_AO     KC_LBRC
+#define KC_SWE_AE     KC_QUOT
+#define KC_SWE_OE     KC_SCLN
+#define KC_SWE_PAR    KC_GRV
+#define KC_SWE_ACT    KC_EQL
+#define KC_SWE_GRV_16 S(KC_EQL)
 
 // Combo things
 enum combos {
@@ -320,7 +320,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
       case AO_ARING:                  // Å, å
       if (pressed) {
         if (swe_mode) {
-          tap_code(SWE_AO);
+          tap_code(KC_SWE_AO);
         } else {
           tap_code16(ALGR(KC_A));
         }
@@ -329,7 +329,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
     case AE_ADIAE:                    // Ä, ä
       if (pressed) {
         if (swe_mode) {
-          tap_code(SWE_AE);
+          tap_code(KC_SWE_AE);
         } else {
           tap_code16(ALGR(KC_QUOT));
         }
@@ -338,7 +338,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
     case EO_ODIAE:                    // Ö, ö
       if (pressed) {
         if (swe_mode) {
-          tap_code(SWE_OE);
+          tap_code(KC_SWE_OE);
         } else {
           tap_code16(ALGR(KC_O));
         }
@@ -349,7 +349,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         if (swe_mode) {
           mods = get_mods();
           clear_mods();
-          tap_code(SWE_ACT);
+          tap_code(KC_SWE_ACT);
           set_mods(mods);
           tap_code(KC_E);
         } else {
@@ -360,7 +360,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
     case PAR_SECT:                    // §
       if (pressed) {
         if (swe_mode) {
-          tap_code(SWE_PAR);
+          tap_code(KC_SWE_PAR);
         } else {
           tap_code16(ALGR(KC_2));
         }
