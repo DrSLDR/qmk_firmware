@@ -55,6 +55,7 @@ static bool swe_mode;
 #define SWE_AE     KC_QUOT
 #define SWE_OE     KC_SCLN
 #define SWE_PAR    KC_GRV
+#define SWE_ACT    KC_EQL
 #define SWE_GRV_16 S(KC_EQL)
 
 // Combo things
@@ -348,7 +349,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         if (swe_mode) {
           mods = get_mods();
           clear_mods();
-          tap_code16(SWE_GRV_16);
+          tap_code(SWE_ACT);
           set_mods(mods);
           tap_code(KC_E);
         } else {
