@@ -85,7 +85,7 @@ static uint16_t swe_held_kc;
 // Handles "simple" shift-dependent key remapping
 #define remap_shift(SK, NK, P) ((get_mods() & MOD_MASK_SHIFT) ? remap16(SK, P) : remap16(NK, P))
 // Provides an early-exit for non-swedish remappings
-#define swescape(K, P) if (swe_mode) {remap(K, P); return false;}
+#define swescape(K, P) if (!swe_mode) {remap(K, P); return false;}
 
 // Combo things
 enum combos {
