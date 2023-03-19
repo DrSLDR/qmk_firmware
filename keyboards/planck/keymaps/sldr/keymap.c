@@ -40,6 +40,7 @@ uint8_t mods;
 // Declare a "we are in Sweden" toggle
 static bool swe_mode;
 
+#define REP record->event.pressed
 #define LOWER MO(_LOWER)
 #define RAISE MO(_RAISE)
 #define PIPE  S(KC_BSLS)
@@ -181,12 +182,12 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case VRSN:
-      if (record->event.pressed) {
+      if (REP) {
         SEND_STRING(QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
       }
       return false;
     case QMAK:
-      if (record->event.pressed) {
+      if (REP) {
         mods = get_mods();
         if ((mods & (MOD_MASK_SHIFT)) && (mods & (MOD_MASK_CTRL))) {
           clear_mods();
@@ -203,7 +204,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
     case SWE_TOG:
-      if(record->event.pressed) {
+      if (REP) {
         swe_mode = !swe_mode;
       }
       return false;
