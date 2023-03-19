@@ -76,6 +76,8 @@ static uint16_t swe_held_kc;
 #define KC_SWE_GRV_16 S(KC_EQL)
 #define KC_SWE_SLS_16 S(KC_7)
 #define KC_SWE_QST_16 S(KC_MINS)
+#define KC_SWE_QOT_16 KC_BSLS
+#define KC_SWE_DQT_16 S(KC_2)
 // Gnarly as sin function macro to handle press/depress remapping
 #define remap(K, P) (P ? register_code(K) : unregister_code(K))
 #define remap16(K, P) (P ? register_code16(K) : unregister_code16(K))
@@ -264,11 +266,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       swescape(KC_COMM, p);
       sweheld(SWE_COM, p);
       mods = get_mods();
-      if(mods & MOD_MASK_SHIFT) {       // <
+      if(mods & MOD_MASK_SHIFT) {         // <
         clear_mods();
         remap16(KC_SWE_LAN_16, p);
         set_mods(mods);
-      } else {                          // ,
+      } else {                            // ,
         remap16(KC_COMM, p);
       }
       return false;
@@ -281,6 +283,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       swescape(KC_SCLN, p);
       sweheld(SWE_SCL, p);
       remap_shift(KC_SWE_COL_16, KC_SWE_SCL_16, p);
+      return false;
+    case SWE_QOT:                         //  Quote key
+      swescape(KC_QUOT, p);
+      sweheld(SWE_QOT, p);
+      remap_shift(KC_SWE_DQT_16, KC_SWE_QOT_16, p);
       return false;
   }
   return true;
