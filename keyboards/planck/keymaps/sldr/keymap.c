@@ -80,6 +80,9 @@ static uint16_t swe_held_kc;
 #define KC_SWE_DQT_16 S(KC_2)
 #define KC_SWE_TIL_16 ALGR(KC_RBRC)
 #define KC_SWE_AT_16  ALGR(KC_2)
+#define KC_SWE_DOL_16 ALGR(KC_4)
+#define KC_SWE_AMP_16 S(KC_6)
+#define KC_SWE_CAR_16 S(KC_RBRC)
 // Gnarly as sin function macro to handle press/depress remapping
 #define remap(K, P) (P ? register_code(K) : unregister_code(K))
 #define remap16(K, P) (P ? register_code16(K) : unregister_code16(K))
@@ -150,7 +153,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_LOWER] = LAYOUT_planck_grid(
-    SWE_TIL, KC_EXLM, SWE_AT,  KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, PIPE,
+    SWE_TIL, KC_EXLM, SWE_AT,  KC_HASH, SWE_DOL, KC_PERC, SWE_CAR, SWE_AMP, KC_ASTR, KC_LPRN, KC_RPRN, PIPE,
     KC_DEL,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_LBRC, KC_RBRC, KC_EQL,  KC_PLUS, KC_CAPS,
     _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_LCBR, KC_RCBR, KC_MINS, KC_UNDS, _______,
     _______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGUP, KC_PGDN, KC_END
@@ -300,10 +303,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       swescape(KC_GRV, p);
       tap_code(KC_SWE_ACT);
       return false;
-    case SWE_AT:
+    case SWE_AT:                          // At-sign
       swescape16(KC_AT, p);
       sweheld(SWE_AT, p);
       remap16(KC_SWE_AT_16, p);
+      return false;
+    case SWE_DOL:                         // Dollar sign
+      swescape16(KC_DLR, p);
+      sweheld(SWE_DOL, p);
+      remap16(KC_SWE_DOL_16, p);
+      return false;
+    case SWE_CAR:                         // Caret
+      swescape16(KC_CIRC, p);
+      tap_code16(KC_SWE_CAR_16);
+      return false;
+    case SWE_AMP:                         // Ampersand
+      swescape16(KC_AMPR, p);
+      sweheld(SWE_AMP, p);
+      remap16(KC_SWE_AMP_16, p);
       return false;
   }
   return true;
