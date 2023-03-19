@@ -79,6 +79,8 @@ static uint16_t swe_held_kc;
 #define remap16(K, P) (P ? register_code16(K) : unregister_code16(K))
 // Extremely gnarly shorthand for the swe-held-key handler
 #define sweheld(K, P) if (P) {swe_key_held=true; swe_held_kc=K;} else {swe_key_held=false;}
+// More shorthand to the people
+#define remap_shift(SK, NK, P) ((get_mods() & MOD_MASK_SHIFT) ? remap16(SK, P) : remap16(NK, P))
 
 // Combo things
 enum combos {
@@ -251,12 +253,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case SWE_DOT:                         // Period key
       if (swe_mode) {
         sweheld(SWE_DOT, p);
-        mods = get_mods();
-        if(mods & MOD_MASK_SHIFT) {       // >
-          remap16(KC_SWE_RAN_16, p);
-        } else {                          // .
-          remap16(KC_DOT, p);
-        }
+        remap_shift(KC_SWE_RAN_16, KC_DOT, p);
       } else {
         remap(KC_DOT, p);
       }
@@ -279,12 +276,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case SWE_SCL:                         // Semicolon key
       if (swe_mode) {
         sweheld(SWE_SCL, p);
-        mods = get_mods();
-        if (mods & MOD_MASK_SHIFT) {      // :
-          remap16(KC_SWE_COL_16, p);
-        } else {                          // ;
-          remap16(KC_SWE_SCL_16, p);
-        }
+        remap_shift(KC_SWE_COL_16, KC_SWE_SCL_16, p);
       } else {
         remap(KC_SCLN, p);
       }
