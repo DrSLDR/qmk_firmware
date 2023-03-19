@@ -69,6 +69,8 @@ static uint16_t swe_held_kc;
 #define KC_SWE_OE     KC_SCLN
 #define KC_SWE_PAR    KC_GRV
 #define KC_SWE_ACT    KC_EQL
+#define KC_SWE_COL_16 S(KC_DOT)
+#define KC_SWE_SCL_16 S(KC_COMM)
 #define KC_SWE_GRV_16 S(KC_EQL)
 // Gnarly as sin function macro to handle press/depress remapping
 #define remap(K, P) (P ? register_code(K) : unregister_code(K))
@@ -251,10 +253,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           swe_key_held = false;
         }
         mods = get_mods();
-        if (mods & (MOD_MASK_SHIFT)) {  // :
-          remap16(S(KC_DOT), p);
+        if (mods & MOD_MASK_SHIFT) {    // :
+          remap16(KC_SWE_COL_16, p);
         } else {                        // ;
-          remap16(S(KC_COMM), p);
+          remap16(KC_SWE_SCL_16, p);
         }
       } else {
         remap(KC_SCLN, p);
