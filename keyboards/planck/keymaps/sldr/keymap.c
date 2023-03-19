@@ -79,6 +79,7 @@ static uint16_t swe_held_kc;
 #define KC_SWE_QOT_16 KC_BSLS
 #define KC_SWE_DQT_16 S(KC_2)
 #define KC_SWE_TIL_16 ALGR(KC_RBRC)
+#define KC_SWE_AT_16  ALGR(KC_2)
 // Gnarly as sin function macro to handle press/depress remapping
 #define remap(K, P) (P ? register_code(K) : unregister_code(K))
 #define remap16(K, P) (P ? register_code16(K) : unregister_code16(K))
@@ -89,6 +90,7 @@ static uint16_t swe_held_kc;
 #define remap_shift(SK, NK, P) ((get_mods() & MOD_MASK_SHIFT) ? remap16(SK, P) : remap16(NK, P))
 // Provides an early-exit for non-swedish remappings
 #define swescape(K, P) if (!swe_mode) {remap(K, P); return false;}
+#define swescape16(K, P) if (!swe_mode) {remap16(K, P); return false;}
 
 // Combo things
 enum combos {
@@ -148,7 +150,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_LOWER] = LAYOUT_planck_grid(
-    SWE_TIL, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, PIPE,
+    SWE_TIL, KC_EXLM, SWE_AT,  KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, PIPE,
     KC_DEL,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_LBRC, KC_RBRC, KC_EQL,  KC_PLUS, KC_CAPS,
     _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_LCBR, KC_RCBR, KC_MINS, KC_UNDS, _______,
     _______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGUP, KC_PGDN, KC_END
@@ -291,12 +293,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       remap_shift(KC_SWE_DQT_16, KC_SWE_QOT_16, p);
       return false;
     case SWE_TIL:                         // Tilde key
-      swescape(KC_GRV, p);
+      swescape16(KC_TILD, p);
       tap_code16(KC_SWE_TIL_16);
       return false;
     case SWE_GRV:                         // Grave key
       swescape(KC_GRV, p);
       tap_code(KC_SWE_ACT);
+      return false;
+    case SWE_AT:
+      swescape16(KC_AT, p);
+      sweheld(SWE_AT, p);
+      remap16(KC_SWE_AT_16, p);
       return false;
   }
   return true;
