@@ -297,11 +297,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
     case SWE_TIL:                         // Tilde key
       swescape16(KC_TILD, p);
-      tap_code16(KC_SWE_TIL_16);
+      if (p) {
+        tap_code16(KC_SWE_TIL_16);
+        tap_code(KC_SPACE);
+      }
       return false;
     case SWE_GRV:                         // Grave key
       swescape(KC_GRV, p);
-      tap_code(KC_SWE_ACT);
+      if (p) {
+        tap_code(KC_SWE_ACT);
+        tap_code(KC_SPACE);
+      }
       return false;
     case SWE_AT:                          // At-sign
       swescape16(KC_AT, p);
@@ -315,7 +321,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
     case SWE_CAR:                         // Caret
       swescape16(KC_CIRC, p);
-      tap_code16(KC_SWE_CAR_16);
+      if (p) {
+        tap_code16(KC_SWE_CAR_16);
+        tap_code(KC_SPACE);
+      }
       return false;
     case SWE_AMP:                         // Ampersand
       swescape16(KC_AMPR, p);
