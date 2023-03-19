@@ -80,7 +80,10 @@ static uint16_t swe_held_kc;
 // Extremely gnarly shorthand for the swe-held-key handler
 #define sweheld(K, P) if (P) {swe_key_held=true; swe_held_kc=K;} else {swe_key_held=false;}
 // More shorthand to the people
+// Handles "simple" shift-dependent key remapping
 #define remap_shift(SK, NK, P) ((get_mods() & MOD_MASK_SHIFT) ? remap16(SK, P) : remap16(NK, P))
+// Provides an early-exit for non-swedish remappings
+#define swescape(K, P) if (swe_mode) {remap(K, P); return false;}
 
 // Combo things
 enum combos {
@@ -251,35 +254,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return true;
     // Swedish key remappings
     case SWE_DOT:                         // Period key
-      if (swe_mode) {
-        sweheld(SWE_DOT, p);
-        remap_shift(KC_SWE_RAN_16, KC_DOT, p);
-      } else {
-        remap(KC_DOT, p);
-      }
+      swescape(KC_DOT, p);
+      sweheld(SWE_DOT, p);
+      remap_shift(KC_SWE_RAN_16, KC_DOT, p);
       return false;
     case SWE_COM:                         // Comma key
-      if (swe_mode) {
-        sweheld(SWE_COM, p);
-        mods = get_mods();
-        if(mods & MOD_MASK_SHIFT) {       // <
-          clear_mods();
-          remap16(KC_SWE_LAN_16, p);
-          set_mods(mods);
-        } else {                          // ,
-          remap16(KC_COMM, p);
-        }
-      } else {
-        remap(KC_COMM, p);
+      swescape(KC_COMM, p);
+      sweheld(SWE_COM, p);
+      mods = get_mods();
+      if(mods & MOD_MASK_SHIFT) {       // <
+        clear_mods();
+        remap16(KC_SWE_LAN_16, p);
+        set_mods(mods);
+      } else {                          // ,
+        remap16(KC_COMM, p);
       }
       return false;
     case SWE_SCL:                         // Semicolon key
-      if (swe_mode) {
-        sweheld(SWE_SCL, p);
-        remap_shift(KC_SWE_COL_16, KC_SWE_SCL_16, p);
-      } else {
-        remap(KC_SCLN, p);
-      }
+      swescape(KC_SCLN, p);
+      sweheld(SWE_SCL, p);
+      remap_shift(KC_SWE_COL_16, KC_SWE_SCL_16, p);
       return false;
   }
   return true;
