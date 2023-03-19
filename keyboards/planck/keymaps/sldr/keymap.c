@@ -33,12 +33,25 @@ enum planck_keycodes {
   QMAK,
   // Swedish-mode hackery
   SWE_TOG,
+  SWE_DOT,
+  SWE_COM,
+  SWE_SLS,
+  SWE_SCL,
+  SWE_QOT,
+  SWE_TIL,
+  SWE_GRV,
+  SWE_AT,
+  SWE_DOL,
+  SWE_AMP,
+  SWE_CAR,
 };
 
 // Modifier store we will need later
 uint8_t mods;
 // Declare a "we are in Sweden" toggle
 static bool swe_mode;
+static bool swe_key_held;
+static uint16_t swe_held_kc;
 
 #define LOWER MO(_LOWER)
 #define RAISE MO(_RAISE)
@@ -57,6 +70,9 @@ static bool swe_mode;
 #define KC_SWE_PAR    KC_GRV
 #define KC_SWE_ACT    KC_EQL
 #define KC_SWE_GRV_16 S(KC_EQL)
+// Gnarly as sin function macro to handle press/depress remapping
+#define remap(K, P) (P ? register_code(K) : unregister_code(K))
+#define remap16(K, P) (P ? register_code16(K) : unregister_code16(K))
 
 // Combo things
 enum combos {
@@ -88,7 +104,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Workman
  * ,-----------------------------------------------------------------------------------.
- * | Tab  |   Q  |   D  |   R  |   W  |   B  |   J  |   F  |   U  |   P  |   P  |  <-  |
+ * | Tab  |   Q  |   D  |   R  |   W  |   B  |   J  |   F  |   U  |   P  |   ;  |  <-  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Ctrl |   A  |   S  |   H  |   T  |   G  |   Y  |   N  |   E  |   O  |   I  |  '   |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -98,9 +114,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_WM] = LAYOUT_planck_grid(
-    KC_TAB,  KC_Q,    KC_D,    KC_R,    KC_W,    KC_B,    KC_J,    KC_F,    KC_U,    KC_P,    KC_SCLN, KC_BSPC,
-    KC_LCTL, KC_A,    KC_S,    KC_H,    KC_T,    KC_G,    KC_Y,    KC_N,    KC_E,    KC_O,    KC_I,    KC_QUOT,
-    KC_LSFT, KC_Z,    KC_X,    KC_M,    KC_C,    KC_V,    KC_K,    KC_L,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
+    KC_TAB,  KC_Q,    KC_D,    KC_R,    KC_W,    KC_B,    KC_J,    KC_F,    KC_U,    KC_P,    SWE_SCL, KC_BSPC,
+    KC_LCTL, KC_A,    KC_S,    KC_H,    KC_T,    KC_G,    KC_Y,    KC_N,    KC_E,    KC_O,    KC_I,    SWE_QOT,
+    KC_LSFT, KC_Z,    KC_X,    KC_M,    KC_C,    KC_V,    KC_K,    KC_L,    SWE_COM, SWE_DOT, SWE_SLS, KC_RSFT,
     KC_ESC,  KC_LALT, XXXXXXX, KC_LGUI, LOWER,   KC_SPC,  KC_ENT,  RAISE,   KC_LEFT, KC_UP,   KC_DOWN, KC_RGHT
 ),
 
@@ -165,6 +181,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 void keyboard_post_init_user(){
   swe_mode = true;
+  swe_key_held = false;
+  swe_held_kc = 0;
 }
 
 // MISC ////////////////////////////////////////////////////////////////////////
@@ -203,9 +221,43 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
       }
       return false;
+    // Swedish mode setter
     case SWE_TOG:
       if (p) {
         swe_mode = !swe_mode;
+      }
+      return false;
+    // Special Swedish modifier handling
+    case KC_LSFT:
+    case KC_LCTL:
+    case KC_LALT:
+    case KC_RSFT:
+    case KC_RCTL:
+    case KC_ALGR:
+      if (swe_mode && swe_key_held) {
+        bool rp = p;
+        record->event.pressed = false;
+        process_record_user(swe_held_kc, record);
+        record->event.pressed = rp;
+      }
+      return true;
+    // Swedish key remappings
+    case SWE_SCL:                         // Semicolon key
+      if (swe_mode) {
+        if (p) {
+          swe_key_held = true;
+          swe_held_kc = SWE_SCL;
+        } else {
+          swe_key_held = false;
+        }
+        mods = get_mods();
+        if (mods & (MOD_MASK_SHIFT)) {  // :
+          remap16(S(KC_DOT), p);
+        } else {                        // ;
+          remap16(S(KC_COMM), p);
+        }
+      } else {
+        remap(KC_SCLN, p);
       }
       return false;
   }
