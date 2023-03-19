@@ -74,6 +74,8 @@ static uint16_t swe_held_kc;
 #define KC_SWE_LAN_16 KC_NUBS
 #define KC_SWE_RAN_16 S(KC_NUBS)
 #define KC_SWE_GRV_16 S(KC_EQL)
+#define KC_SWE_SLS_16 S(KC_7)
+#define KC_SWE_QST_16 S(KC_MINS)
 // Gnarly as sin function macro to handle press/depress remapping
 #define remap(K, P) (P ? register_code(K) : unregister_code(K))
 #define remap16(K, P) (P ? register_code16(K) : unregister_code16(K))
@@ -269,6 +271,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       } else {                          // ,
         remap16(KC_COMM, p);
       }
+      return false;
+    case SWE_SLS:                         // Slash key
+      swescape(KC_SLSH, p);
+      sweheld(SWE_SLS, p);
+      remap_shift(KC_SWE_QST_16, KC_SWE_SLS_16, p);
       return false;
     case SWE_SCL:                         // Semicolon key
       swescape(KC_SCLN, p);
