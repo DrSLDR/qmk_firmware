@@ -261,6 +261,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         remap(KC_DOT, p);
       }
       return false;
+    case SWE_COM:                         // Comma key
+      if (swe_mode) {
+        sweheld(SWE_COM, p);
+        mods = get_mods();
+        if(mods & MOD_MASK_SHIFT) {       // <
+          clear_mods();
+          remap16(KC_SWE_LAN_16, p);
+          set_mods(mods);
+        } else {                          // ,
+          remap16(KC_COMM, p);
+        }
+      } else {
+        remap(KC_COMM, p);
+      }
+      return false;
     case SWE_SCL:                         // Semicolon key
       if (swe_mode) {
         sweheld(SWE_SCL, p);
