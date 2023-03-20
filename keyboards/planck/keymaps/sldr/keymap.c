@@ -47,6 +47,8 @@ enum planck_keycodes {
   SWE_AST,
   SWE_LPR,
   SWE_RPR,
+  SWE_PIP,
+  SWE_BSL,
 };
 
 // Modifier store we will need later
@@ -90,6 +92,7 @@ static uint16_t swe_held_kc;
 #define KC_SWE_LPR_16 S(KC_8)
 #define KC_SWE_RPR_16 S(KC_9)
 #define KC_SWE_PIP_16 ALGR(KC_NUBS)
+#define KC_SWE_BSL_16 ALGR(KC_MINS)
 // Gnarly as sin function macro to handle press/depress remapping
 #define remap(K, P) (P ? register_code(K) : unregister_code(K))
 #define remap16(K, P) (P ? register_code16(K) : unregister_code16(K))
@@ -160,7 +163,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_LOWER] = LAYOUT_planck_grid(
-    SWE_TIL, KC_EXLM, SWE_AT,  KC_HASH, SWE_DOL, KC_PERC, SWE_CAR, SWE_AMP, SWE_AST, SWE_LPR, SWE_RPR, PIPE,
+    SWE_TIL, KC_EXLM, SWE_AT,  KC_HASH, SWE_DOL, KC_PERC, SWE_CAR, SWE_AMP, SWE_AST, SWE_LPR, SWE_RPR, SWE_PIP,
     KC_DEL,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_LBRC, KC_RBRC, KC_EQL,  KC_PLUS, KC_CAPS,
     _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_LCBR, KC_RCBR, KC_MINS, KC_UNDS, _______,
     _______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGUP, KC_PGDN, KC_END
@@ -178,7 +181,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_RAISE] = LAYOUT_planck_grid(
-    SWE_GRV, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSLS,
+    SWE_GRV, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    SWE_BSL,
     KC_DEL,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_LBRC, KC_RBRC, KC_EQL,  KC_PLUS, KC_CAPS,
     _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_LCBR, KC_RCBR, KC_MINS, KC_UNDS, _______,
     _______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGUP, KC_PGDN, KC_END
@@ -352,6 +355,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       swescape16(KC_RPRN, p);
       sweheld(SWE_RPR, p);
       remap16(KC_SWE_RPR_16, p);
+      return false;
+    case SWE_PIP:                         // Pipe
+      swescape16(PIPE, p);
+      sweheld(SWE_PIP, p);
+      remap16(KC_SWE_PIP_16, p);
+      return false;
+    case SWE_BSL:                         // Backslash
+      swescape16(KC_BSLS, p);
+      sweheld(SWE_BSL, p);
+      remap16(KC_SWE_BSL_16, p);
       return false;
   }
   return true;
