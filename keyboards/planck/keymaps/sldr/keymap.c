@@ -44,6 +44,9 @@ enum planck_keycodes {
   SWE_DOL,
   SWE_AMP,
   SWE_CAR,
+  SWE_AST,
+  SWE_LPR,
+  SWE_RPR,
 };
 
 // Modifier store we will need later
@@ -83,6 +86,10 @@ static uint16_t swe_held_kc;
 #define KC_SWE_DOL_16 ALGR(KC_4)
 #define KC_SWE_AMP_16 S(KC_6)
 #define KC_SWE_CAR_16 S(KC_RBRC)
+#define KC_SWE_AST_16 S(KC_NUHS)
+#define KC_SWE_LPR_16 S(KC_8)
+#define KC_SWE_RPR_16 S(KC_9)
+#define KC_SWE_PIP_16 ALGR(KC_NUBS)
 // Gnarly as sin function macro to handle press/depress remapping
 #define remap(K, P) (P ? register_code(K) : unregister_code(K))
 #define remap16(K, P) (P ? register_code16(K) : unregister_code16(K))
@@ -153,7 +160,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_LOWER] = LAYOUT_planck_grid(
-    SWE_TIL, KC_EXLM, SWE_AT,  KC_HASH, SWE_DOL, KC_PERC, SWE_CAR, SWE_AMP, KC_ASTR, KC_LPRN, KC_RPRN, PIPE,
+    SWE_TIL, KC_EXLM, SWE_AT,  KC_HASH, SWE_DOL, KC_PERC, SWE_CAR, SWE_AMP, SWE_AST, SWE_LPR, SWE_RPR, PIPE,
     KC_DEL,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_LBRC, KC_RBRC, KC_EQL,  KC_PLUS, KC_CAPS,
     _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_LCBR, KC_RCBR, KC_MINS, KC_UNDS, _______,
     _______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGUP, KC_PGDN, KC_END
@@ -330,6 +337,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       swescape16(KC_AMPR, p);
       sweheld(SWE_AMP, p);
       remap16(KC_SWE_AMP_16, p);
+      return false;
+    case SWE_AST:                         // Asterisk
+      swescape16(KC_ASTR, p);
+      sweheld(SWE_AST, p);
+      remap16(KC_SWE_AST_16, p);
+      return false;
+    case SWE_LPR:                         // Left paren
+      swescape16(KC_LPRN, p);
+      sweheld(SWE_LPR, p);
+      remap16(KC_SWE_LPR_16, p);
+      return false;
+    case SWE_RPR:                         // Right paren
+      swescape16(KC_RPRN, p);
+      sweheld(SWE_RPR, p);
+      remap16(KC_SWE_RPR_16, p);
       return false;
   }
   return true;
