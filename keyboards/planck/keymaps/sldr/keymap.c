@@ -49,6 +49,14 @@ enum planck_keycodes {
   SWE_RPR,
   SWE_PIP,
   SWE_BSL,
+  SWE_LBR,
+  SWE_RBR,
+  SWE_LCB,
+  SWE_RCB,
+  SWE_EQL,
+  SWE_MIN,
+  SWE_UND,
+  SWE_PLS,
 };
 
 // Modifier store we will need later
@@ -74,14 +82,16 @@ static uint16_t swe_held_kc;
 #define KC_SWE_OE     KC_SCLN
 #define KC_SWE_PAR    KC_GRV
 #define KC_SWE_ACT    KC_EQL
+#define KC_SWE_LAN    KC_NUBS
+#define KC_SWE_QOT    KC_BSLS
+#define KC_SWE_MIN    KC_SLSH
+#define KC_SWE_PLS    KC_MINS
 #define KC_SWE_COL_16 S(KC_DOT)
 #define KC_SWE_SCL_16 S(KC_COMM)
-#define KC_SWE_LAN_16 KC_NUBS
 #define KC_SWE_RAN_16 S(KC_NUBS)
 #define KC_SWE_GRV_16 S(KC_EQL)
 #define KC_SWE_SLS_16 S(KC_7)
 #define KC_SWE_QST_16 S(KC_MINS)
-#define KC_SWE_QOT_16 KC_BSLS
 #define KC_SWE_DQT_16 S(KC_2)
 #define KC_SWE_TIL_16 ALGR(KC_RBRC)
 #define KC_SWE_AT_16  ALGR(KC_2)
@@ -93,6 +103,12 @@ static uint16_t swe_held_kc;
 #define KC_SWE_RPR_16 S(KC_9)
 #define KC_SWE_PIP_16 ALGR(KC_NUBS)
 #define KC_SWE_BSL_16 ALGR(KC_MINS)
+#define KC_SWE_LCB_16 ALGR(KC_7)
+#define KC_SWE_RCB_16 ALGR(KC_0)
+#define KC_SWE_LBR_16 ALGR(KC_8)
+#define KC_SWE_RBR_16 ALGR(KC_9)
+#define KC_SWE_EQL_16 S(KC_0)
+#define KC_SWE_UND_16 S(KC_SWE_MIN)
 // Gnarly as sin function macro to handle press/depress remapping
 #define remap(K, P) (P ? register_code(K) : unregister_code(K))
 #define remap16(K, P) (P ? register_code16(K) : unregister_code16(K))
@@ -164,8 +180,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_LOWER] = LAYOUT_planck_grid(
     SWE_TIL, KC_EXLM, SWE_AT,  KC_HASH, SWE_DOL, KC_PERC, SWE_CAR, SWE_AMP, SWE_AST, SWE_LPR, SWE_RPR, SWE_PIP,
-    KC_DEL,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_LBRC, KC_RBRC, KC_EQL,  KC_PLUS, KC_CAPS,
-    _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_LCBR, KC_RCBR, KC_MINS, KC_UNDS, _______,
+    KC_DEL,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   SWE_LBR, SWE_RBR, SWE_EQL, SWE_PLS, KC_CAPS,
+    _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  SWE_LCB, SWE_RCB, SWE_MIN, SWE_UND, _______,
     _______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGUP, KC_PGDN, KC_END
 ),
 
@@ -182,8 +198,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_RAISE] = LAYOUT_planck_grid(
     SWE_GRV, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    SWE_BSL,
-    KC_DEL,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_LBRC, KC_RBRC, KC_EQL,  KC_PLUS, KC_CAPS,
-    _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_LCBR, KC_RCBR, KC_MINS, KC_UNDS, _______,
+    KC_DEL,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   SWE_LBR, SWE_RBR, SWE_EQL, SWE_PLS, KC_CAPS,
+    _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  SWE_LCB, SWE_RCB, SWE_MIN, SWE_UND, _______,
     _______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGUP, KC_PGDN, KC_END
 ),
 
@@ -284,7 +300,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       mods = get_mods();
       if(mods & MOD_MASK_SHIFT) {         // <
         clear_mods();
-        remap16(KC_SWE_LAN_16, p);
+        remap(KC_SWE_LAN, p);
         set_mods(mods);
       } else {                            // ,
         remap16(KC_COMM, p);
@@ -303,7 +319,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case SWE_QOT:                         //  Quote key
       swescape(KC_QUOT, p);
       sweheld(SWE_QOT, p);
-      remap_shift(KC_SWE_DQT_16, KC_SWE_QOT_16, p);
+      remap_shift(KC_SWE_DQT_16, KC_SWE_QOT, p);
       return false;
     case SWE_TIL:                         // Tilde key
       swescape16(KC_TILD, p);
@@ -365,6 +381,46 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       swescape16(KC_BSLS, p);
       sweheld(SWE_BSL, p);
       remap16(KC_SWE_BSL_16, p);
+      return false;
+    case SWE_LBR:                         // Left bracket
+      swescape16(KC_LBRC, p);
+      sweheld(SWE_LBR, p);
+      remap16(KC_SWE_LBR_16, p);
+      return false;
+    case SWE_RBR:                         // Right bracket
+      swescape16(KC_RBRC, p);
+      sweheld(SWE_RBR, p);
+      remap16(KC_SWE_RBR_16, p);
+      return false;
+    case SWE_LCB:                         // Left curly bracket
+      swescape16(KC_LCBR, p);
+      sweheld(SWE_LCB, p);
+      remap16(KC_SWE_LCB_16, p);
+      return false;
+    case SWE_RCB:                         // Right curly bracket
+      swescape16(KC_RCBR, p);
+      sweheld(SWE_RCB, p);
+      remap16(KC_SWE_RCB_16, p);
+      return false;
+    case SWE_EQL:                         // Equals
+      swescape16(KC_EQL, p);
+      sweheld(SWE_EQL, p);
+      remap16(KC_SWE_EQL_16, p);
+      return false;
+    case SWE_MIN:                         // Minus
+      swescape16(KC_MINS, p);
+      sweheld(SWE_MIN, p);
+      remap(KC_SWE_MIN, p);
+      return false;
+    case SWE_UND:                         // Underscore
+      swescape16(KC_UNDS, p);
+      sweheld(SWE_UND, p);
+      remap16(KC_SWE_UND_16, p);
+      return false;
+    case SWE_PLS:                         // Plus
+      swescape16(KC_PLUS, p);
+      sweheld(SWE_PLS, p);
+      remap(KC_SWE_PLS, p);
       return false;
   }
   return true;
