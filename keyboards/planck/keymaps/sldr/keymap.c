@@ -331,7 +331,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case SWE_GRV:                         // Grave key
       swescape(KC_GRV, p);
       if (p) {
-        tap_code(KC_SWE_ACT);
+        tap_code16(KC_SWE_GRV_16);
         tap_code(KC_SPACE);
       }
       return false;
