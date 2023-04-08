@@ -149,7 +149,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * |   `    |   1  |   2  |   3  |   4  |   5  | NOOP |           | NOOP |   6  |   7  |   8  |   9  |   0  | Bsp/MED|
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * | Del    |   Q  |   D  |   R  |   W  |   B  |  CS  |           |  CA  |   J  |   F  |   U  |   P  |   ;  |   \    |
+ * | Tab    |   Q  |   D  |   R  |   W  |   B  |  CS  |           |  CA  |   J  |   F  |   U  |   P  |   ;  |   \    |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * | Ctrl   |   A  |   S  |   H  |   T  |   G  |------|           |------|   Y  |   N  |   E  |   O  |   I  |   '    |
  * |--------+------+------+------+------+------| Meh  |           |Hyper |------+------+------+------+------+--------|
@@ -161,21 +161,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                        | PSCR | NOOP |       | NOOP | Pl/ps|
  *                                 ,------|------|------|       |------+------+------.
  *                                 |      |      | NOOP |       | NOOP |      |      |
- *                                 | Tab  | Space|------|       |------| Enter| Bspc |
+ *                                 | Del  | Space|------|       |------| Enter| Bspc |
  *                                 |      |      |Esc/ut|       | NOOP |      |      |
  *                                 `--------------------'       `--------------------'
  */
 [BASE] = LAYOUT_ergodox_pretty(
   // left hand
   SWE_GRV, KC_1,    SWE_2,   KC_3,    SWE_4,   KC_5,    XXXXXXX,              XXXXXXX,      SWE_6,      SWE_7,   SWE_8,   SWE_9,   SWE_0,     LT(MDIA,KC_BSPC),
-  KC_DEL,  KC_Q,    KC_D,    KC_R,    KC_W,    KC_B,    RCS(KC_NO),           LCA(KC_NO),   KC_J,       KC_F,    KC_U,    KC_P,    SWE_SCL,  SWE_BSL,
+  KC_TAB,  KC_Q,    KC_D,    KC_R,    KC_W,    KC_B,    RCS(KC_NO),           LCA(KC_NO),   KC_J,       KC_F,    KC_U,    KC_P,    SWE_SCL,  SWE_BSL,
   KC_LCTL, KC_A,    KC_S,    KC_H,    KC_T,    KC_G,                                        KC_Y,       KC_N,    KC_E,    KC_O,    KC_I,     SWE_QOT,
   KC_LSFT, KC_Z,    KC_X,    KC_M,    KC_C,    KC_V,    MEH(KC_NO),           HYPR(KC_NO),  KC_K,       KC_L,    SWE_COM, SWE_DOT, SWE_SLS,  KC_RSFT,
   ESCUT,   KC_LALT, XXXXXXX, XXXXXXX, KC_LGUI,                                              MO(UTIL),   KC_LEFT, KC_UP,   KC_DOWN, KC_RIGHT,
 
                                               KC_PSCR,  XXXXXXX,              XXXXXXX,      KC_MPLY,
                                                         XXXXXXX,              XXXXXXX,
-                                      KC_TAB, KC_SPC,   ESCUT,                XXXXXXX,      KC_ENT,     KC_BSPC
+                                      KC_DEL, KC_SPC,   ESCUT,                XXXXXXX,      KC_ENT,     KC_BSPC
 ),
 /* Keymap 1: Utility layer
  *
