@@ -170,7 +170,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [BASE] = LAYOUT_ergodox_pretty(
   // left hand
   KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    XXXXXXX,              XXXXXXX,      KC_6,       KC_7,    KC_8,    KC_9,    KC_0,     LT(MDIA,KC_BSPC),
-  KC_DEL,  KC_Q,    KC_D,    KC_R,    KC_W,    KC_B,    RCS(KC_NO),           LCA(KC_NO),   KC_J,       KC_F,    KC_U,    KC_P,    SWE_SCL,  KC_BSLS,
+  KC_DEL,  KC_Q,    KC_D,    KC_R,    KC_W,    KC_B,    RCS(KC_NO),           LCA(KC_NO),   KC_J,       KC_F,    KC_U,    KC_P,    SWE_SCL,  SWE_BSL,
   KC_LCTL, KC_A,    KC_S,    KC_H,    KC_T,    KC_G,                                        KC_Y,       KC_N,    KC_E,    KC_O,    KC_I,     SWE_QOT,
   KC_LSFT, KC_Z,    KC_X,    KC_M,    KC_C,    KC_V,    MEH(KC_NO),           HYPR(KC_NO),  KC_K,       KC_L,    SWE_COM, SWE_DOT, SWE_SLS,  KC_RSFT,
   ESCUT,   KC_LALT, XXXXXXX, XXXXXXX, KC_LGUI,                                              MO(UTIL),   KC_LEFT, KC_UP,   KC_DOWN, KC_RIGHT,
@@ -368,6 +368,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       swescape(KC_SCLN, p);
       sweheld(SWE_SCL, p);
       remap_shift(KC_SWE_COL_16, KC_SWE_SCL_16, p);
+      return false;
+    case SWE_BSL:                         // Backslash/Pipe key
+      swescape16(KC_BSLS, p);
+      sweheld(SWE_BSL, p);
+      mods = get_mods();
+      if (mods & MOD_MASK_SHIFT) {
+        clear_mods();
+        remap16(KC_SWE_PIP_16, p);
+        set_mods(mods);
+      } else {
+        remap16(KC_SWE_BSL_16, p);
+      }
       return false;
   }
   return true;
