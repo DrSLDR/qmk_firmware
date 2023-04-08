@@ -171,8 +171,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // left hand
   KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    XXXXXXX,              XXXXXXX,      KC_6,       KC_7,    KC_8,    KC_9,    KC_0,     LT(MDIA,KC_BSPC),
   KC_DEL,  KC_Q,    KC_D,    KC_R,    KC_W,    KC_B,    RCS(KC_NO),           LCA(KC_NO),   KC_J,       KC_F,    KC_U,    KC_P,    SWE_SCL,  KC_BSLS,
-  KC_LCTL, KC_A,    KC_S,    KC_H,    KC_T,    KC_G,                                        KC_Y,       KC_N,    KC_E,    KC_O,    KC_I,     KC_QUOT,
-  KC_LSFT, KC_Z,    KC_X,    KC_M,    KC_C,    KC_V,    MEH(KC_NO),           HYPR(KC_NO),  KC_K,       KC_L,    KC_COMM, KC_DOT,  KC_SLSH,  KC_RSFT,
+  KC_LCTL, KC_A,    KC_S,    KC_H,    KC_T,    KC_G,                                        KC_Y,       KC_N,    KC_E,    KC_O,    KC_I,     SWE_QOT,
+  KC_LSFT, KC_Z,    KC_X,    KC_M,    KC_C,    KC_V,    MEH(KC_NO),           HYPR(KC_NO),  KC_K,       KC_L,    SWE_COM, SWE_DOT, SWE_SLS,  KC_RSFT,
   ESCUT,   KC_LALT, XXXXXXX, XXXXXXX, KC_LGUI,                                              MO(UTIL),   KC_LEFT, KC_UP,   KC_DOWN, KC_RIGHT,
 
                                               KC_PSCR,  XXXXXXX,              XXXXXXX,      KC_MPLY,
@@ -336,6 +336,34 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         record->event.pressed = rp;
       }
       return true;
+    // Swedish key remappings
+    case SWE_DOT:                         // Period key
+      swescape(KC_DOT, p);
+      sweheld(SWE_DOT, p);
+      remap_shift(KC_SWE_RAN_16, KC_DOT, p);
+      return false;
+    case SWE_COM:                         // Comma key
+      swescape(KC_COMM, p);
+      sweheld(SWE_COM, p);
+      mods = get_mods();
+      if(mods & MOD_MASK_SHIFT) {         // <
+        clear_mods();
+        remap(KC_SWE_LAN, p);
+        set_mods(mods);
+      } else {                            // ,
+        remap16(KC_COMM, p);
+      }
+      return false;
+    case SWE_SLS:                         // Slash key
+      swescape(KC_SLSH, p);
+      sweheld(SWE_SLS, p);
+      remap_shift(KC_SWE_QST_16, KC_SWE_SLS_16, p);
+      return false;
+    case SWE_QOT:                         //  Quote key
+      swescape(KC_QUOT, p);
+      sweheld(SWE_QOT, p);
+      remap_shift(KC_SWE_DQT_16, KC_SWE_QOT, p);
+      return false;
     case SWE_SCL:                         // Semicolon key
       swescape(KC_SCLN, p);
       sweheld(SWE_SCL, p);
