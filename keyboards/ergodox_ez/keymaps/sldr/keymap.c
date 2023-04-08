@@ -282,35 +282,42 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // clang-format on
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    if (record->event.pressed) {
-        switch (keycode) {
-            case VRSN:
-                SEND_STRING(QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
-                return false;
-            case QMAK:
-                mods = get_mods();
-                if ((mods & (MOD_MASK_SHIFT)) && (mods & (MOD_MASK_CTRL))) {
-                    clear_mods();
-                    SEND_STRING("qmk flash -j 2 --keyboard " QMK_KEYBOARD " --keymap " QMK_KEYMAP);
-                    wait_ms(150);
-                    tap_code(KC_ENT);
-                    reset_keyboard();
-                } else if (mods & (MOD_MASK_SHIFT)) {
-                    clear_mods();
-                    SEND_STRING("qmk flash -j 2 --keyboard " QMK_KEYBOARD " --keymap " QMK_KEYMAP);
-                } else {
-                    SEND_STRING("qmk compile -j 2 --keyboard " QMK_KEYBOARD " --keymap " QMK_KEYMAP);
-                }
-                return false;
-            case LUP:
-                move_layer(true);
-                return false;
-            case LDN:
-                move_layer(false);
-                return false;
+  const bool p = record->event.pressed;
+  switch(keycode) {
+    case VRSN:
+      if (p) {
+        SEND_STRING(QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
+      }
+      return false;
+    case QMAK:
+      if (p) {
+        mods = get_mods();
+        if ((mods & (MOD_MASK_SHIFT)) && (mods & (MOD_MASK_CTRL))) {
+          clear_mods();
+          SEND_STRING("qmk flash -j 2 --keyboard " QMK_KEYBOARD " --keymap " QMK_KEYMAP);
+          wait_ms(150);
+          tap_code(KC_ENT);
+          reset_keyboard();
+        } else if (mods & (MOD_MASK_SHIFT)) {
+          clear_mods();
+          SEND_STRING("qmk flash -j 2 --keyboard " QMK_KEYBOARD " --keymap " QMK_KEYMAP);
+        } else {
+          SEND_STRING("qmk compile -j 2 --keyboard " QMK_KEYBOARD " --keymap " QMK_KEYMAP);
         }
-    }
-    return true;
+      }
+      return false;
+    case LUP:
+      if (p) {
+        move_layer(true);
+      }
+      return false;
+    case LDN:
+      if(p) {
+        move_layer(false);
+      }
+      return false;
+  }
+  return true;
 }
 
 // Runs just one time when the keyboard initializes.
