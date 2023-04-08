@@ -22,6 +22,10 @@ enum custom_keycodes {
 // Declare variables we'll play with later
 uint8_t mods;
 static uint8_t active_base_layer;
+// Declare a "we are in Sweden" toggle
+static bool swe_mode;
+static bool swe_key_held;
+static uint16_t swe_held_kc;
 
 // Declare the layer management function
 void move_layer(bool up);
@@ -235,6 +239,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 // Runs just one time when the keyboard initializes.
 void keyboard_post_init_user(void) {
   active_base_layer = BASE;
+  swe_mode = true;
+  swe_key_held = false;
+  swe_held_kc = 0;
 #ifdef RGBLIGHT_COLOR_LAYER_0
     rgblight_setrgb(RGBLIGHT_COLOR_LAYER_0);
 #endif
