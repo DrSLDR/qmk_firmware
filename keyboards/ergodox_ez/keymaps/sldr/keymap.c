@@ -41,6 +41,57 @@ void move_layer(bool up);
 #define CLEFT C(KC_LEFT)
 #define ESCUT LT(UTIL, KC_ESC)
 
+// Proto-Swedish-mode shorthand
+#define PIPE  S(KC_BSLS)
+#define ARING RALT(KC_A)    // Å, å
+#define ADIAE RALT(KC_QUOT) // Ä, ä
+#define ODIAE RALT(KC_O)    // Ö, ö
+#define EACUT RALT(KC_Y)    // É, é
+// Actual swedish mode keycodes
+#define KC_SWE_AO     KC_LBRC
+#define KC_SWE_AE     KC_QUOT
+#define KC_SWE_OE     KC_SCLN
+#define KC_SWE_PAR    KC_GRV
+#define KC_SWE_ACT    KC_EQL
+#define KC_SWE_LAN    KC_NUBS
+#define KC_SWE_QOT    KC_BSLS
+#define KC_SWE_MIN    KC_SLSH
+#define KC_SWE_PLS    KC_MINS
+#define KC_SWE_COL_16 S(KC_DOT)
+#define KC_SWE_SCL_16 S(KC_COMM)
+#define KC_SWE_RAN_16 S(KC_NUBS)
+#define KC_SWE_GRV_16 S(KC_EQL)
+#define KC_SWE_SLS_16 S(KC_7)
+#define KC_SWE_QST_16 S(KC_MINS)
+#define KC_SWE_DQT_16 S(KC_2)
+#define KC_SWE_TIL_16 ALGR(KC_RBRC)
+#define KC_SWE_AT_16  ALGR(KC_2)
+#define KC_SWE_DOL_16 ALGR(KC_4)
+#define KC_SWE_AMP_16 S(KC_6)
+#define KC_SWE_CAR_16 S(KC_RBRC)
+#define KC_SWE_AST_16 S(KC_NUHS)
+#define KC_SWE_LPR_16 S(KC_8)
+#define KC_SWE_RPR_16 S(KC_9)
+#define KC_SWE_PIP_16 ALGR(KC_NUBS)
+#define KC_SWE_BSL_16 ALGR(KC_MINS)
+#define KC_SWE_LCB_16 ALGR(KC_7)
+#define KC_SWE_RCB_16 ALGR(KC_0)
+#define KC_SWE_LBR_16 ALGR(KC_8)
+#define KC_SWE_RBR_16 ALGR(KC_9)
+#define KC_SWE_EQL_16 S(KC_0)
+#define KC_SWE_UND_16 S(KC_SWE_MIN)
+// Gnarly as sin function macro to handle press/depress remapping
+#define remap(K, P) (P ? register_code(K) : unregister_code(K))
+#define remap16(K, P) (P ? register_code16(K) : unregister_code16(K))
+// Extremely gnarly shorthand for the swe-held-key handler
+#define sweheld(K, P) if (P) {swe_key_held=true; swe_held_kc=K;} else {swe_key_held=false;}
+// More shorthand to the people
+// Handles "simple" shift-dependent key remapping
+#define remap_shift(SK, NK, P) ((get_mods() & MOD_MASK_SHIFT) ? remap16(SK, P) : remap16(NK, P))
+// Provides an early-exit for non-swedish remappings
+#define swescape(K, P) if (!swe_mode) {remap(K, P); return false;}
+#define swescape16(K, P) if (!swe_mode) {remap16(K, P); return false;}
+
 // Combo things
 enum combos {
   AO_ARING,       // Å, å
