@@ -322,6 +322,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         swe_mode = !swe_mode;
       }
       return false;
+    // Special Swedish modifier handling
+    case KC_LSFT:
+    case KC_LCTL:
+    case KC_LALT:
+    case KC_RSFT:
+    case KC_RCTL:
+    case KC_ALGR:
+      if (swe_mode && swe_key_held) {
+        bool rp = p;
+        record->event.pressed = false;
+        process_record_user(swe_held_kc, record);
+        record->event.pressed = rp;
+      }
+      return true;
   }
   return true;
 }
