@@ -212,5 +212,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // Begin SLDR stuff
 /* Combo definitions */
-#define COMBO_COUNT 12
+#define COMBO_COUNT 6
 #define COMBO_TERM 50
