@@ -24,13 +24,13 @@ enum custom_keycodes {
     SWE_SCL,
     SWE_QOT,
     SWE_GRV,
-    SWE_AT,
-    SWE_DOL,
-    SWE_AMP,
-    SWE_CAR,
-    SWE_AST,
-    SWE_LPR,
-    SWE_RPR,
+    SWE_2,
+    SWE_4,
+    SWE_6,
+    SWE_7,
+    SWE_8,
+    SWE_9,
+    SWE_0,
     SWE_BSL,
     SWE_LBR,
     SWE_RBR,
@@ -167,7 +167,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [BASE] = LAYOUT_ergodox_pretty(
   // left hand
-  SWE_GRV, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    XXXXXXX,              XXXXXXX,      KC_6,       KC_7,    KC_8,    KC_9,    KC_0,     LT(MDIA,KC_BSPC),
+  SWE_GRV, KC_1,    SWE_2,   KC_3,    SWE_4,   KC_5,    XXXXXXX,              XXXXXXX,      SWE_6,      SWE_7,   SWE_8,   SWE_9,   SWE_0,     LT(MDIA,KC_BSPC),
   KC_DEL,  KC_Q,    KC_D,    KC_R,    KC_W,    KC_B,    RCS(KC_NO),           LCA(KC_NO),   KC_J,       KC_F,    KC_U,    KC_P,    SWE_SCL,  SWE_BSL,
   KC_LCTL, KC_A,    KC_S,    KC_H,    KC_T,    KC_G,                                        KC_Y,       KC_N,    KC_E,    KC_O,    KC_I,     SWE_QOT,
   KC_LSFT, KC_Z,    KC_X,    KC_M,    KC_C,    KC_V,    MEH(KC_NO),           HYPR(KC_NO),  KC_K,       KC_L,    SWE_COM, SWE_DOT, SWE_SLS,  KC_RSFT,
@@ -393,6 +393,93 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           tap_code16(KC_SWE_GRV_16);
           tap_code(KC_SPACE);
         }
+      }
+      return false;
+    case SWE_2:                             // 2-key
+      swescape(KC_2, p);
+      sweheld(SWE_2, p);
+      mods = get_mods();
+      if (mods & MOD_MASK_SHIFT) {
+        clear_mods();
+        remap16(KC_SWE_AT_16, p);
+        set_mods(mods);
+      } else {
+        remap(KC_2, p);
+      }
+      return false;
+    case SWE_4:                             // 4-key
+      swescape(KC_4, p);
+      sweheld(SWE_4, p);
+      mods = get_mods();
+      if (mods & MOD_MASK_SHIFT) {
+        clear_mods();
+        remap16(KC_SWE_DOL_16, p);
+        set_mods(mods);
+      } else {
+        remap(KC_4, p);
+      }
+      return false;
+    case SWE_6:                             // 6-key
+      swescape(KC_6, p);
+      sweheld(SWE_6, p);
+      mods = get_mods();
+      if (mods & MOD_MASK_SHIFT) {
+        if (p) {
+          clear_mods();
+          tap_code16(KC_SWE_CAR_16);
+          tap_code(KC_SPACE);
+          set_mods(mods);
+        }
+      } else {
+        remap(KC_6, p);
+      }
+      return false;
+    case SWE_7:                             // 7-key
+      swescape(KC_7, p);
+      sweheld(SWE_7, p);
+      mods = get_mods();
+      if (mods & MOD_MASK_SHIFT) {
+        clear_mods();
+        remap16(KC_SWE_AMP_16, p);
+        set_mods(mods);
+      } else {
+        remap(KC_7, p);
+      }
+      return false;
+    case SWE_8:                             // 8-key
+      swescape(KC_8, p);
+      sweheld(SWE_8, p);
+      mods = get_mods();
+      if (mods & MOD_MASK_SHIFT) {
+        clear_mods();
+        remap16(KC_SWE_AST_16, p);
+        set_mods(mods);
+      } else {
+        remap(KC_8, p);
+      }
+      return false;
+    case SWE_9:                             // 9-key
+      swescape(KC_9, p);
+      sweheld(SWE_9, p);
+      mods = get_mods();
+      if (mods & MOD_MASK_SHIFT) {
+        clear_mods();
+        remap16(KC_SWE_LPR_16, p);
+        set_mods(mods);
+      } else {
+        remap(KC_9, p);
+      }
+      return false;
+    case SWE_0:                             // 0-key
+      swescape(KC_0, p);
+      sweheld(SWE_0, p);
+      mods = get_mods();
+      if (mods & MOD_MASK_SHIFT) {
+        clear_mods();
+        remap16(KC_SWE_RPR_16, p);
+        set_mods(mods);
+      } else {
+        remap(KC_0, p);
       }
       return false;
   }
