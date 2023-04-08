@@ -201,8 +201,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [UTIL] = LAYOUT_ergodox_pretty(
   // left hand
   _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F11,      KC_F12,  KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______,
-  KC_CAPS, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______, _______,     _______, _______, KC_LCBR, KC_RCBR, KC_EQL,  KC_PLUS, _______,
-  _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______,                       _______, KC_LBRC, KC_RBRC, KC_MINS, KC_UNDS, _______,
+  KC_CAPS, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______, _______,     _______, _______, SWE_LCB, SWE_RCB, SWE_EQL, SWE_PLS, _______,
+  _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______,                       _______, SWE_LBR, SWE_RBR, SWE_MIN, SWE_UND, _______,
   _______, CLEFT,   CDOWN,   CUP,     CRGHT,   _______, _______,     _______, _______, _______, _______, _______, _______, _______,
   _______, _______, _______, _______, _______,                                         _______, KC_HOME, KC_PGUP, KC_PGDN, KC_END,
 
@@ -481,6 +481,46 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       } else {
         remap(KC_0, p);
       }
+      return false;
+    case SWE_LBR:                         // Left bracket
+      swescape16(KC_LBRC, p);
+      sweheld(SWE_LBR, p);
+      remap16(KC_SWE_LBR_16, p);
+      return false;
+    case SWE_RBR:                         // Right bracket
+      swescape16(KC_RBRC, p);
+      sweheld(SWE_RBR, p);
+      remap16(KC_SWE_RBR_16, p);
+      return false;
+    case SWE_LCB:                         // Left curly bracket
+      swescape16(KC_LCBR, p);
+      sweheld(SWE_LCB, p);
+      remap16(KC_SWE_LCB_16, p);
+      return false;
+    case SWE_RCB:                         // Right curly bracket
+      swescape16(KC_RCBR, p);
+      sweheld(SWE_RCB, p);
+      remap16(KC_SWE_RCB_16, p);
+      return false;
+    case SWE_EQL:                         // Equals
+      swescape16(KC_EQL, p);
+      sweheld(SWE_EQL, p);
+      remap16(KC_SWE_EQL_16, p);
+      return false;
+    case SWE_MIN:                         // Minus
+      swescape16(KC_MINS, p);
+      sweheld(SWE_MIN, p);
+      remap(KC_SWE_MIN, p);
+      return false;
+    case SWE_UND:                         // Underscore
+      swescape16(KC_UNDS, p);
+      sweheld(SWE_UND, p);
+      remap16(KC_SWE_UND_16, p);
+      return false;
+    case SWE_PLS:                         // Plus
+      swescape16(KC_PLUS, p);
+      sweheld(SWE_PLS, p);
+      remap(KC_SWE_PLS, p);
       return false;
   }
   return true;
