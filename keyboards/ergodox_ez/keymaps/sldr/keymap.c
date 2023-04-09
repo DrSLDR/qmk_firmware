@@ -607,30 +607,54 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 /* Combo management */
 void process_combo_event(uint16_t combo_index, bool pressed) {
-   switch(combo_index) {
-      case AO_ARING:
+  switch(combo_index) {
+    case AO_ARING:                      // Å, å
       if (pressed) {
-        tap_code16(RALT(KC_A));         // Å, å
+        if (swe_mode) {
+          tap_code(KC_SWE_AO);
+        } else {
+          tap_code16(ALGR(KC_A));
+        }
       }
       break;
-    case AE_ADIAE:
+    case AE_ADIAE:                      // Ä, ä
       if (pressed) {
-        tap_code16(RALT(KC_QUOT));      // Ä, ä
+        if (swe_mode) {
+          tap_code(KC_SWE_AE);
+        } else {
+          tap_code16(ALGR(KC_QUOT));
+        }
       }
       break;
-    case EO_ODIAE:
+    case EO_ODIAE:                      // Ö, ö
       if (pressed) {
-        tap_code16(RALT(KC_O));         // Ö, ö
+        if (swe_mode) {
+          tap_code(KC_SWE_OE);
+        } else {
+          tap_code16(ALGR(KC_O));
+        }
       }
       break;
-    case EU_EACUT:
+    case EU_EACUT:                      // É, é
       if (pressed) {
-        tap_code16(RALT(KC_Y));         // É, é
+        if (swe_mode) {
+          mods = get_mods();
+          clear_mods();
+          tap_code(KC_SWE_ACT);
+          set_mods(mods);
+          tap_code(KC_E);
+        } else {
+          tap_code16(ALGR(KC_Y));
+        }
       }
       break;
-    case PAR_SECT:
+    case PAR_SECT:                      // §
       if (pressed) {
-        tap_code16(RALT(KC_2));         // §
+        if (swe_mode) {
+          tap_code(KC_SWE_PAR);
+        } else {
+          tap_code16(ALGR(KC_2));
+        }
       }
       break;
     case EUR_EURO:
@@ -638,7 +662,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         tap_code16(RALT(KC_E));         // €
       }
       break;
-   }
+  }
 }
 
 // Layer manager
