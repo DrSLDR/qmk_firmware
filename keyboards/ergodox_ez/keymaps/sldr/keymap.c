@@ -123,10 +123,10 @@ void move_layer(bool up);
 #define SWE_NOT_OFF active_swe_mode != OFF
 #define SWE_ON_ONLY active_swe_mode == ON
 // Provides an early-exit for non-swedish remappings
-#define swescape(K, P) if (active_swe_mode != OFF) {remap(K, P); return false;}
-#define swescape_nr(K, P) if (active_swe_mode == ON) {remap(K, P); return false;}
-#define swescape16(K, P) if (active_swe_mode != OFF) {remap16(K, P); return false;}
-#define swescape16_nr(K, P) if (active_swe_mode == ON) {remap16(K, P); return false;}
+#define swescape(K, P) if (!(SWE_NOT_OFF)) {remap(K, P); return false;}
+#define swescape_nr(K, P) if (!(SWE_ON_ONLY)) {remap(K, P); return false;}
+#define swescape16(K, P) if (!(SWE_NOT_OFF)) {remap16(K, P); return false;}
+#define swescape16_nr(K, P) if (!(SWE_ON_ONLY)) {remap16(K, P); return false;}
 
 // Combo things
 enum combos {
