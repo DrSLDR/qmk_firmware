@@ -46,7 +46,14 @@ enum custom_keycodes {
 // Declare variables we'll play with later
 uint8_t mods;
 static uint8_t active_base_layer;
-// Declare a "we are in Sweden" toggle
+// Declare a Swedish mode enum
+enum SWEDISH_MODE {
+  ON,
+  ON_SANS_NUMROW,
+  OFF,
+};
+// Declare "we are in Sweden" toggles
+static uint8_t active_swe_mode;
 static bool swe_mode;
 static bool swe_key_held;
 static uint16_t swe_held_kc;
@@ -318,6 +325,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case SWE_TOG:
       if (p) {
         swe_mode = !swe_mode;
+        switch(active_swe_mode) {
+          case ON:
+            active_swe_mode = OFF;
+            break;
+          case OFF:
+            active_swe_mode = ON_SANS_NUMROW;
+            break;
+          case ON_SANS_NUMROW:
+            active_swe_mode = ON;
+            break;
+        }
       }
       return false;
     // Special Swedish modifier handling
@@ -529,6 +547,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 // Runs just one time when the keyboard initializes.
 void keyboard_post_init_user(void) {
   active_base_layer = BASE;
+  active_swe_mode = ON;
   swe_mode = true;
   swe_key_held = false;
   swe_held_kc = 0;
