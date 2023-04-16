@@ -418,7 +418,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
     case SWE_GRV:                         // Grave/Tilde key
-      swescape(KC_GRV, p);
+      swescape_nr(KC_GRV, p);
       sweheld(SWE_GRV, p);
       if (p) {
         mods = get_mods();
@@ -434,7 +434,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
     case SWE_2:                             // 2-key
-      swescape(KC_2, p);
+      swescape_nr(KC_2, p);
       sweheld(SWE_2, p);
       mods = get_mods();
       if (mods & MOD_MASK_SHIFT) {
@@ -446,7 +446,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
     case SWE_4:                             // 4-key
-      swescape(KC_4, p);
+      swescape_nr(KC_4, p);
       sweheld(SWE_4, p);
       mods = get_mods();
       if (mods & MOD_MASK_SHIFT) {
@@ -458,7 +458,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
     case SWE_6:                             // 6-key
-      swescape(KC_6, p);
+      swescape_nr(KC_6, p);
       sweheld(SWE_6, p);
       mods = get_mods();
       if (mods & MOD_MASK_SHIFT) {
@@ -473,7 +473,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
     case SWE_7:                             // 7-key
-      swescape(KC_7, p);
+      swescape_nr(KC_7, p);
       sweheld(SWE_7, p);
       mods = get_mods();
       if (mods & MOD_MASK_SHIFT) {
@@ -485,7 +485,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
     case SWE_8:                             // 8-key
-      swescape(KC_8, p);
+      swescape_nr(KC_8, p);
       sweheld(SWE_8, p);
       mods = get_mods();
       if (mods & MOD_MASK_SHIFT) {
@@ -497,7 +497,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
     case SWE_9:                             // 9-key
-      swescape(KC_9, p);
+      swescape_nr(KC_9, p);
       sweheld(SWE_9, p);
       mods = get_mods();
       if (mods & MOD_MASK_SHIFT) {
@@ -509,7 +509,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
     case SWE_0:                             // 0-key
-      swescape(KC_0, p);
+      swescape_nr(KC_0, p);
       sweheld(SWE_0, p);
       mods = get_mods();
       if (mods & MOD_MASK_SHIFT) {
