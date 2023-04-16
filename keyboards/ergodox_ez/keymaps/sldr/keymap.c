@@ -40,6 +40,7 @@ enum custom_keycodes {
     SWE_MIN,
     SWE_UND,
     SWE_PLS,
+    SWE_MODE,
 #endif
 };
 
@@ -228,7 +229,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * |        |      |      |      |      |      |      |           |      |      |      | Prev | Next |      |        |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |      |      |      | Lclk | Rclk |                                       |VolUp |VolDn | Mute |      |      |
+ *   |SEMODE|      |      | Lclk | Rclk |                                       |VolUp |VolDn | Mute |      |      |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
  *                                        | VER  | MAKE |       | BOOT |      |
@@ -240,11 +241,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [MDIA] = LAYOUT_ergodox_pretty(
   // left hand
-  SWE_TOG, _______, _______, _______, _______, _______, _______,     _______, _______, _______, _______, _______, _______, _______,
-  _______, _______, _______, KC_MS_U, _______, _______, _______,     _______, _______, _______, _______, _______, _______, _______,
-  _______, _______, KC_MS_L, KC_MS_D, KC_MS_R, _______,                       _______, _______, _______, _______, _______, KC_MPLY,
-  _______, _______, _______, _______, _______, _______, _______,     _______, _______, _______, KC_MPRV, KC_MNXT, _______, _______,
-  _______, _______, _______, KC_BTN1, KC_BTN2,                                         KC_VOLU, KC_VOLD, KC_MUTE, _______, _______,
+  SWE_TOG,  _______, _______, _______, _______, _______, _______,     _______, _______, _______, _______, _______, _______, _______,
+  _______,  _______, _______, KC_MS_U, _______, _______, _______,     _______, _______, _______, _______, _______, _______, _______,
+  _______,  _______, KC_MS_L, KC_MS_D, KC_MS_R, _______,                       _______, _______, _______, _______, _______, KC_MPLY,
+  _______,  _______, _______, _______, _______, _______, _______,     _______, _______, _______, KC_MPRV, KC_MNXT, _______, _______,
+  SWE_MODE, _______, _______, KC_BTN1, KC_BTN2,                                         KC_VOLU, KC_VOLD, KC_MUTE, _______, _______,
 
                                                VRSN,    QMAK,        QK_BOOT, _______,
                                                         _______,     _______,
@@ -334,6 +335,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
           case ON_SANS_NUMROW:
             active_swe_mode = ON;
+            break;
+        }
+      }
+      return false;
+    // Tell the world about which mode we are in
+    case SWE_MODE:
+      if (p) {
+        switch(active_swe_mode) {
+          case ON:
+            SEND_STRING("ON");
+            break;
+          case OFF:
+            SEND_STRING("OFF");
+            break;
+          case ON_SANS_NUMROW:
+            SEND_STRING("NUMROW");
             break;
         }
       }
