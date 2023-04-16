@@ -53,9 +53,8 @@ enum SWEDISH_MODE {
   ON_SANS_NUMROW,
   OFF,
 };
-// Declare "we are in Sweden" toggles
+// Declare Swedish mode management variables
 static uint8_t active_swe_mode;
-static bool swe_mode;
 static bool swe_key_held;
 static uint16_t swe_held_kc;
 
@@ -120,9 +119,14 @@ void move_layer(bool up);
 // More shorthand to the people
 // Handles "simple" shift-dependent key remapping
 #define remap_shift(SK, NK, P) ((get_mods() & MOD_MASK_SHIFT) ? remap16(SK, P) : remap16(NK, P))
+// Enum comparison shorthands
+#define SWE_NOT_OFF active_swe_mode != OFF
+#define SWE_ON_ONLY active_swe_mode == ON
 // Provides an early-exit for non-swedish remappings
-#define swescape(K, P) if (!swe_mode) {remap(K, P); return false;}
-#define swescape16(K, P) if (!swe_mode) {remap16(K, P); return false;}
+#define swescape(K, P) if (active_swe_mode != OFF) {remap(K, P); return false;}
+#define swescape_nr(K, P) if (active_swe_mode == ON) {remap(K, P); return false;}
+#define swescape16(K, P) if (active_swe_mode != OFF) {remap16(K, P); return false;}
+#define swescape16_nr(K, P) if (active_swe_mode == ON) {remap16(K, P); return false;}
 
 // Combo things
 enum combos {
@@ -325,7 +329,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // Swedish mode setter
     case SWE_TOG:
       if (p) {
-        swe_mode = !swe_mode;
         switch(active_swe_mode) {
           case ON:
             active_swe_mode = OFF;
@@ -362,7 +365,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case KC_RSFT:
     case KC_RCTL:
     case KC_ALGR:
-      if (swe_mode && swe_key_held) {
+      if ((SWE_NOT_OFF) && swe_key_held) {
         bool rp = p;
         record->event.pressed = false;
         process_record_user(swe_held_kc, record);
@@ -565,7 +568,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 void keyboard_post_init_user(void) {
   active_base_layer = BASE;
   active_swe_mode = ON;
-  swe_mode = true;
   swe_key_held = false;
   swe_held_kc = 0;
 #ifdef RGBLIGHT_COLOR_LAYER_0
@@ -646,7 +648,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
   switch(combo_index) {
     case AO_ARING:                      // Å, å
       if (pressed) {
-        if (swe_mode) {
+        if (SWE_NOT_OFF) {
           tap_code(KC_SWE_AO);
         } else {
           tap_code16(ALGR(KC_A));
@@ -655,7 +657,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
       break;
     case AE_ADIAE:                      // Ä, ä
       if (pressed) {
-        if (swe_mode) {
+        if (SWE_NOT_OFF) {
           tap_code(KC_SWE_AE);
         } else {
           tap_code16(ALGR(KC_QUOT));
@@ -664,7 +666,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
       break;
     case EO_ODIAE:                      // Ö, ö
       if (pressed) {
-        if (swe_mode) {
+        if (SWE_NOT_OFF) {
           tap_code(KC_SWE_OE);
         } else {
           tap_code16(ALGR(KC_O));
@@ -673,7 +675,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
       break;
     case EU_EACUT:                      // É, é
       if (pressed) {
-        if (swe_mode) {
+        if (SWE_NOT_OFF) {
           mods = get_mods();
           clear_mods();
           tap_code(KC_SWE_ACT);
@@ -686,7 +688,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
       break;
     case PAR_SECT:                      // §
       if (pressed) {
-        if (swe_mode) {
+        if (SWE_NOT_OFF) {
           tap_code(KC_SWE_PAR);
         } else {
           tap_code16(ALGR(KC_2));
