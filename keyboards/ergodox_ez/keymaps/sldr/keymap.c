@@ -170,7 +170,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *   |Esc/ut| Alt  | NOOP | NOOP | LGui |                                       | UTIL | Left |  Up  | Down | Right |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
- *                                        | PSCR | NOOP |       | NOOP | Pl/ps|
+ *                                        | PSCR | NOOP |       | Alt  | Pl/ps|
  *                                 ,------|------|------|       |------+------+------.
  *                                 |      |      | NOOP |       | NOOP |      |      |
  *                                 | Del  | Space|------|       |------| Enter| Bspc |
@@ -185,7 +185,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_LSFT, KC_Z,    KC_X,    KC_M,    KC_C,    KC_V,    MEH(KC_NO),           HYPR(KC_NO),  KC_K,       KC_L,    SWE_COM, SWE_DOT, SWE_SLS,  KC_RSFT,
   ESCUT,   KC_LALT, XXXXXXX, XXXXXXX, KC_LGUI,                                              MO(UTIL),   KC_LEFT, KC_UP,   KC_DOWN, KC_RIGHT,
 
-                                              KC_PSCR,  XXXXXXX,              XXXXXXX,      KC_MPLY,
+                                              KC_PSCR,  XXXXXXX,              KC_RALT,      KC_MPLY,
                                                         XXXXXXX,              XXXXXXX,
                                       KC_DEL, KC_SPC,   ESCUT,                XXXXXXX,      KC_ENT,     KC_BSPC
 ),
