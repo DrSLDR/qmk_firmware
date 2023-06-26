@@ -167,7 +167,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------| Meh  |           |Hyper |------+------+------+------+------+--------|
  * | LShift |   Z  |   X  |   M  |   C  |   V  |      |           |      |   K  |   L  |   ,  |   .  |   /  | RShift |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |Esc/ut| Alt  | NOOP | NOOP | LGui |                                       | UTIL | Left |  Up  | Down | Right |
+ *   |Esc/ut| Alt  | NOOP | INS  | LGui |                                       | UTIL | Left |  Up  | Down | Right |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
  *                                        | PSCR | NOOP |       | Alt  | Pl/ps|
@@ -183,7 +183,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TAB,  KC_Q,    KC_D,    KC_R,    KC_W,    KC_B,    RCS(KC_NO),           LCA(KC_NO),   KC_J,       KC_F,    KC_U,    KC_P,    SWE_SCL,  SWE_BSL,
   KC_LCTL, KC_A,    KC_S,    KC_H,    KC_T,    KC_G,                                        KC_Y,       KC_N,    KC_E,    KC_O,    KC_I,     SWE_QOT,
   KC_LSFT, KC_Z,    KC_X,    KC_M,    KC_C,    KC_V,    MEH(KC_NO),           HYPR(KC_NO),  KC_K,       KC_L,    SWE_COM, SWE_DOT, SWE_SLS,  KC_RSFT,
-  ESCUT,   KC_LALT, XXXXXXX, XXXXXXX, KC_LGUI,                                              MO(UTIL),   KC_LEFT, KC_UP,   KC_DOWN, KC_RIGHT,
+  ESCUT,   KC_LALT, XXXXXXX, KC_INS,  KC_LGUI,                                              MO(UTIL),   KC_LEFT, KC_UP,   KC_DOWN, KC_RIGHT,
 
                                               KC_PSCR,  XXXXXXX,              KC_LALT,      KC_MPLY,
                                                         XXXXXXX,              XXXXXXX,
