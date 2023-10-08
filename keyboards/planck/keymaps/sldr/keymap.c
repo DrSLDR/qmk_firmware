@@ -325,14 +325,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       swescape16(KC_TILD, p);
       if (p) {
         tap_code16(KC_SWE_TIL_16);
-        tap_code(KC_SPACE);
+        // tap_code(KC_SPACE);
       }
       return false;
     case SWE_GRV:                         // Grave key
       swescape(KC_GRV, p);
       if (p) {
         tap_code16(KC_SWE_GRV_16);
-        tap_code(KC_SPACE);
+        // tap_code(KC_SPACE);
       }
       return false;
     case SWE_AT:                          // At-sign
