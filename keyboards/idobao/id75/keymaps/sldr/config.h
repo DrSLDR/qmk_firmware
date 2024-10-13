@@ -22,6 +22,9 @@
 #undef DEBOUNCE
 #define DEBOUNCE 5
 
+// Allow the Make keycode
+#define ENABLE_COMPILE_KEYCODE
+
 // Define some LIGHTS and EFFECTS
 
 #define RESET_LED_HSV HSV_RED
@@ -29,9 +32,9 @@
 #define _QW_LED_HSV 100, 255, 255
 #define _OSM_LED_HSV HSV_GREEN
 
-#define STARTUP_EFFECT RGBLIGHT_MODE_STATIC_LIGHT
-#define FN_EFFECT RGBLIGHT_MODE_SNAKE + 5
-#define CAPS_EFFECT RGBLIGHT_MODE_KNIGHT + 1
+#define STARTUP_EFFECT RGB_MATRIX_SOLID_COLOR
+#define FN_EFFECT RGB_MATRIX_SOLID_COLOR //RGBLIGHT_MODE_SNAKE + 5
+#define CAPS_EFFECT RGB_MATRIX_SOLID_COLOR //RGBLIGHT_MODE_KNIGHT + 1
 
 // Combo stuff
 #define COMBO_COUNT 4
@@ -55,6 +58,6 @@
 #define VENDOR_ID       0x51dc
 #define PRODUCT_ID      0x005e
 #define DEVICE_VER      0x0001
-#define MANUFACTURER    SLDR
-#define PRODUCT         ID75 (idobo)
-#define DESCRIPTION     15x5 matrix keyboard
+#define MANUFACTURER    "SLDR"
+#define PRODUCT         "ID75 (idobo)"
+#define DESCRIPTION     "15x5 matrix keyboard"
