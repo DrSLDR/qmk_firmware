@@ -52,6 +52,7 @@ void move_layer(bool up);
 enum custom_keycodes {
     LY_UP = SAFE_RANGE
   , LY_DN
+  , RESET
   , SKY_S1     // Skyrim, sell 1
   , SKY_MK     // Skyrim, make thing
   , SKY_MK2    // Skyrim, make thing but differently
@@ -148,7 +149,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 
  [_FN] = LAYOUT_ortho_5x15( /* FUNCTION */
-    _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F11,  QK_BOOT, KC_F12,  KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_DEL,  \
+    _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F11,  RESET,   KC_F12,  KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_DEL,  \
     _______, SKY_S1,  SKY_MK,  SKY_MK2, _______, _______, _______, KC_MSTP, _______, _______, _______, _______, _______, _______, _______, \
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_LBRC, KC_RBRC, KC_MINS, KC_EQL,  _______, \
     _______, _______, _______, _______, _______, _______, _______, RGB_TOG, _______, _______, _______, _______, _______, _______, _______, \
@@ -182,11 +183,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record){
   switch (keycode) {
-    case QK_BOOT:
+    case RESET:
       if (record->event.pressed){
         rgblight_mode(STARTUP_EFFECT);
         rgblight_sethsv(RESET_LED_HSV);
         wait_ms(50);
+        reset_keyboard();
       }
       else {
         // do fuck all
