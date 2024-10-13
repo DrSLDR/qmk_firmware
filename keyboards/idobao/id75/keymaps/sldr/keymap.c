@@ -35,7 +35,6 @@
 static uint8_t prev_mode;
 static bool caps;
 static uint8_t active_base_layer;
-static uint8_t active_compose;
 
 // Caps effect control
 void caps_effect_toggle(void);
@@ -61,105 +60,24 @@ enum custom_keycodes {
   , HLP_AR2    // Helper arrow =>
 };
 
-// Unicode keycodes and map
-enum unicode_names {
-  SLAR,
-  CLAR,
-  SLAD,
-  CLAD,
-  SLOD,
-  CLOD,
-  SLEA,
-  CLEA,
-  SLJC,
-  CLJC,
-  SLSC,
-  CLSC,
-  SLHC,
-  CLHC,
-  SLCC,
-  CLCC,
-  SLGC,
-  CLGC,
-  SLUB,
-  CLUB,
-  STHO,
-  CTHO
-};
-
-const uint32_t PROGMEM unicode_map[] = {
-  [SLAR] = 0xe5,  // SMALL LETTER A WITH RING ABOVE    (å)
-  [CLAR] = 0xc5,  // CAPITAL LETTER A WITH RING ABOVE  (Å)
-  [SLAD] = 0xe4,  // SMALL LETTER A WITH DIAERESIS     (ä)
-  [CLAD] = 0xc4,  // CAPITAL LETTER A WITH DIAERESIS   (Ä)
-  [SLOD] = 0xf6,  // SMALL LETTER O WITH DIAERESIS     (ö)
-  [CLOD] = 0xd6,  // CAPITAL LETTER O WITH DIAERESIS   (Ö)
-  [SLEA] = 0xe9,  // SMALL LETTER E WITH ACUTE         (é)
-  [CLEA] = 0xc9,  // CAPITAL LETTER E WITH ACUTE       (É)
-  [SLJC] = 0x135, // SMALL LETTER J WITH CIRCUMFLEX    (ĵ)
-  [CLJC] = 0x134, // CAPITAL LETTER J WITH CIRCUMFLEX  (Ĵ)
-  [SLSC] = 0x15d, // SMALL LETTER S WITH CIRCUMFLEX    (ŝ)
-  [CLSC] = 0x15c, // CAPITAL LETTER S WITH CIRCUMFLEX  (Ŝ)
-  [SLHC] = 0x125, // SMALL LETTER H WITH CIRCUMFLEX    (ĥ)
-  [CLHC] = 0x124, // CAPITAL LETTER H WITH CIRCUMFLEX  (Ĥ)
-  [SLCC] = 0x109, // SMALL LETTER C WITH CIRCUMFLEX    (ĉ)
-  [CLCC] = 0x108, // CAPITAL LETTER C WITH CIRCUMFLEX  (Ĉ)
-  [SLGC] = 0x11d, // SMALL LETTER G WITH CIRCUMFLEX    (ĝ)
-  [CLGC] = 0x11c, // CAPITAL LETTER G WITH CIRCUMFLEX  (Ĝ)
-  [SLUB] = 0x16d, // SMALL LETTER U WITH BREVE         (ŭ)
-  [CLUB] = 0x16c, // CAPITAL LETTER U WITH BREVE       (Ŭ)
-  [STHO] = 0xfe,  // SMALL LETTER THORN                (þ)
-  [CTHO] = 0xde   // CAPITAL LETTER THORN              (Þ)
-};
-
 // Combo things
 enum combos {
   AO_ARING,       // Å, å
   AE_ADIAE,       // Ä, ä
   EO_ODIAE,       // Ö, ö
-  EU_EACUT,       // É, é
-  PAR_SECT,       // °, §
-  DEG_DEGR,       // °, § - shortcut to the degree sign
-  LAM_LAMB,       // Λ, λ
-  DEL_DELT,       // Δ, δ
-  LEM_INFT,       // ™, ∞ - lemniscate
-  TM_TRADM,       // ™, ∞ - shortcut to the trademark sign
-  EUR_EURO,       // €
-  THO_THRN,       // Þ, þ
-  LAR_LARR,       // ←
-  RAW_RARR        // →
+  EX_EACUT        // É, é
 };
 
 const uint16_t PROGMEM ao_combo[]  = {KC_A, KC_O, COMBO_END};       // Å, å
 const uint16_t PROGMEM ae_combo[]  = {KC_A, KC_E, COMBO_END};       // Ä, ä
 const uint16_t PROGMEM eo_combo[]  = {KC_E, KC_O, COMBO_END};       // Ö, ö
-const uint16_t PROGMEM eu_combo[]  = {KC_E, KC_U, COMBO_END};       // É, é
-const uint16_t PROGMEM par_combo[] = {KC_P, KC_A, KC_R, COMBO_END}; // °, §
-const uint16_t PROGMEM deg_combo[] = {KC_D, KC_E, KC_G, COMBO_END}; // °, §
-const uint16_t PROGMEM lam_combo[] = {KC_L, KC_A, KC_M, COMBO_END}; // Λ, λ
-const uint16_t PROGMEM del_combo[] = {KC_D, KC_E, KC_L, COMBO_END}; // Δ, δ
-const uint16_t PROGMEM lem_combo[] = {KC_L, KC_E, KC_M, COMBO_END}; // ™, ∞
-const uint16_t PROGMEM tm_combo[]  = {KC_T, KC_M, COMBO_END};       // ™, ∞
-const uint16_t PROGMEM eur_combo[] = {KC_E, KC_U, KC_R, COMBO_END}; // €
-const uint16_t PROGMEM tho_combo[] = {KC_T, KC_H, KC_O, COMBO_END}; // Þ, þ
-const uint16_t PROGMEM lar_combo[] = {KC_L, KC_A, KC_R, COMBO_END}; // ←
-const uint16_t PROGMEM raw_combo[] = {KC_R, KC_A, KC_W, COMBO_END}; // →
+const uint16_t PROGMEM ex_combo[]  = {KC_E, KC_X, COMBO_END};       // É, é
 
 combo_t key_combos[COMBO_COUNT] = {
   [AO_ARING] = COMBO_ACTION(ao_combo),      // Å, å
   [AE_ADIAE] = COMBO_ACTION(ae_combo),      // Ä, ä
   [EO_ODIAE] = COMBO_ACTION(eo_combo),      // Ö, ö
-  [EU_EACUT] = COMBO_ACTION(eu_combo),      // É, é
-  [PAR_SECT] = COMBO_ACTION(par_combo),     // °, §
-  [DEG_DEGR] = COMBO_ACTION(deg_combo),     // °, §
-  [LAM_LAMB] = COMBO_ACTION(lam_combo),     // Λ, λ
-  [DEL_DELT] = COMBO_ACTION(del_combo),     // Δ, δ
-  [LEM_INFT] = COMBO_ACTION(lem_combo),     // ™, ∞
-  [TM_TRADM] = COMBO_ACTION(tm_combo),      // ™, ∞
-  [EUR_EURO] = COMBO_ACTION(eur_combo),     // €
-  [THO_THRN] = COMBO_ACTION(tho_combo),     // Þ, þ
-  [LAR_LARR] = COMBO_ACTION(lar_combo),     // ←
-  [RAW_RARR] = COMBO_ACTION(raw_combo)      // →
+  [EX_EACUT] = COMBO_ACTION(ex_combo)       // É, é
 };
 
 // Helper macros
@@ -350,12 +268,12 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
   switch(combo_index) {
     case AO_ARING:
       if (pressed) {
-        tap_code16(RALT(KC_A));         // Å, å
+        tap_code16(RALT(KC_W));         // Å, å
       }
       break;
     case AE_ADIAE:
       if (pressed) {
-        tap_code16(RALT(KC_QUOT));      // Ä, ä
+        tap_code16(RALT(KC_A));         // Ä, ä
       }
       break;
     case EO_ODIAE:
@@ -363,59 +281,9 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         tap_code16(RALT(KC_O));         // Ö, ö
       }
       break;
-    case EU_EACUT:
+    case EX_EACUT:
       if (pressed) {
-        tap_code16(RALT(KC_Y));         // É, é
-      }
-      break;
-    case PAR_SECT:
-      if (pressed) {
-        tap_code16(RALT(KC_2));         // °, §
-      }
-      break;
-    case DEG_DEGR:
-      if (pressed) {
-        tap_code16(SAGR(KC_2));         // °, §
-      }
-      break;
-    case LAM_LAMB:
-      if (pressed) {
-        tap_code16(RALT(KC_4));         // Λ, λ
-      }
-      break;
-    case DEL_DELT:
-      if (pressed) {
-        tap_code16(RALT(KC_5));         // Δ, δ
-      }
-      break;
-    case LEM_INFT:
-      if (pressed) {
-        tap_code16(RALT(KC_1));         // ™, ∞
-      }
-      break;
-    case TM_TRADM:
-      if (pressed) {
-        tap_code16(SAGR(KC_1));         // ™, ∞
-      }
-      break;
-    case EUR_EURO:
-      if (pressed) {
-        tap_code16(RALT(KC_E));         // €
-      }
-      break;
-    case THO_THRN:
-      if (pressed) {
-        tap_code16(RALT(KC_T));         // Þ, þ
-      }
-      break;
-    case LAR_LARR:
-      if (pressed) {
-        tap_code16(RALT(KC_0));         // ←
-      }
-      break;
-    case RAW_RARR:
-      if (pressed) {
-        tap_code16(RALT(KC_MINS));      // →
+        tap_code16(RALT(KC_G));         // É, é
       }
       break;
   }
@@ -426,11 +294,9 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 void keyboard_post_init_user(){
   caps = false;
   active_base_layer = _WM;
-  active_compose = UC_LNX;
 
   rgblight_sethsv(_WM_LED_HSV);
   rgblight_mode_noeeprom(STARTUP_EFFECT);
-  set_unicode_input_mode(active_compose);
 }
 
 // LAYER CONTROL FUNCTION /////////////////////////////////////////////////////
@@ -438,7 +304,7 @@ void keyboard_post_init_user(){
 void move_layer(bool up) {
   switch (active_base_layer) {
     case _WM:
-      if (up) {
+      if (! up) {
         active_base_layer = _QW;
         layer_on(active_base_layer);
         rgblight_sethsv(_QW_LED_HSV);
@@ -446,14 +312,9 @@ void move_layer(bool up) {
       break;
     case _QW:
       if (up) {
-        // There is no higher layer
-        return;
-      }
-      else {
         layer_off(active_base_layer);
         active_base_layer = _WM;
         rgblight_sethsv(_WM_LED_HSV);
-      }
       break;
   }
   return;
@@ -483,22 +344,6 @@ void caps_effect_toggle(){
     rgblight_mode(CAPS_EFFECT);
     prev_mode = CAPS_EFFECT;
   }
-}
-
-// COMPOSE METHOD CYCLE ////////////////////////////////////////////////////////
-
-void compose_cycle(){
-  switch (active_compose){
-    case UC_LNX:
-      active_compose = UC_WINC;
-      SEND_STRING("WIN");
-      break;
-    case UC_WINC:
-      active_compose = UC_LNX;
-      SEND_STRING("LNX");
-      break;
-  }
-  set_unicode_input_mode(active_compose);
 }
 
 // LED CONTROL FOR ONE SHOT LAYER //////////////////////////////////////////////
