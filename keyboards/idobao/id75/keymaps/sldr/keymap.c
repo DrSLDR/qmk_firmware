@@ -52,7 +52,6 @@ void move_layer(bool up);
 enum custom_keycodes {
     LY_UP = SAFE_RANGE
   , LY_DN
-  , COMP_SW    // Switch compose mode
   , SKY_S1     // Skyrim, sell 1
   , SKY_MK     // Skyrim, make thing
   , SKY_MK2    // Skyrim, make thing but differently
@@ -82,11 +81,11 @@ combo_t key_combos[COMBO_COUNT] = {
 
 // Helper macros
 #define ALGUI A(KC_LGUI)
-#define LCA C(KC_LALT)
+#define KCLCA C(KC_LALT)
 #define ESCFN LT(_FN, KC_ESC)
 #define KCOSL OSL(_OSM)
 #define CLSFT C(KC_LSFT)
-#define MEH LCA(KC_LSFT)
+#define KCMEH LCA(KC_LSFT)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -108,8 +107,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_INS,  KC_PSCR, KC_PAUS, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC, \
     KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_MPRV, KC_MPLY, KC_MNXT, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS, \
     KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_VOLD, KC_MUTE, KC_VOLU, KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, \
-    LC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    ALGUI,   XXXXXXX, LCA,     KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT, \
-    ESCFN,   KC_LGUI, MO(_FN), KC_LALT, KCOSL,   KC_SPC,  CLSFT,   KC_CAPS, MEH,     KC_ENT,  KC_RALT, KC_LEFT, KC_UP,   KC_DOWN, KC_RGHT  \
+    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    ALGUI,   XXXXXXX, KCLCA,   KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT, \
+    ESCFN,   KC_LGUI, MO(_FN), KC_LALT, KCOSL,   KC_SPC,  CLSFT,   KC_CAPS, KCMEH,   KC_ENT,  KC_RALT, KC_LEFT, KC_UP,   KC_DOWN, KC_RGHT  \
  ),
 
 /* WORKMAN (Partially transparent layer to handle Workman remappings; () means unchanged key, [] means to be changed key)
@@ -131,29 +130,29 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______ \
  ),
 
 /* FUNCTION
  * .--------------------------------------------------------------------------------------------------------------------------------------.
- * |        | F1     | F2     | F3     | F4     | F5     | F11    | RESET  | F12    | F6     | F7     | F8     | F9     | F10    | DEL    |
+ * |        | F1     | F2     | F3     | F4     | F5     | F11    | BOOT   | F12    | F6     | F7     | F8     | F9     | F10    | DEL    |
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
  * |        | SKY S1 | SKY MK | SKY MK2|        |        |        | STOP   |        |        |        |        |        |        |        |
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
- * |        |        |        |        |        |        |        | COMB T |        |        | [      | ]      | MINS   | EQL    |        |
+ * |        |        |        |        |        |        |        |        |        |        | [      | ]      | MINS   | EQL    |        |
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
  * |        |        |        |        |        |        |        | RGB TOG|        |        |        |        |        |        |        |
  * |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
- * |        |        | [TRNS] |        | LY DOWN|        |        | COMP SW|        |        | LY UP  | HOME   | PG UP  | PG DN  | END    |
+ * |        |        | [TRNS] |        | LY DOWN|        |        | BUILD  |        |        | LY UP  | HOME   | PG UP  | PG DN  | END    |
  * '--------------------------------------------------------------------------------------------------------------------------------------'
  */
 
  [_FN] = LAYOUT_ortho_5x15( /* FUNCTION */
-    _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F11,  RESET,   KC_F12,  KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_DEL,  \
+    _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F11,  QK_BOOT, KC_F12,  KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_DEL,  \
     _______, SKY_S1,  SKY_MK,  SKY_MK2, _______, _______, _______, KC_MSTP, _______, _______, _______, _______, _______, _______, _______, \
-    _______, _______, _______, _______, _______, _______, _______, CMB_TOG, _______, _______, KC_LBRC, KC_RBRC, KC_MINS, KC_EQL,  _______, \
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_LBRC, KC_RBRC, KC_MINS, KC_EQL,  _______, \
     _______, _______, _______, _______, _______, _______, _______, RGB_TOG, _______, _______, _______, _______, _______, _______, _______, \
-    _______, _______, KC_TRNS, _______, LY_DN,   _______, _______, COMP_SW, _______, _______, LY_UP,   KC_HOME, KC_PGUP, KC_PGDN, KC_END \
+    _______, _______, KC_TRNS, _______, LY_DN,   _______, _______, QK_MAKE, _______, _______, LY_UP,   KC_HOME, KC_PGUP, KC_PGDN, KC_END   \
  ),
 
 /* SUPER ONE-SHOT STUFF
@@ -175,7 +174,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
     KC_CAPS, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_CAPS, \
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______  \
  ),
 };
 
@@ -183,7 +182,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record){
   switch (keycode) {
-    case RESET:
+    case QK_BOOT:
       if (record->event.pressed){
         rgblight_mode(STARTUP_EFFECT);
         rgblight_sethsv(RESET_LED_HSV);
@@ -216,11 +215,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record){
     case KC_CAPS:
       if (record->event.pressed){
         caps_effect_toggle();
-      }
-      break;
-    case COMP_SW:
-      if (record->event.pressed){
-        compose_cycle();
       }
       break;
 
@@ -316,8 +310,9 @@ void move_layer(bool up) {
         active_base_layer = _WM;
         rgblight_sethsv(_WM_LED_HSV);
       break;
-  }
+    }
   return;
+  }
 }
 
 // COLOR DECOMPOSE FUNCTION ////////////////////////////////////////////////////
