@@ -34,7 +34,7 @@
 // Variable declarations
 static uint8_t prev_mode;
 static bool caps;
-static uint8_t active_base_layer;
+static uint8_t topmost_active_layer;
 
 // Caps effect control
 void caps_effect_toggle(void);
@@ -289,7 +289,10 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 
 void keyboard_post_init_user(){
   caps = false;
-  active_base_layer = _WM;
+  topmost_active_layer = _WM;
+
+  layer_on(_QW);
+  layer_on(_WM);
 
   rgblight_sethsv(_WM_LED_HSV);
   rgblight_mode_noeeprom(STARTUP_EFFECT);
@@ -298,18 +301,18 @@ void keyboard_post_init_user(){
 // LAYER CONTROL FUNCTION /////////////////////////////////////////////////////
 
 void move_layer(bool up) {
-  switch (active_base_layer) {
+  switch (topmost_active_layer) {
     case _WM:
       if (! up) {
-        active_base_layer = _QW;
-        layer_on(active_base_layer);
+        layer_off(topmost_active_layer);
+        topmost_active_layer = _QW;
         rgblight_sethsv(_QW_LED_HSV);
       }
       break;
     case _QW:
       if (up) {
-        layer_off(active_base_layer);
-        active_base_layer = _WM;
+        topmost_active_layer = _WM;
+        layer_on(topmost_active_layer);
         rgblight_sethsv(_WM_LED_HSV);
       break;
     }
