@@ -65,19 +65,19 @@ enum combos {
   AO_ARING,       // Å, å
   AE_ADIAE,       // Ä, ä
   EO_ODIAE,       // Ö, ö
-  EX_EACUT        // É, é
+  EZ_EACUT        // É, é
 };
 
 const uint16_t PROGMEM ao_combo[]  = {KC_A, KC_O, COMBO_END};       // Å, å
 const uint16_t PROGMEM ae_combo[]  = {KC_A, KC_E, COMBO_END};       // Ä, ä
 const uint16_t PROGMEM eo_combo[]  = {KC_E, KC_O, COMBO_END};       // Ö, ö
-const uint16_t PROGMEM ex_combo[]  = {KC_E, KC_X, COMBO_END};       // É, é
+const uint16_t PROGMEM ez_combo[]  = {KC_E, KC_Z, COMBO_END};       // É, é
 
 combo_t key_combos[COMBO_COUNT] = {
   [AO_ARING] = COMBO_ACTION(ao_combo),      // Å, å
   [AE_ADIAE] = COMBO_ACTION(ae_combo),      // Ä, ä
   [EO_ODIAE] = COMBO_ACTION(eo_combo),      // Ö, ö
-  [EX_EACUT] = COMBO_ACTION(ex_combo)       // É, é
+  [EZ_EACUT] = COMBO_ACTION(ez_combo)       // É, é
 };
 
 // Helper macros
@@ -277,7 +277,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         tap_code16(RALT(KC_O));         // Ö, ö
       }
       break;
-    case EX_EACUT:
+    case EZ_EACUT:
       if (pressed) {
         tap_code16(RALT(KC_G));         // É, é
       }
