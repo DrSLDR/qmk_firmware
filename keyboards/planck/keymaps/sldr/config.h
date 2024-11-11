@@ -17,11 +17,11 @@
 #pragma once
 
 #ifdef AUDIO_ENABLE
-#  define STARTUP_SONG SONG(PLANCK_SOUND)
-#  define GOODBYE_SONG SONG(GOODBYE_SOUND)
+#define STARTUP_SONG SONG(PLANCK_SOUND)
+#define GOODBYE_SONG SONG(GOODBYE_SOUND)
 // #define STARTUP_SONG SONG(NO_SOUND)
 
-#    define DEFAULT_LAYER_SONGS \
+#define DEFAULT_LAYER_SONGS \
         { SONG(QWERTY_SOUND), SONG(COLEMAK_SOUND), SONG(DVORAK_SOUND) }
 #endif
 
@@ -51,5 +51,8 @@
 #undef ENCODER_PRESENT
 
 // Combo handling
-#define COMBO_COUNT 6
+#define COMBO_COUNT 5
 #define COMBO_TERM 50
+
+// Allow the Make keycode
+#define ENABLE_COMPILE_KEYCODE
