@@ -21,7 +21,7 @@
       {
         devShell = (import ./shell.nix) {
           inherit pkgs;
-          arm = false;
+          arm = true;
           teensy = false;
         };
       }
