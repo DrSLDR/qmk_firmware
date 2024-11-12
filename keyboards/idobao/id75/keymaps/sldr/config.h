@@ -37,7 +37,7 @@
 #define CAPS_EFFECT RGBLIGHT_MODE_BREATHING + 3
 
 // Combo stuff
-#define COMBO_COUNT 4
+#define COMBO_COUNT 5
 #define COMBO_TERM 50
 
 // Skyrim macro stuff
