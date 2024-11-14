@@ -18,6 +18,7 @@
 #ifdef AUDIO_ENABLE
 #    include "muse.h"
 #endif
+#include "print.h"
 
 
 enum planck_layers {
@@ -41,14 +42,17 @@ enum planck_layers {
 // Variable declarations
 static uint8_t topmost_active_layer;
 
-// enum planck_keycodes {
-// };
+// Layer switch function
+void move_layer(bool up);
+void move_layer_helper(uint8_t target);
+
+enum planck_keycodes {
+  LY_UP = SAFE_RANGE,
+  LY_DN
+};
 
 #define LOWER MO(_LOWER)
 #define RAISE MO(_RAISE)
-// Ugly QMK hackarounds
-#define RESET QK_BOOTLOADER
-#define DEBUG QK_DEBUG_TOGGLE
 
 // Combo things
 enum combos {
@@ -72,6 +76,24 @@ combo_t key_combos[COMBO_COUNT] = {
   [EZ_EACUT] = COMBO_ACTION(ez_combo),      // É, é
   [SS_CAPS] = COMBO_ACTION(ss_combo)        // Caps
 };
+
+// Sound options
+#ifdef AUDIO_ENABLE
+  #define _NONE (_ADJUST + 1)
+  float nope_sound[][2] = SONG(TERMINAL_SOUND);
+  float qw_sound[][2] = SONG(QWERTY_SOUND);
+  float wm_sound[][2] = SONG(WORKMAN_SOUND);
+  #define PLAY_SONG_BY_INDEX(index) \
+    do { \
+      if ((index) == _NONE) { \
+        PLAY_SONG(nope_sound); \
+      } else if ((index) == _QWERTY) { \
+        PLAY_SONG(qw_sound); \
+      } else if ((index) == _WM) { \
+        PLAY_SONG(wm_sound); \
+      } \
+    } while (0)
+#endif
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -156,14 +178,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |Mus on|Musoff|MIDIon|MIDIof|TermOn|TermOf|      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |             |      |      |      |      |      |
+ * |      |      |      |      |      |             |      |      | LUp  | LDn  |      |
  * `-----------------------------------------------------------------------------------'
  */
 [_ADJUST] = LAYOUT_planck_grid(
     QK_MAKE, QK_BOOT, DB_TOGG, RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, KC_DEL ,
     _______, _______, _______, AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, _______, _______, _______, _______, _______,
     _______, _______, _______, MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _______, _______, _______, _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, LY_UP,   LY_DN,   _______
 )
 
 };
@@ -175,6 +197,49 @@ void keyboard_post_init_user(){
 
   layer_on(_QWERTY);
   layer_on(_WM);
+}
+
+// LAYER CONTROL ///////////////////////////////////////////////////////////////
+
+void move_layer(bool up) {
+  #ifdef CONSOLE_ENABLE
+    uprintf("move_layer: %u\n", up);
+  #endif
+  switch (topmost_active_layer) {
+    case _WM:
+      if (up) {
+        move_layer_helper(_WM);
+      }
+      else {
+        move_layer_helper(_QWERTY);
+      }
+      break;
+    case _QWERTY:
+      if (up) {
+        move_layer_helper(_WM);
+      }
+      else {
+        move_layer_helper(_QWERTY);
+      }
+      break;
+  }
+}
+
+void move_layer_helper(uint8_t target){
+  #ifdef CONSOLE_ENABLE
+    uprintf("move_layer_helper: target: %x, current: %x\n", target, topmost_active_layer);
+  #endif
+  if (target != topmost_active_layer) {
+    if (target > topmost_active_layer) {
+      layer_on(target);
+    } else {
+      layer_off(topmost_active_layer);
+    }
+    topmost_active_layer = target;
+    PLAY_SONG_BY_INDEX(target);
+  } else {
+    PLAY_SONG_BY_INDEX(_NONE);
+  }
 }
 
 // MISC ////////////////////////////////////////////////////////////////////////
@@ -189,9 +254,24 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  // const bool p = record->event.pressed;
-//   switch (keycode) {
-//   }
+  const bool p = record->event.pressed;
+  #ifdef CONSOLE_ENABLE
+    uprintf("KL: kc: 0x%04X, p: %u\n", keycode, p);
+  #endif
+  switch (keycode) {
+    case LY_UP:
+      if (p) {
+        move_layer(true);
+      }
+      return true;
+      break;
+    case LY_DN:
+      if (p) {
+        move_layer(false);
+      }
+      return true;
+      break;
+  }
   return true;
 }
 
