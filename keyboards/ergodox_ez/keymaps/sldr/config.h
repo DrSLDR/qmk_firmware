@@ -50,68 +50,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     get_mods() == (MOD_BIT(KC_LSFT) | MOD_BIT(KC_RSFT)) \
 )
 
-#ifndef LED_BRIGHTNESS_LO
-#define LED_BRIGHTNESS_LO       15
-#endif
-#ifndef LED_BRIGHTNESS_HI
-#define LED_BRIGHTNESS_HI       255
-#endif
-#define LED_BRIGHTNESS_DEFAULT (LED_BRIGHTNESS_HI)
-
-// Pick one of the modes
-// Defaults to 15 mirror, for legacy behavior
-
-// #define ERGODOX_LED_15 // Addresses 15 LEDs, but same position on both halves
-// #define ERGODOX_LED_15_MIRROR // Addresses 15 LEDs, but are mirrored
-// #define ERGODOX_LED_30 // Addresses all 30 LED individually
-
 /* fix space cadet rollover issue */
 #define DISABLE_SPACE_CADET_ROLLOVER
-
-/*
- * The debounce filtering reports a key/switch change directly,
- * without any extra delay. After that the debounce logic will filter
- * all further changes, until the key/switch reports the same state for
- * the given count of scans.
- * So a perfect switch will get a short debounce period and
- * a bad key will get a much longer debounce period.
- * The result is an adaptive debouncing period for each switch.
- *
- * If you don't define it here, the matrix code will default to
- * 5, which is now closer to 10ms, but still plenty according to
- * manufacturer specs.
- */
-
-
-// RGB backlight
-#define IS31FL3731_I2C_ADDRESS_1 IS31FL3731_I2C_ADDRESS_GND
-#define IS31FL3731_I2C_ADDRESS_2 IS31FL3731_I2C_ADDRESS_VCC
-
-// #define RGBLIGHT_COLOR_LAYER_0 0x00, 0x00, 0xFF
-/* #define RGBLIGHT_COLOR_LAYER_1 0x00, 0x00, 0xFF */
-/* #define RGBLIGHT_COLOR_LAYER_2 0xFF, 0x00, 0x00 */
-/* #define RGBLIGHT_COLOR_LAYER_3 0x00, 0xFF, 0x00 */
-/* #define RGBLIGHT_COLOR_LAYER_4 0xFF, 0xFF, 0x00 */
-/* #define RGBLIGHT_COLOR_LAYER_5 0x00, 0xFF, 0xFF */
-/* #define RGBLIGHT_COLOR_LAYER_6 0xFF, 0x00, 0xFF */
-/* #define RGBLIGHT_COLOR_LAYER_7 0xFF, 0xFF, 0xFF */
-
-/*
- * Feature disable options
- *  These options are also useful to firmware size reduction.
- */
-
-/* disable debug print */
-// #define NO_DEBUG
-
-/* disable print */
-// #define NO_PRINT
-
-/* disable action features */
-//#define NO_ACTION_LAYER
-//#define NO_ACTION_TAPPING
-//#define NO_ACTION_ONESHOT
-
-//#define DEBUG_MATRIX_SCAN_RATE
 
 #undef IGNORE_MOD_TAP_INTERRUPT
