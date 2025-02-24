@@ -22,7 +22,7 @@
         devShell = (import ./shell.nix) {
           inherit pkgs;
           arm = true;
-          teensy = false;
+          teensy = true;
         };
       }
     );
