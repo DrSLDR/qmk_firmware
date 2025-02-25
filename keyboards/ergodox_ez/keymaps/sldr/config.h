@@ -54,3 +54,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define DISABLE_SPACE_CADET_ROLLOVER
 
 #undef IGNORE_MOD_TAP_INTERRUPT
+
+// Allow the Make keycode
+#define ENABLE_COMPILE_KEYCODE
