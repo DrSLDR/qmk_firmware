@@ -57,3 +57,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // Allow the Make keycode
 #define ENABLE_COMPILE_KEYCODE
+
+// Tune the debouncing
+#ifdef DEBOUNCE
+#undef DEBOUNCE
+#endif
+#define DEBOUNCE 45

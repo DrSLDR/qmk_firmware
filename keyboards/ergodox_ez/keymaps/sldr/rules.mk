@@ -16,3 +16,6 @@ BACKLIGHT_SUPPORTED = no
 MOUSE_SHARED_EP = no
 
 DEFAULT_FOLDER = ergodox_ez/base
+
+# Set the debounce algorithm
+DEBOUNCE_TYPE = sym_eager_pk
