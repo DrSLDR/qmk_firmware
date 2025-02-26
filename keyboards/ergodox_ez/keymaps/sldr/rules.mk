@@ -19,3 +19,6 @@ DEFAULT_FOLDER = ergodox_ez/base
 
 # Set the debounce algorithm
 DEBOUNCE_TYPE = sym_eager_pk
+
+# Enable combos
+COMBO_ENABLE = yes

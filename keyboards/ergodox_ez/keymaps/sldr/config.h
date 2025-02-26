@@ -63,3 +63,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #undef DEBOUNCE
 #endif
 #define DEBOUNCE 45
+
+// Configure Combos
+#define COMBO_TERM 50

@@ -14,6 +14,30 @@ enum custom_keycodes {
 // State variables
 static uint8_t topmost_active_layer;
 
+// Combo declarations
+// Combo things
+enum combos {
+  AO_ARING,       // Å, å
+  AE_ADIAE,       // Ä, ä
+  EO_ODIAE,       // Ö, ö
+  EZ_EACUT,       // É, é
+  SS_CAPS         // Caps via shifts
+};
+
+const uint16_t PROGMEM ao_combo[]  = {KC_A, KC_O, COMBO_END};       // Å, å
+const uint16_t PROGMEM ae_combo[]  = {KC_A, KC_E, COMBO_END};       // Ä, ä
+const uint16_t PROGMEM eo_combo[]  = {KC_E, KC_O, COMBO_END};       // Ö, ö
+const uint16_t PROGMEM ez_combo[]  = {KC_E, KC_Z, COMBO_END};       // É, é
+const uint16_t PROGMEM ss_combo[]  = {KC_LSFT, KC_RSFT, COMBO_END}; // Caps
+
+combo_t key_combos[] = {
+    COMBO(ao_combo, RALT(KC_W)),
+    COMBO(ae_combo, RALT(KC_A)),
+    COMBO(eo_combo, RALT(KC_O)),
+    COMBO(ez_combo, RALT(KC_G)),
+    COMBO(ss_combo, KC_CAPS),
+};
+
 // Functional macros
 #define SL_WHAT KC_NO
 #define SL_ESC LT(UTIL,KC_ESC)
