@@ -20,7 +20,6 @@
 #endif
 #include "print.h"
 
-
 enum planck_layers {
   _QWERTY,
   _WM,
@@ -28,6 +27,10 @@ enum planck_layers {
   _RAISE,
   _ADJUST,
 };
+
+// Layer clamps
+#define _BOTTOM_LAYER _QWERTY
+#define _TOP_LAYER _WM
 
 // Modifier macros
 #define _MOD_LCTL 0x1
@@ -205,24 +208,14 @@ void move_layer(bool up) {
   #ifdef CONSOLE_ENABLE
     uprintf("move_layer: %u\n", up);
   #endif
-  switch (topmost_active_layer) {
-    case _WM:
-      if (up) {
-        move_layer_helper(_WM);
-      }
-      else {
-        move_layer_helper(_QWERTY);
-      }
-      break;
-    case _QWERTY:
-      if (up) {
-        move_layer_helper(_WM);
-      }
-      else {
-        move_layer_helper(_QWERTY);
-      }
-      break;
+  uint8_t target = topmost_active_layer;
+  // Set target with clamping
+  if (up && target < _TOP_LAYER) {
+    target++;
+  } else if (!up && target > _BOTTOM_LAYER) {
+    target--;
   }
+  move_layer_helper(target);
 }
 
 void move_layer_helper(uint8_t target){
