@@ -44,6 +44,7 @@ enum planck_layers {
 
 // Variable declarations
 static uint8_t topmost_active_layer;
+static bool mouse_on;
 
 // Layer switch function
 void move_layer(bool up);
@@ -51,7 +52,8 @@ void move_layer_helper(uint8_t target);
 
 enum planck_keycodes {
   LY_UP = SAFE_RANGE,
-  LY_DN
+  LY_DN,
+  MS_TOG
 };
 
 #define LOWER MO(_LOWER)
@@ -83,9 +85,13 @@ combo_t key_combos[COMBO_COUNT] = {
 // Sound options
 #ifdef AUDIO_ENABLE
   #define _NONE (_ADJUST + 1)
+  #define _MSON (_ADJUST + 2)
+  #define _MSOFF (_ADJUST + 3)
   float nope_sound[][2] = SONG(TERMINAL_SOUND);
   float qw_sound[][2] = SONG(QWERTY_SOUND);
   float wm_sound[][2] = SONG(WORKMAN_SOUND);
+  float mouse_yes_sound[][2] = SONG(SCROLL_LOCK_ON_SOUND);
+  float mouse_no_sound[][2] = SONG(SCROLL_LOCK_OFF_SOUND);
   #define PLAY_SONG_BY_INDEX(index) \
     do { \
       if ((index) == _NONE) { \
@@ -94,6 +100,10 @@ combo_t key_combos[COMBO_COUNT] = {
         PLAY_SONG(qw_sound); \
       } else if ((index) == _WM) { \
         PLAY_SONG(wm_sound); \
+      } else if ((index) == _MSON) { \
+        PLAY_SONG(mouse_yes_sound); \
+      } else if ((index) == _MSOFF) { \
+        PLAY_SONG(mouse_no_sound); \
       } \
     } while (0)
 #endif
@@ -179,16 +189,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |Aud on|Audoff|AGnorm|AGswap|      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |Mus on|Musoff|MIDIon|MIDIof|TermOn|TermOf|      |      |      |
+ * |      |      |      |Mus on|Musoff|MIDIon|MIDIof|      | MWUp | MWDn |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |             |      |      | LUp  | LDn  |      |
+ * |      |      |      |      |      |Lclick|Rclick|      | MLeft| M/LUp| M/LDn| MRght|
  * `-----------------------------------------------------------------------------------'
  */
 [_ADJUST] = LAYOUT_planck_grid(
-    QK_MAKE, QK_BOOT, DB_TOGG, _______, _______, _______, _______, _______, _______, _______, _______,  KC_DEL,
+    QK_MAKE, QK_BOOT, DB_TOGG, _______, _______, _______, _______, _______, _______, _______, _______, MS_TOG,
     _______, _______, _______, AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, _______, _______, _______, _______, _______,
-    _______, _______, _______, MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _______, _______, _______, _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, LY_UP,   LY_DN,   _______
+    _______, _______, _______, MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _______, MS_WHLU, MS_WHLD, _______, _______,
+    _______, _______, _______, _______, _______, MS_BTN1, MS_BTN2, _______, MS_LEFT, LY_UP,   LY_DN,   MS_RGHT
 )
 
 };
@@ -197,6 +207,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 void keyboard_post_init_user(){
   topmost_active_layer = _WM;
+  mouse_on = false;
 
   layer_on(_QWERTY);
   layer_on(_WM);
@@ -252,14 +263,37 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     uprintf("KL: kc: 0x%04X, p: %u\n", keycode, p);
   #endif
   switch (keycode) {
-    case LY_UP:
+    case MS_TOG:
       if (p) {
+        if (mouse_on) {
+          PLAY_SONG_BY_INDEX(_MSOFF);
+        } else {
+          PLAY_SONG_BY_INDEX(_MSON);
+        }
+        mouse_on = !mouse_on;
+      }
+      return true;
+      break;
+    case LY_UP:
+      if (mouse_on) {
+        if (p) {
+          register_code16(MS_UP);
+        } else {
+          unregister_code16(MS_UP);
+        }
+      } else if (p) {
         move_layer(true);
       }
       return true;
       break;
     case LY_DN:
-      if (p) {
+      if (mouse_on) {
+        if (p) {
+          register_code16(MS_DOWN);
+        } else {
+          unregister_code16(MS_DOWN);
+        }
+      } else if (p) {
         move_layer(false);
       }
       return true;
